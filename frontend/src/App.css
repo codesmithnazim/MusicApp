@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+*{
+  transition: color;
+  transition-duration: 300ms;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -7,13 +12,15 @@
   --color-foreground: #212529;
   --color-primary: #e60076;
   --color-muted: #9fa1a2;
+  --color-hover-background: oklch(96.7% 0.003 264.542);
 }
 
 .dark {
-  --color-background: oklch(0.145 0 0);
+  --color-background: #171a23;
   --color-foreground: oklch(0.985 0 0);
   --color-primary: #ef1960;
   --color-muted: #7f8186;
+  --color-hover-background: oklch(44.23% 0.01723 268.304);
 }
 
 @theme inline {
@@ -21,4 +28,9 @@
   --color-foreground: var(--color-foreground);
   --color-primary: var(--color-primary);
   --color-muted: var(--color-muted);
+  --color-hcolor: var(--color-hover-color);
+  --color-hbackground: var(--color-hover-background)
 }
+
+
+

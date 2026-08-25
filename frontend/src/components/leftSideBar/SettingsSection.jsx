@@ -5,7 +5,7 @@ import ThemeTogglingBtn from '../ui/themeTogglingBtn'
 
 function SettingsSection() {
   return (
-    <div className='flex flex-col gap-1 pb-2'>
+    <div className='flex flex-col gap-1 pb-4'>
         <FullScreenButton />
         <ThemeTogglingBtn/>
     </div>

@@ -7,7 +7,7 @@ import ThemeContext from "./contexts/ThemeContext"
 function App() {
   return (
     <ThemeContext>
-    <div className="musicApp max-w-screen min-h-screen bg-pink-100 flex">
+    <div className="musicApp max-w-screen min-h-screen bg-pink-100 flex ">
       <LSMain className={`justify-self-start`} />
       <Routes>
         <Route path="/" element={<Browse />} />
