@@ -10,7 +10,7 @@ function Main() {
   const { isDark } = useThemeContext();
   return (
     <div
-      className={`${isDark ? "dark" : ""} w-54 h-screen bg-background sticky overflow-y-scroll scrollbar-none pl-4.5  flex flex-col items-start gap-3 overscroll-y-auto border-r border-r-zinc-200`}
+      className={`${isDark ? "dark" : ""} w-54 h-screen bg-background sticky overflow-y-scroll scrollbar-none pl-4.5  flex flex-col items-start gap-3 overscroll-y-auto border-r border-r-partitioner`}
     >
       <SiteBrand />
       <div className={`${isDark ? "dark":""} text-muted font-normal text-sm`}>Browse</div>

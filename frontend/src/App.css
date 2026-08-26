@@ -10,10 +10,11 @@
 :root {
   --color-background: oklch(1 0 0);
   --color-foreground: #212529;
-  --color-primary: #e60076;
+  --color-primary: #ef1960;
   --color-muted: #9fa1a2;
   --color-hover-background: oklch(96.7% 0.003 264.542);
   --color-searchBarBackground: oklch(96.7% 0.001 286.375);
+  --color-partitioner:oklch(96.7% 0.001 286.375);
 }
 
 .dark {
@@ -23,6 +24,8 @@
   --color-muted: #7f8186;
   --color-hover-background: oklch(44.23% 0.01723 268.304);
   --color-searchBarBackground: #1f1f22;
+  --color-partitioner:oklch(27.4% 0.006 286.033);
+
 }
 
 @theme inline {
@@ -32,5 +35,6 @@
   --color-muted: var(--color-muted);
   --color-hcolor: var(--color-hover-color);
   --color-hbackground: var(--color-hover-background);
-  --color-sbBackground: var(--color-searchBarBackground)
+  --color-sbBackground: var(--color-searchBarBackground);
+  --color-partitioner: var(--color-partitioner)
 }
