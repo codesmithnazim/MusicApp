@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-*{
+* {
   transition: color;
   transition-duration: 300ms;
 }
@@ -13,6 +13,7 @@
   --color-primary: #e60076;
   --color-muted: #9fa1a2;
   --color-hover-background: oklch(96.7% 0.003 264.542);
+  --color-searchBarBackground: oklch(96.7% 0.001 286.375);
 }
 
 .dark {
@@ -21,6 +22,7 @@
   --color-primary: #ef1960;
   --color-muted: #7f8186;
   --color-hover-background: oklch(44.23% 0.01723 268.304);
+  --color-searchBarBackground: #1f1f22;
 }
 
 @theme inline {
@@ -29,8 +31,6 @@
   --color-primary: var(--color-primary);
   --color-muted: var(--color-muted);
   --color-hcolor: var(--color-hover-color);
-  --color-hbackground: var(--color-hover-background)
+  --color-hbackground: var(--color-hover-background);
+  --color-sbBackground: var(--color-searchBarBackground)
 }
-
-
-
