@@ -1,0 +1,42 @@
+GET http://localhost:3000/api/songs
+
+
+###
+GET http://localhost:3000/api/blogs/67c2ee98bfd7e820dd7cd659
+
+
+###
+POST http://localhost:3000/api/songs
+Content-Type: application/json
+
+{
+  "title": "jhkhkmnm,njh",
+  "artist": "jhkjhjhjkhhjhkjh",
+  "audioUrl": "hjkhkjhkkljjhkjhjkhkhkjkhkjh",
+  "audioKey":"key",
+  "coverUrl":"Not food",
+  "duration":67
+}
+
+
+###
+DELETE http://localhost:3000/api/blogs/5a422a851b54a676234d17f7
+
+
+###
+PUT http://localhost:3000/api/blogs/67cadab408282ee8ed1e61d0
+Content-Type: application/json
+
+{
+  "content": "HTML is easy",
+  "important": true
+}
+
+
+###
+PATCH  http://localhost:3000/api/blogs/5a422aa71b54a676234d17f8
+Content-Type: application/json
+
+{
+  "likes": 100
+}

@@ -1,0 +1,15 @@
+import logger from "../utils/logger.js";
+
+const errorHandler = (error, req, res, next) => {
+  logger.error("error name ", error?.name, "error message ", error?.message);
+  if (error.name === "CastError")
+    return res.status(400).json({ error: "malformated _id" });
+  else if (error.name === "ValidationError")
+    return res.status(400).json({ error: error.message });
+  else if (error.name === "MongoServerError" && error.code === 11000)
+    return res.status(400).json({ error: "Entries must be unique" });
+
+  next(error)
+};
+
+export default errorHandler;

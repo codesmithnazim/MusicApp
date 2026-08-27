@@ -4,6 +4,7 @@ import LSMain from "./components/leftSideBar/LSMain";
 import Browse from "./components/pages/Browse";
 import { useThemeContext } from "./contexts/ThemeContext";
 import Header from "./components/Header/Header";
+import Register from "./components/pages/Register"
 
 function App() {
   const { isDark } = useThemeContext();
@@ -16,6 +17,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Browse/>} />
+          <Route path="/register" element={<Register/>} />
         </Routes>
       </div>
     </div>

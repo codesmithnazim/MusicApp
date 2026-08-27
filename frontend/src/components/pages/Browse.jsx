@@ -2,7 +2,7 @@ import React from 'react'
 
 function Browse() {
   return (
-    <div></div>
+    <div>Browse page</div>
   )
 }
 
