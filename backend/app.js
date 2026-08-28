@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors"
+import cookieParser from "cookie-parser"
 // import blogRouter from "./controllers/blog.controller.js";
 import requestLogger from "./middlewares/requestLogger.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -21,6 +22,7 @@ app.use(cors({
   credentials: true
 }))
 app.use(express.json());
+app.use(cookieParser())
 app.use(requestLogger);
 // app.use("/api/blogs", blogRouter);
 app.use('/api/songs', songsRouter)
