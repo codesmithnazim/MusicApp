@@ -1,20 +1,21 @@
-import { useState } from "react";
+import  { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
 
-function Register() {
+function LogIn() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const formSubmitHandler = async (newUser) => {
+  const formSubmitHandler = async (user) => {
     try {
-      const backRes = await usersService.registerUser(newUser);
+      const backRes = await usersService.logInUser(user);
       console.log("the backend res = ", backRes);
       document.querySelector("form").reset();
     } catch (error) {
       setEmailError(error.response.data.error);
+    //   console.log(error);
     } finally {
       setIsProcessing(false);
     }
@@ -24,10 +25,10 @@ function Register() {
     e.preventDefault();
     setIsProcessing(true);
     const formData = new FormData(e.currentTarget);
-    const newUser = Object.fromEntries(formData.entries());
+    const user = Object.fromEntries(formData.entries());
     // console.log("the raw form data ", formData);
-    console.log("the complete record ", newUser);
-    formSubmitHandler(newUser);
+    console.log("the complete record ", user);
+    formSubmitHandler(user);
   };
 
   const changePasswordLook = () => {
@@ -48,29 +49,17 @@ function Register() {
   return (
     <div className="w-4/5 h-4/5  flex items-center justify-center ">
       <div className="w-100 border-2 border-black flex flex-col gap-3">
-        <div className="heading font-semibold text-3xl ">Create an account</div>
+        <div className="heading font-semibold text-3xl ">Login as a user</div>
         <div className="text-sm">
-          Already have an account?
-          <NavLink to={"login"} className={"text-primary"}>
-            Sign in
+          Create new account?
+          <NavLink to={"register"} className={"text-primary"}>
+           Register
           </NavLink>
         </div>
         <form
           onSubmit={formMaker}
           className="flex flex-col gap-5 justify-start "
         >
-          <div className="username flex flex-col gap-1.5">
-            <label htmlFor="username" className="text-muted font-light">
-              Username
-            </label>
-            <input
-              id="username"
-              name="name"
-              type="text"
-              required
-              className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
-            />
-          </div>
           <div className="email flex flex-col gap-1.5">
             <label htmlFor="email" className="text-muted font-light">
               Email Address
@@ -113,7 +102,7 @@ function Register() {
             type="submit"
             className="text-primary w-fit py-1.5 px-4 border-primary border rounded-sm font-medium cursor-pointer"
           >
-            {`${isProcessing ? "Registering..." : "Create Account"}`}
+            {`${isProcessing ? "Checking..." : "Log In"}`}
           </button>
         </form>
       </div>
@@ -121,4 +110,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default LogIn;
