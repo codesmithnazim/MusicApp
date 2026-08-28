@@ -1,20 +1,18 @@
-import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../models/Users.model.js";
+import { User } from "../models/user.model.js";
 import logger from "../utils/logger.js";
-const usersRouter = express.Router();
 
-usersRouter.get("/", async (req, res, next) => {
+const getAllUsers = async (req, res, next) => {
   try {
     const allUsers = await User.find({});
     res.status(200).json(allUsers);
   } catch (error) {
     next(error);
   }
-});
+};
 
-usersRouter.post("/register", async (req, res, next) => {
+const registerUser = async (req, res, next) => {
   try {
     const { body } = req;
     body.password = await bcrypt.hash(body.password, 10);
@@ -23,9 +21,9 @@ usersRouter.post("/register", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
-usersRouter.post("/login", async (req, res, next) => {
+const logInUser = async (req, res, next) => {
   // console.log("the body ", body, "the email ", email)
   try {
     const user = req.body;
@@ -38,8 +36,8 @@ usersRouter.post("/login", async (req, res, next) => {
       res.status(404).json({ error: "Email not found, please sign up first" });
       return;
     }
-    const password =await bcrypt.compare(user.password, userRecord.password);
-    logger.info("is password true ", password)
+    const password = await bcrypt.compare(user.password, userRecord.password);
+    logger.info("is password true ", password);
     //Wrong assword
     if (!password) {
       res.status(400).json({ error: "wrong password, try again" });
@@ -54,10 +52,23 @@ usersRouter.post("/login", async (req, res, next) => {
         jwt.sign({ email, id }, "that's a secrret, don't share with any body"),
         { secure: true },
       )
-      .json({success: true, redirectTo:"/"})
+      .json({ success: true, redirectTo: "/" });
   } catch (error) {
     next(error);
   }
-});
+};
 
-export { usersRouter };
+// User profile
+
+const userProfile = async (req, res, next) => {
+  try {
+    const { user } = req;
+    if (user) {
+      logger.info("user exists ", user);
+    } else return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getAllUsers, registerUser, logInUser, userProfile };

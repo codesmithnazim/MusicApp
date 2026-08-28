@@ -1,6 +1,6 @@
 import express from "express";
 import logger from "../utils/logger.js";
-import { Song } from "../models/songs.model.js";
+import { Song } from "../models/song.model.js";
 const songsRouter = express.Router();
 
 songsRouter.get("/", async (req, res, next) => {

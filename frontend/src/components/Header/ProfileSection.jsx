@@ -1,8 +1,27 @@
+import { useEffect } from "react";
 import { useThemeContext } from "../../contexts/ThemeContext";
 import { NavLink } from "react-router-dom";
+import usersService from "../../services/users.service";
 
 function ProfileSection() {
   const { isDark } = useThemeContext();
+  useEffect(() => {
+    try {
+      const getProfile = async () => {
+        const userExist = await usersService.getProfile();
+        
+      };
+
+      getProfile();
+    } catch (error) {
+
+    }
+
+    return () => {
+      
+    };
+  }, []);
+
   return (
     <div className="flex gap-2">
       <NavLink

@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -8,14 +8,21 @@ function LogIn() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const navigate= useNavigate()
   const formSubmitHandler = async (user) => {
     try {
       const backRes = await usersService.logInUser(user);
-      console.log("the backend res = ", backRes);
-      document.querySelector("form").reset();
+      if(backRes.success){
+        console.log("the backend res = ", backRes);
+        document.querySelector("form").reset();
+        // <NavLink to={`${backRes.redirectTo}`}/>
+        // <link rel="stylesheet" href="/" />
+        // Navigate(backRes.redirectTo)   
+        navigate(backRes.redirectTo)    
+      }
     } catch (error) {
-      setEmailError(error.response.data.error);
-    //   console.log(error);
+      setEmailError(error.response?.data?.error);
+      console.log(error);
     } finally {
       setIsProcessing(false);
     }
@@ -48,11 +55,11 @@ function LogIn() {
 
   return (
     <div className="w-4/5 h-4/5  flex items-center justify-center ">
-      <div className="w-100 border-2 border-black flex flex-col gap-3">
+      <div className="w-100 flex flex-col gap-3">
         <div className="heading font-semibold text-3xl ">Login as a user</div>
         <div className="text-sm">
           Create new account?
-          <NavLink to={"register"} className={"text-primary"}>
+          <NavLink to={"/register"} className={"text-primary"}>
            Register
           </NavLink>
         </div>

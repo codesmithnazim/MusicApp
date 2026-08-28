@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -8,11 +8,13 @@ function Register() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const navigate= useNavigate()
   const formSubmitHandler = async (newUser) => {
     try {
       const backRes = await usersService.registerUser(newUser);
       console.log("the backend res = ", backRes);
       document.querySelector("form").reset();
+      navigate('/login')
     } catch (error) {
       setEmailError(error.response.data.error);
     } finally {
@@ -47,7 +49,7 @@ function Register() {
 
   return (
     <div className="w-4/5 h-4/5  flex items-center justify-center ">
-      <div className="w-100 border-2 border-black flex flex-col gap-3">
+      <div className="w-100 flex flex-col gap-3">
         <div className="heading font-semibold text-3xl ">Create an account</div>
         <div className="text-sm">
           Already have an account?

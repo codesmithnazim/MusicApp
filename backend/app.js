@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import config from "./utils/config.js";
 import logger from "./utils/logger.js";
 import { songsRouter } from "./controllers/song.controller.js";
-import { usersRouter } from "./controllers/user.controller.js";
+import { usersRouter } from "./routes/user.route.js";
 
 mongoose
   .connect(config.MONGODB_URI, { family: 4 })
@@ -26,7 +26,7 @@ app.use(cookieParser())
 app.use(requestLogger);
 // app.use("/api/blogs", blogRouter);
 app.use('/api/songs', songsRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/user', usersRouter)
 app.use(unknownEndpoints);
 app.use(errorHandler);
 export { app };
