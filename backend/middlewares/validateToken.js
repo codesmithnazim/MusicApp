@@ -1,14 +1,18 @@
 
 import jwt from "jsonwebtoken"
 import logger from "../utils/logger.js"
+import config from "../utils/config.js"
+
 const tokenValidator=async (req, res, next)=>{
     try {
         const token= req.cookies.musicWebAppToken
         if(!token){
             logger.info("no token with this name ")
-            return;
+            return next()
+            
         }
-        const user = jwt.verify(token, "that's a secrret, don't share with any body")
+        console.log("uoiuoiuoiuuyiuy")
+        const user = jwt.verify(token,config.JWT_SECRET)
         req.user= user
         logger.info("The user information from the tokenvalidator ",user)
         next()

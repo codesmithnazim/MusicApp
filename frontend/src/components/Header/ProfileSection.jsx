@@ -8,18 +8,15 @@ function ProfileSection() {
   useEffect(() => {
     try {
       const getProfile = async () => {
-        const userExist = await usersService.getProfile();
-        
+        const userRecord = await usersService.getProfile();
+        console.log("user Record" ,userRecord);
       };
-
       getProfile();
     } catch (error) {
-
+      console.error(error);
     }
 
-    return () => {
-      
-    };
+    return () => {};
   }, []);
 
   return (

@@ -76,6 +76,7 @@ function LogIn() {
               type="email"
               name="email"
               required
+              minLength={11}
               autoComplete="email"
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
               onChange={validateEmail}
@@ -90,6 +91,10 @@ function LogIn() {
               type="password"
               name="password"
               required
+              onInput={(e)=>{
+                if(e.target.value.length< 6)e.target.setCustomValidity("paswword must be 6 characters long")
+                  else e.target.setCustomValidity("")
+              }}
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
             />
             {hidePassword ? (

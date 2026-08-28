@@ -8,15 +8,16 @@ function Register() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const formSubmitHandler = async (newUser) => {
     try {
       const backRes = await usersService.registerUser(newUser);
       console.log("the backend res = ", backRes);
       document.querySelector("form").reset();
-      navigate('/login')
+      navigate("/login");
     } catch (error) {
-      setEmailError(error.response.data.error);
+      setEmailError(error.response?.data?.error);
+      console.log(error.response?.data?.error);
     } finally {
       setIsProcessing(false);
     }
@@ -70,6 +71,7 @@ function Register() {
               name="name"
               type="text"
               required
+              minLength={3}
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
             />
           </div>
@@ -82,6 +84,7 @@ function Register() {
               type="email"
               name="email"
               required
+              minLength={11}
               autoComplete="email"
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
               onChange={validateEmail}
@@ -96,6 +99,13 @@ function Register() {
               type="password"
               name="password"
               required
+              onInput={(e) => {
+                if (e.target.value.length < 6)
+                  e.target.setCustomValidity(
+                    "paswword must be 6 characters long",
+                  );
+                else e.target.setCustomValidity("");
+              }}
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
             />
             {hidePassword ? (
