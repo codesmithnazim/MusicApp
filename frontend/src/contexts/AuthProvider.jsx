@@ -14,7 +14,7 @@ function AuthProvider({ children }) {
         if (userRecord.success) {
           console.log("user Record", userRecord);
           setIsAuthenticated(!isAuthenticated);
-          setUser(userRecord);
+          setUser(userRecord.user);
         }
       };
       getProfile();

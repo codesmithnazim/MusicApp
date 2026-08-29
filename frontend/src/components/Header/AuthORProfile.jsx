@@ -1,23 +1,20 @@
 import { useAuth } from "../../contexts/AuthProvider";
 import AuthenticatingButtons from "./AuthenticatingButtons";
-import { useThemeContext } from "../../contexts/ThemeProvider";
+import Profile from "../utils/Profile";
 
 function AuthORProfile() {
-  const { isDark } = useThemeContext();
   const { isAuthenticated, user } = useAuth();
-    console.log(
+  console.log(
     "the data from the profile section ",
     isAuthenticated,
     "the user details = ",
     user,
   );
-  if(isAuthenticated){
-    return 
+  if (isAuthenticated) {
+    return <Profile />;
   }
-  
-  
-  return <AuthenticatingButtons/>
 
+  return <AuthenticatingButtons />;
 }
 
 export default AuthORProfile;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Searchbar from "./Searchbar";
 import Cart from "./Cart";
 import AuthORProfile from "./AuthORProfile";
