@@ -15,8 +15,8 @@ const logInUser = async (user) => {
   return data;
 };
 
-const getProfile = async () => {
-  const { data } = await api.get(`/profile`);
+const getMe = async () => {
+  const { data } = await api.get(`/me`);
   return data;
 };
-export default { registerUser, logInUser, getProfile };
+export default { registerUser, logInUser, getMe };

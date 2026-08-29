@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { RiFullscreenExitFill } from "react-icons/ri";
 import { RiFullscreenFill } from "react-icons/ri";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { useThemeContext } from "../../contexts/ThemeProvider";
 
 
 function FullScreenButton() {

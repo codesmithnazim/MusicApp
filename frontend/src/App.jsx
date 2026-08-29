@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import LSMain from "./components/leftSideBar/LSMain";
 import Browse from "./components/pages/Browse";
-import { useThemeContext } from "./contexts/ThemeContext";
+import { useThemeContext } from "./contexts/ThemeProvider";
 import Header from "./components/Header/Header";
 import Register from "./components/pages/Register"
 import Login from "./components/pages/LogIn";

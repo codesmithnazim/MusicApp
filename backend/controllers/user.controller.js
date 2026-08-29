@@ -48,7 +48,7 @@ const logInUser = async (req, res, next) => {
     logger.info("is password true ", password);
     //Wrong assword
     if (!password) {
-      res.status(400).json({ error: "wrong password, try again" });
+      res.status(401).json({ error: "wrong password, try again" });
       return;
     }
     // jwt.sign({ email, id }, "that's a secrret, don't share with any body");
@@ -61,25 +61,24 @@ const logInUser = async (req, res, next) => {
         jwt.sign({ email, id }, "that's a secrret, don't share with any body"),
         { secure: false },
       )
-      .json({ success: true, redirectTo: "/" });
+      .json({ success: true, redirectTo: "/" ,user: userRecord});
   } catch (error) {
     next(error);
   }
 };
 
 // User profile
-const userProfile = async (req, res, next) => {
+const myProfile = async (req, res, next) => {
   try {
     const { user } = req;
-    if (user) {
-      logger.info("user exists ", user);
-      res.send(user);
-      return;
+    if (!user) {
+      logger.error("user not exist");
+      return res.status(401).json({ error: "your credentials are wrong" });
     }
-    res.status();
+    return res.status(200).json({user , success: true});
   } catch (error) {
     next(error);
   }
 };
 
-export { getAllUsers, registerUser, logInUser, userProfile };
+export { getAllUsers, registerUser, logInUser, myProfile };

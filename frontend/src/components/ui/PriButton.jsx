@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { useThemeContext } from "../../contexts/ThemeProvider";
 function MainButton({ content, Icon }) {
   const { isDark } = useThemeContext();
   return (

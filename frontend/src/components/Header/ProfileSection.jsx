@@ -1,24 +1,17 @@
-import { useEffect } from "react";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthProvider";
+import { useThemeContext } from "../../contexts/ThemeProvider";
 import { NavLink } from "react-router-dom";
-import usersService from "../../services/users.service";
 
 function ProfileSection() {
   const { isDark } = useThemeContext();
-  useEffect(() => {
-    try {
-      const getProfile = async () => {
-        const userRecord = await usersService.getProfile();
-        console.log("user Record" ,userRecord);
-      };
-      getProfile();
-    } catch (error) {
-      console.error(error);
-    }
+  const { isAuthenticated, user } = useAuth();
 
-    return () => {};
-  }, []);
-
+  console.log(
+    "the data from the profile section ",
+    isAuthenticated,
+    "the user details = ",
+    user,
+  );
   return (
     <div className="flex gap-2">
       <NavLink

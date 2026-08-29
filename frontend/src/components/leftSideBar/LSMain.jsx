@@ -3,7 +3,7 @@ import "../../App.css";
 import BrowseSection from "./BrowseSection";
 import MyCollectionSection from "./MyCollectionSection";
 import SettingsSection from "./SettingsSection";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { useThemeContext } from "../../contexts/ThemeProvider";
 import { Link } from "react-router-dom";
 
 function Main() {

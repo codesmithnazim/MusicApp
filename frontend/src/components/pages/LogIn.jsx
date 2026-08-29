@@ -1,24 +1,25 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
+import { useAuth } from "../../contexts/AuthProvider";
 
 function LogIn() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const navigate= useNavigate()
+  const navigate = useNavigate();
+  const { isAuthenticated, setIsAuthenticated, setUser } = useAuth();
   const formSubmitHandler = async (user) => {
     try {
       const backRes = await usersService.logInUser(user);
-      if(backRes.success){
+      if (backRes.success) {
         console.log("the backend res = ", backRes);
         document.querySelector("form").reset();
-        // <NavLink to={`${backRes.redirectTo}`}/>
-        // <link rel="stylesheet" href="/" />
-        // Navigate(backRes.redirectTo)   
-        navigate(backRes.redirectTo)    
+        setIsAuthenticated(true);
+        setUser(backRes.user);
+        navigate(backRes.redirectTo);
       }
     } catch (error) {
       setEmailError(error.response?.data?.error);
@@ -60,7 +61,7 @@ function LogIn() {
         <div className="text-sm">
           Create new account?
           <NavLink to={"/register"} className={"text-primary"}>
-           Register
+            Register
           </NavLink>
         </div>
         <form
@@ -91,9 +92,12 @@ function LogIn() {
               type="password"
               name="password"
               required
-              onInput={(e)=>{
-                if(e.target.value.length< 6)e.target.setCustomValidity("paswword must be 6 characters long")
-                  else e.target.setCustomValidity("")
+              onInput={(e) => {
+                if (e.target.value.length < 6)
+                  e.target.setCustomValidity(
+                    "paswword must be 6 characters long",
+                  );
+                else e.target.setCustomValidity("");
               }}
               className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
             />

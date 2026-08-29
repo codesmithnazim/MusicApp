@@ -54,7 +54,7 @@ function Register() {
         <div className="heading font-semibold text-3xl ">Create an account</div>
         <div className="text-sm">
           Already have an account?
-          <NavLink to={"login"} className={"text-primary"}>
+          <NavLink to={"/login"} className={"text-primary"}>
             Sign in
           </NavLink>
         </div>
