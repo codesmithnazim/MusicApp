@@ -19,7 +19,9 @@ function AuthProvider({ children }) {
       };
       getProfile();
     } catch (error) {
-      console.error(error);
+      if(error.response.data.message==='No token'){
+        console.error("user have no valid auth token");
+      }
     }
 
     return () => {};

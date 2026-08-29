@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -15,6 +15,7 @@ function Register() {
       console.log("the backend res = ", backRes);
       document.querySelector("form").reset();
       navigate("/login");
+      // return <Navigate to={"/login"} replace /> it only used outside any function, as an alternative to the original return inside a component
     } catch (error) {
       setEmailError(error.response?.data?.error);
       console.log(error.response?.data?.error);

@@ -8,7 +8,7 @@ const tokenValidator=async (req, res, next)=>{
         const token= req.cookies.musicWebAppToken
         if(!token){
             logger.info("no token with this name ")
-            res.status(401).json({"error":"No token"})
+            res.status(401).json({"message":"No token"})
         }
         const user = jwt.verify(token,config.JWT_SECRET)
         req.user= user

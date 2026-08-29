@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Searchbar from "./Searchbar";
 import Cart from "./Cart";
-import ProfileSection from "./ProfileSection";
+import AuthORProfile from "./AuthORProfile";
 
 function Header() {
   return (
@@ -10,7 +10,7 @@ function Header() {
       <Searchbar />
       <div className="flex gap-5 justify-between items-center">
         <Cart />
-        <ProfileSection />
+        <AuthORProfile />
       </div>
     </div>
   );

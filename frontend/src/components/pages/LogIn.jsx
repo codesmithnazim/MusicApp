@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -10,7 +10,7 @@ function LogIn() {
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated, setUser } = useAuth();
+  const {setIsAuthenticated, setUser } = useAuth();
   const formSubmitHandler = async (user) => {
     try {
       const backRes = await usersService.logInUser(user);
@@ -20,6 +20,7 @@ function LogIn() {
         setIsAuthenticated(true);
         setUser(backRes.user);
         navigate(backRes.redirectTo);
+
       }
     } catch (error) {
       setEmailError(error.response?.data?.error);

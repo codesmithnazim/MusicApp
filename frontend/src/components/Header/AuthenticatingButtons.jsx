@@ -1,17 +1,8 @@
-import { useAuth } from "../../contexts/AuthProvider";
-import { useThemeContext } from "../../contexts/ThemeProvider";
 import { NavLink } from "react-router-dom";
-
-function ProfileSection() {
+import { useThemeContext } from "../../contexts/ThemeProvider";
+function AuthenticatingButtons() {
   const { isDark } = useThemeContext();
-  const { isAuthenticated, user } = useAuth();
 
-  console.log(
-    "the data from the profile section ",
-    isAuthenticated,
-    "the user details = ",
-    user,
-  );
   return (
     <div className="flex gap-2">
       <NavLink
@@ -30,4 +21,4 @@ function ProfileSection() {
   );
 }
 
-export default ProfileSection;
+export default AuthenticatingButtons;
