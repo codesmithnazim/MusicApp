@@ -1,15 +1,13 @@
-import {  useState } from "react";
 import { useAuth } from "../../contexts/AuthProvider";
 
 function Avator() {
-  const [, setFirstChr] = useState("");
   const { user } = useAuth();
 
   if (user.profilePicture)
     return (
       <div className="w-9 h-9 rounded-full overflow-hidden">
         <img
-          className="h-full w-full object-contain"
+          className="h-full w-full object-cover object-top-right"
           src={`${user.profilePicture}`}
           alt={`${user.name}`}
         />
