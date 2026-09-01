@@ -10,7 +10,7 @@ import config from "./config.js";
 const getSignedFileUrl = async (key, expiresIn = 3600) => {
   const commond =new GetObjectCommand({
     Bucket: config.BUCKET_NAME,
-    Key:key
+    Key :key
   });
   return await getSignedUrl(b2Client, commond, { expiresIn });
 };
