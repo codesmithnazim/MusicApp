@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
   profilePicture: {
     type: String,
     default: "",
+    // It will store the key only. We will have to produce a signed url from the key for the frontend.
   },
   favourites: [{ type: mongoose.Schema.Types.ObjectId,
     ref: "Song"

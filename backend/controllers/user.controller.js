@@ -6,6 +6,8 @@ import b2Client from "../config/b2Client.js";
 import { User } from "../models/user.model.js";
 import logger from "../utils/logger.js";
 import config from "../utils/config.js";
+import mongoose from "mongoose";
+import getSignedFileUrl from "../utils/b2SignedUrl.js";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -18,10 +20,12 @@ const getAllUsers = async (req, res, next) => {
 
 const registerUser = async (req, res, next) => {
   try {
-    let fileURL = new String();
-    const { body } = req;
+    // let fileURL = new String();
+    const _id= new mongoose.Types.ObjectId()
+    let key= '';
+    const { body:user } = req; // Variable aliasing body-----> user
 
-    if (body.password.length < 6) {
+    if (user.password.length < 6) {
       res.status(404).json({ error: "password must be 6 characters long" });
       return;
     }
@@ -32,7 +36,7 @@ const registerUser = async (req, res, next) => {
         "the extension generated for the profile picture of this user ",
         fileExtension,
       );
-      const key = `avators/${Math.round(Math.random() * 2e10)}${fileExtension}`;
+      key = `avators/${_id}-${Date.now()}${fileExtension}`;
       logger.info(
         "the key generated for the profile picture of this user ",
         key,
@@ -48,12 +52,14 @@ const registerUser = async (req, res, next) => {
         },
       });
       await upload.done();
-      fileURL = `https://${config.BUCKET_NAME}.${config.B2_ENDPOINT}/${key}`;
+      // fileURL = `https://${config.BUCKET_NAME}.${config.B2_ENDPOINT}/${key}`;
     }
-    logger.info("the url of the picture going for storing ", fileURL);
-    body.password = await bcrypt.hash(body.password, 10);
-    body.profilePicture = fileURL || "";
-    const newUser = await User.create(body);
+
+    // logger.info("the url of the picture going for storing ", fileURL);
+    user.password = await bcrypt.hash(user.password, 10);
+    user._id=_id
+    user.profilePicture =  key 
+    const newUser = await User.create(user);
     res.status(200).json(newUser);
   } catch (error) {
     next(error);
@@ -85,6 +91,11 @@ const logInUser = async (req, res, next) => {
     // jwt.sign({ email, id }, "that's a secrret, don't share with any body");
     email = userRecord.email;
     const id = userRecord._id;
+    //  Add the avator url generated from the profilePicture attribue present in the userRecord
+    if(userRecord.profilePicture){
+      userRecord.profilePicture= await getSignedFileUrl(userRecord.profilePicture)
+    }
+
     res
       .status(200)
       .cookie(
