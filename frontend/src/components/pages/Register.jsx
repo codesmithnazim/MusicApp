@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -27,8 +27,8 @@ function Register() {
   const formMaker = (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    const formData = new FormData(e.currentTarget);
-    const newUser = Object.fromEntries(formData.entries());
+    const newUser = new FormData(e.currentTarget);
+    // const newUser = Object.fromEntries(formData.entries()); Do'nt use it if the form have file inputs
     // console.log("the raw form data ", formData);
     console.log("the complete record ", newUser);
     formSubmitHandler(newUser);
@@ -121,6 +121,20 @@ function Register() {
               />
             )}
             {emailError && <span className="text-red-400">{emailError}</span>}
+          </div>
+
+          {/* Input for uploading the profile picture */}
+          <div className="email flex flex-col gap-1.5">
+            <label htmlFor="profilePic" className="text-muted font-light">
+              Upload profile picture
+            </label>
+            <input
+              type="file"
+              name="profilePic"
+              id="profilePic"
+              accept="image/*"
+              className="cursor-pointer border-2 border-black"
+            />
           </div>
           <button
             type="submit"

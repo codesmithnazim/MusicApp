@@ -20,8 +20,8 @@ export default defineConfig([
     },
     rules: {
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],       // nudge toward a real logger, don't block it
-      // "eqeqeq": "error",
-      // "curly": "warn",
+      "eqeqeq": "error",
+      "curly": "warn",
       "prefer-const": "error",
       "no-var": "error",
       "n/no-process-exit": "error",  // fail loudly in code review, not by killing the process

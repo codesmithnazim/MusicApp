@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useAuth } from "../../contexts/AuthProvider";
 
 function Avator() {

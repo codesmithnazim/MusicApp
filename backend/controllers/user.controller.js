@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import path from "path";
+import { Upload } from "@aws-sdk/lib-storage";
+import b2Client from "../config/b2Client.js";
 import { User } from "../models/user.model.js";
 import logger from "../utils/logger.js";
+import config from "../utils/config.js";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -14,14 +18,41 @@ const getAllUsers = async (req, res, next) => {
 
 const registerUser = async (req, res, next) => {
   try {
+    let fileURL = new String();
     const { body } = req;
 
     if (body.password.length < 6) {
       res.status(404).json({ error: "password must be 6 characters long" });
       return;
     }
-
+    logger.info("the request object = ", req.file);
+    if (req.file) {
+      const fileExtension = path.extname(req.file.originalname);
+      logger.info(
+        "the extension generated for the profile picture of this user ",
+        fileExtension,
+      );
+      const key = `avators/${Math.round(Math.random() * 2e10)}${fileExtension}`;
+      logger.info(
+        "the key generated for the profile picture of this user ",
+        key,
+      );
+      // logger.info("the bucket name = ", config.BUCKET_NAME)
+      const upload = new Upload({
+        client: b2Client,
+        params: {
+          Bucket: config.BUCKET_NAME,
+          Key: key,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        },
+      });
+      await upload.done();
+      fileURL = `https://${config.BUCKET_NAME}.${config.B2_ENDPOINT}/${key}`;
+    }
+    logger.info("the url of the picture going for storing ", fileURL);
     body.password = await bcrypt.hash(body.password, 10);
+    body.profilePicture = fileURL || "";
     const newUser = await User.create(body);
     res.status(200).json(newUser);
   } catch (error) {
@@ -61,7 +92,7 @@ const logInUser = async (req, res, next) => {
         jwt.sign({ email, id }, "that's a secrret, don't share with any body"),
         { secure: false },
       )
-      .json({ success: true, redirectTo: "/" ,user: userRecord});
+      .json({ success: true, redirectTo: "/", user: userRecord });
   } catch (error) {
     next(error);
   }
@@ -75,7 +106,7 @@ const myProfile = async (req, res, next) => {
       logger.error("user not exist");
       return res.status(401).json({ error: "your credentials are wrong" });
     }
-    return res.status(200).json({user , success: true});
+    return res.status(200).json({ user, success: true });
   } catch (error) {
     next(error);
   }
