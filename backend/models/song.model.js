@@ -19,11 +19,7 @@ const musicSchema = new mongoose.Schema(
     audioUrl: {
       type: String,
       required: true,
-    },
-    audioKey: {
-      type: String,
-      required: true,
-    },
+    }, // It'll store the key not the url, for further explnation please go to ./user.model.js
     coverUrl: {
       type: String,
       required: true,
@@ -35,6 +31,10 @@ const musicSchema = new mongoose.Schema(
     plays: {
       type: Number,
       default: 0,
+    },
+    description:{
+      type: String,
+      default: ""
     },
     duration: {
       type: Number,

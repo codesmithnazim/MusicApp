@@ -10,6 +10,7 @@ import Discover from "./components/pages/Discover";
 import Charts from "./components/pages/Charts";
 import Playlist from "./components/pages/Playlists"
 import Likes from "./components/pages/Likes"
+import UploadSong from "./components/pages/Upload-song";
 
 function App() {
   const { isDark } = useThemeContext();
@@ -28,6 +29,7 @@ function App() {
           <Route path="/likes" element={<Likes/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/upload-song" element={<UploadSong/>} />
         </Routes>
       </div>
     </div>
