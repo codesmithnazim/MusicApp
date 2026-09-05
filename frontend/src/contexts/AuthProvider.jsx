@@ -8,21 +8,23 @@ function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   useEffect(() => {
-    try {
-      const getProfile = async () => {
+    const getProfile = async () => {
+      try {
         const userRecord = await usersService.getMe();
         if (userRecord.success) {
           console.log("user Record", userRecord);
           setIsAuthenticated(!isAuthenticated);
           setUser(userRecord.user);
         }
-      };
-      getProfile();
-    } catch (error) {
-      if(error.response.data.message==='No token'){
-        console.error("user have no valid auth token");
+      } catch (error) {
+        
+        if(error?.response?.data){
+          console.log('the error came during fetching the user data ',error.response.data)
+        }
+        // console.log("user have no valid auth token", error);
       }
-    }
+    };
+    getProfile();
 
     return () => {};
   }, []);

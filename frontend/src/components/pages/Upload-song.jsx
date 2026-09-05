@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useThemeContext } from "../../contexts/ThemeProvider";
 import { LuCloudUpload } from "react-icons/lu";
+import { TbCircleDotted } from "react-icons/tb";
 import { useState } from "react";
 import songsServis from "../../services/songs.servis";
 
@@ -11,38 +12,69 @@ function UploadSong() {
   const [errorMessage, setErrorMessage] = useState("");
   const [songInfo, setSongInfo] = useState("");
   const [coverPicName, setCoverPicName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const handleSongSelect = (e) => {
     const file = e.target.files[0];
+    setErrorMessage("");
     if (file) {
       setSongInfo(file.name);
+      console.log(
+        "the song or file object ready for sending towards backend  ",
+        file,
+      );
+      return;
     }
-    console.log("the uploaded naath or song info ", file);
   };
 
   const handlePictureSelect = (e) => {
     const file = e.target.files[0];
+    setErrorMessage("");
     if (file) {
       setCoverPicName(file.name);
+      console.log(
+        "the song or Naath cover pic file object ready for sending towards backend  ",
+        file,
+      );
+      return;
     }
-    console.log("the uploaded naath or song cover picture information ", file);
   };
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     try {
+      setIsUploading(true);
       const songData = new FormData(e.currentTarget);
-      console.log("the song data = ", songData);
+      console.log(
+        "the song details = ",
+        songData.get("songAudio"),
+        songData.get("songCoverPic"),
+      );
+      //Custom error handling
+      if (songData.get("songAudio").size === 0) {
+        setErrorMessage("please upload an audio");
+        return;
+      }
+      if (songData.get("songCoverPic").size === 0) {
+        setErrorMessage("Audio song cover picture is required");
+        return;
+      }
       const uploadedSong = await songsServis.uploadSong(songData);
       console.log(
-        "Response from the backend containig the successfully stored song detail ",
+        "Response from the backend containig the successfully uploaded song detail ",
         uploadedSong,
       );
     } catch (error) {
+      if (error.message) {
+        console.log("the error message = ", error.message);
+      }
       console.log(
         "error came during uploading a song ",
-        error.response.data.error,
+        error.response?.data?.error,
       );
-      setErrorMessage(error.response.data.error);
+      setErrorMessage(error.response?.data?.error);
+    }
+    finally{
+      setIsUploading(false)
     }
   };
 
@@ -56,7 +88,7 @@ function UploadSong() {
           onClick={() => songInputRef.current.click()} // songInputRef.current have the input tag, so we are calling the onclick of that input here.
         >
           <img
-            src="../../../public/Upload Music.png"
+            src="../../../Upload Music.png"
             alt="the songs upload png"
             className="w-20 h-20"
           />
@@ -64,13 +96,15 @@ function UploadSong() {
 
           <input
             type="file"
-            name="musicFile"
+            name="songAudio"
             accept="audio/*"
             ref={songInputRef} // We're making the reference of this input equal to the reference stored in the songInputRef varibale.
             style={{ display: "none" }}
             onChange={handleSongSelect}
           />
-        <p className={`${songInfo ? "" : "hidden"} text-primary`}>{songInfo}</p>
+          <p className={`${songInfo ? "" : "hidden"} text-primary`}>
+            {songInfo}
+          </p>
         </div>
 
         {/* Song cover picture upload */}
@@ -79,7 +113,7 @@ function UploadSong() {
           onClick={() => coverPicInputRef.current.click()} // coverPicInputRef.current have the input tag, so we are calling the onclick of that input here.
         >
           <img
-            src="../../../public/Upload Music.png"
+            src="../../../songCoverPicIdentifier.png"
             alt="the songs upload png"
             className="w-10 h-10"
           />
@@ -87,13 +121,15 @@ function UploadSong() {
 
           <input
             type="file"
-            name="musicFile"
+            name="songCoverPic"
             accept="image/*"
             ref={coverPicInputRef} // We're making the reference of this input equal to the reference stored in the coverPicInputRef varibale.
             style={{ display: "none" }}
             onChange={handlePictureSelect}
           />
-        <p className={`${coverPicName ? "" : "hidden"} text-primary`}>{coverPicName}</p>
+          <p className={`${coverPicName ? "" : "hidden"} text-primary`}>
+            {coverPicName}
+          </p>
         </div>
 
         {/* Div for inputting the track title */}
@@ -112,9 +148,9 @@ function UploadSong() {
             minLength={5}
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
           />
-          <span className={`${isDark ? "dark" : ""} text-sm text-olive-500 `}>
-            {"Tip: Use commas to add multiple artist names."}
-          </span>
+          <span
+            className={`${isDark ? "dark" : ""} text-sm text-olive-500 `}
+          ></span>
         </div>
 
         {/* Div for inputting the artist name */}
@@ -133,6 +169,7 @@ function UploadSong() {
             minLength={2}
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
           />
+          {"Tip: Use commas to add multiple artist names."}
         </div>
 
         {/* div for inputting the Genre of the track */}
@@ -247,8 +284,8 @@ function UploadSong() {
             Description
           </label>
           <input
-            id="artist"
-            name="artist"
+            id="description"
+            name="description"
             type="text"
             required
             minLength={2}
@@ -258,16 +295,23 @@ function UploadSong() {
         </div>
 
         <div className={`${errorMessage ? "" : "hidden"} text-sm text-red-700`}>
-          {" "}
           {errorMessage}
         </div>
 
         <button
           type="submit"
-          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end mt-10 cursor-pointer`}
+          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer`}
         >
-          <LuCloudUpload size={20} />
-          Upload
+          {isUploading ? (
+            <>
+              <TbCircleDotted size={20} className="text-white animate-spin" />{" "}
+              uploading...{" "}
+            </>
+          ) : 
+            <>
+              <LuCloudUpload size={20} /> upload{" "}
+            </>
+          }
         </button>
       </form>
     </div>

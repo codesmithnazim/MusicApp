@@ -8,8 +8,8 @@ import unknownEndpoints from "./middlewares/unknownEndpoint.js";
 import mongoose from "mongoose";
 import config from "./utils/config.js";
 import logger from "./utils/logger.js";
-import { songsRouter } from "./controllers/song.controller.js";
 import { usersRouter } from "./routes/user.route.js";
+import { songsRouter } from "./routes/song.route.js";
 
 mongoose
   .connect(config.MONGODB_URI, { family: 4 })

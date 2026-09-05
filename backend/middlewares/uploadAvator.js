@@ -1,7 +1,7 @@
 import multer from "multer"
 const storage= multer.memoryStorage()
 
-const upload= multer({
+const uploadAvator= multer({
     storage,
     limits: {fileSize: 5*1024*1024},
     fileFilter: (req, file, cb)=>{
@@ -12,4 +12,4 @@ const upload= multer({
     }
 })
 
-export default upload
+export default uploadAvator

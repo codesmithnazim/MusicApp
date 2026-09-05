@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const musicSchema = new mongoose.Schema(
   {
-    title: {
+    title: { 
       type: String,
       required: true,
       trim: true,
     },
     artist: {
       type: String,
-      required: true,
+      required: [true, "the artist name is a required field"],
       trim: true,
     },
     isfeatured: {
@@ -18,11 +18,11 @@ const musicSchema = new mongoose.Schema(
     },
     audioUrl: {
       type: String,
-      required: true,
+      required: [true, "audioUrl is required"],
     }, // It'll store the key not the url, for further explnation please go to ./user.model.js
     coverUrl: {
       type: String,
-      required: true,
+      required: [true, "coverUrl is required"],
     },
     genre: {
       type: String,
@@ -32,9 +32,9 @@ const musicSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    description:{
+    description: {
       type: String,
-      default: ""
+      default: "",
     },
     duration: {
       type: Number,

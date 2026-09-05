@@ -21,9 +21,9 @@ const getAllUsers = async (req, res, next) => {
 const registerUser = async (req, res, next) => {
   try {
     // let fileURL = new String();
-    const _id= new mongoose.Types.ObjectId()
-    let key= '';
-    const { body:user } = req; // Variable aliasing body-----> user
+    const _id = new mongoose.Types.ObjectId();
+    let key = "";
+    const { body: user } = req; // Variable aliasing body-----> user
 
     if (user.password.length < 6) {
       res.status(404).json({ error: "password must be 6 characters long" });
@@ -57,8 +57,8 @@ const registerUser = async (req, res, next) => {
 
     // logger.info("the url of the picture going for storing ", fileURL);
     user.password = await bcrypt.hash(user.password, 10);
-    user._id=_id
-    user.profilePicture =  key 
+    user._id = _id;
+    user.profilePicture = key;
     const newUser = await User.create(user);
     res.status(200).json(newUser);
   } catch (error) {
@@ -92,16 +92,20 @@ const logInUser = async (req, res, next) => {
     email = userRecord.email;
     const id = userRecord._id;
     //  Add the avator url generated from the profilePicture attribue present in the userRecord
-    if(userRecord.profilePicture){
-      userRecord.profilePicture= await getSignedFileUrl(userRecord.profilePicture)
+    if (userRecord.profilePicture) {
+      userRecord.profilePicture = await getSignedFileUrl(
+        userRecord.profilePicture,
+      );
     }
 
     res
       .status(200)
       .cookie(
         "musicWebAppToken",
-        jwt.sign({ email, id }, "that's a secrret, don't share with any body"),
-        { secure: false },
+        jwt.sign({ email, id }, "that's a secrret, don't share with any body", {
+          expiresIn: '30d',
+        }),
+        { secure: config.NODE_ENV === "PRODUCTION",httpOnly: true, maxAge:30*24*60*60*1000 },
       )
       .json({ success: true, redirectTo: "/", user: userRecord });
   } catch (error) {
