@@ -5,7 +5,11 @@ const loadUser = async (req, res, next) => {
   try {
     const { id } = req.user;
     const completeUser = await User.findById(id);
-    completeUser.profilePicture= await getSignedFileUrl(completeUser.profilePicture) || completeUser.profilePicture
+    if (completeUser.profilePicture) {
+      completeUser.profilePicture =
+        (await getSignedFileUrl(completeUser.profilePicture)) ||
+        completeUser.profilePicture;
+    }
     // res.status(200).json(completeUser)
     req.user = completeUser;
     next();

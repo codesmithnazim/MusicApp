@@ -4,6 +4,7 @@ import {
   registerUser,
   logInUser,
   myProfile,
+  TopArtists
 } from "../controllers/user.controller.js";
 import { tokenValidator } from "../middlewares/validateToken.js";
 import { loadUser } from "../middlewares/loadUser.js";
@@ -14,5 +15,6 @@ usersRouter.get("/", getAllUsers);
 usersRouter.post("/register", uploadAvator.single("profilePic"), registerUser);
 usersRouter.post("/login", logInUser);
 usersRouter.get("/me", tokenValidator, loadUser, myProfile);
+usersRouter.get("/top-artists", TopArtists)
 
 export { usersRouter };

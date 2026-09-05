@@ -19,4 +19,9 @@ const getMe = async () => {
   const { data } = await api.get(`/me`);
   return data;
 };
-export default { registerUser, logInUser, getMe };
+
+const TopArtists = async () => {
+  const { data } = await api.get(`/top-artists`);
+  return data;
+};
+export default { registerUser, logInUser, getMe,TopArtists };

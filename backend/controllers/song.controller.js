@@ -3,6 +3,7 @@ import { Song } from "../models/song.model.js";
 import createFileUpload from "../utils/createFileUpload.js";
 import { parseBuffer } from "music-metadata";
 import logger from "../utils/logger.js";
+import { User } from "../models/user.model.js";
 
 // songsRouter.get("/", async (req, res, next) => {
 //   try {
@@ -57,7 +58,8 @@ const songsUploader = async (req, res, next) => {
 
       const newSong = await Song.create(songDetails);
       console.log("the uploaded song details ", newSong);
-      res.status(201).json({song: newSong})
+      await User.findByIdAndUpdate(user.id, { $push: { songs: newSong._id } });
+      res.status(201).json({ song: newSong });
     }
   } catch (error) {
     logger.error(

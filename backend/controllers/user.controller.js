@@ -8,6 +8,7 @@ import logger from "../utils/logger.js";
 import config from "../utils/config.js";
 import mongoose from "mongoose";
 import getSignedFileUrl from "../utils/b2SignedUrl.js";
+import { Song } from "../models/song.model.js";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -93,6 +94,7 @@ const logInUser = async (req, res, next) => {
     const id = userRecord._id;
     //  Add the avator url generated from the profilePicture attribue present in the userRecord
     if (userRecord.profilePicture) {
+      // console.log('Profile picture is present')
       userRecord.profilePicture = await getSignedFileUrl(
         userRecord.profilePicture,
       );
@@ -103,9 +105,13 @@ const logInUser = async (req, res, next) => {
       .cookie(
         "musicWebAppToken",
         jwt.sign({ email, id }, "that's a secrret, don't share with any body", {
-          expiresIn: '30d',
+          expiresIn: "30d",
         }),
-        { secure: config.NODE_ENV === "PRODUCTION",httpOnly: true, maxAge:30*24*60*60*1000 },
+        {
+          secure: config.NODE_ENV === "PRODUCTION",
+          httpOnly: true,
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+        },
       )
       .json({ success: true, redirectTo: "/", user: userRecord });
   } catch (error) {
@@ -126,5 +132,20 @@ const myProfile = async (req, res, next) => {
     next(error);
   }
 };
+const TopArtists = async (req, res, next) => {
+  try {
+    const topArtists = await Song.aggregate([
+      { $match: { visibility: "public", status: "approved" } },
+      { $group: { _id: "$user", totalPlays: {$sum : "$plays"}, totalLikes: {$sum : "$likes" } } },
+      {$addFields: { "totalScore" : {$add : [{$multiply:["$totalPlays", 1]},{$multiply:["$totalLikes", 3] }] }}},
+      {$sort: {"totalScore" : -1}},
+      {$limit: 5}
+    ]);
+    console.log("The top artists = ", topArtists);
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+  }
+};
 
-export { getAllUsers, registerUser, logInUser, myProfile };
+export { getAllUsers, registerUser, logInUser, myProfile, TopArtists };

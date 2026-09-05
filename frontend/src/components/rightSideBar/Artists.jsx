@@ -1,9 +1,23 @@
-
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import usersService from "../../services/users.service";
 function Artists() {
+  useEffect(() => {
+    const getTopArtists = async () => {
+      try {
+        const topArtists = await usersService.TopArtists();
+      } catch (error) {
+        console.log("error message while fetching top artists ", error.message);
+      }
+    };
+    getTopArtists();
+    return () => {};
+  }, []);
+
   return (
     <div>
-      <h2 className="text-[20px] font-semibold">Top Artists</h2>
-      
+      <h2 className="text-[20px] font-semibold w-fit mx-auto">Top Artists</h2>
+      <Link to={"someyhing-good"}></Link>
     </div>
   );
 }

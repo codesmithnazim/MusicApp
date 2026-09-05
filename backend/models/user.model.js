@@ -24,21 +24,24 @@ const userSchema = new mongoose.Schema({
     default: "",
     // It will store the key only. We will have to produce a signed url from the key for the frontend.
   },
-  favourites: [{ type: mongoose.Schema.Types.ObjectId,
-    ref: "Song"
-   }],
-   
+  songs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Song",
+    },
+  ],
+  favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Song" }],
 });
 
-userSchema.set('toJSON',{
-  transform:(originalDoc, returnedDoc)=>{
-    returnedDoc.id= returnedDoc._id.toString(),
-    delete returnedDoc._id,
-    delete returnedDoc.__v,
-    delete returnedDoc.password
-  }
-})
+userSchema.set("toJSON", {
+  transform: (originalDoc, returnedDoc) => {
+    ((returnedDoc.id = returnedDoc._id.toString()),
+      delete returnedDoc._id,
+      delete returnedDoc.__v,
+      delete returnedDoc.password);
+  },
+});
 
-const User= mongoose.model("User", userSchema)
+const User = mongoose.model("User", userSchema);
 
-export {User}
+export { User };

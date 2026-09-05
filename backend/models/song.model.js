@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const musicSchema = new mongoose.Schema(
   {
-    title: { 
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -32,9 +32,21 @@ const musicSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    likes: {
+      type: Number,
+      default: 0
+    },
     description: {
       type: String,
       default: "",
+    },
+    status: {
+      type: String,
+      default: "approved",
+    },
+    visibility: {
+      type: String,
+      default: "public",
     },
     duration: {
       type: Number,
@@ -43,7 +55,7 @@ const musicSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false,
+      required: true,
       ref: "User",
     },
   },
