@@ -5,7 +5,8 @@ function Artists() {
   useEffect(() => {
     const getTopArtists = async () => {
       try {
-        const topArtists = await usersService.TopArtists();
+        const {topArtists} = await usersService.TopArtists();
+        console.log('the top five artist receive from the backend ',topArtists)
       } catch (error) {
         console.log("error message while fetching top artists ", error.message);
       }

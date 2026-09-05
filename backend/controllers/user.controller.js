@@ -141,7 +141,14 @@ const TopArtists = async (req, res, next) => {
       {$sort: {"totalScore" : -1}},
       {$limit: 5}
     ]);
-    console.log("The top artists = ", topArtists);
+    const topArtistsCompleteRecord=await Promise.all(topArtists.map(async artistCompleteRecord=>{
+      const artistDetails= await User.findById(artistCompleteRecord._id)
+      artistCompleteRecord.details=artistDetails
+      artistCompleteRecord.profilePicture =await getSignedFileUrl(artistCompleteRecord.profilePicture)
+      return artistCompleteRecord
+    }))
+    console.log("The top artists = ", topArtistsCompleteRecord);
+    res.status(200).json({topArtists: topArtistsCompleteRecord})
   } catch (error) {
     console.log(error.message);
     next(error);
