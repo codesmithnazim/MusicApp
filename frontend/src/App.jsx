@@ -6,7 +6,7 @@ import { useThemeContext } from "./contexts/ThemeProvider";
 import Header from "./components/Header/Header";
 import Register from "./components/pages/Register"
 import Login from "./components/pages/LogIn";
-import Discover from "./components/pages/Discover";
+import Discover from "./components/pages/Discover-page/Discover-Main";
 import Charts from "./components/pages/Charts";
 import Playlist from "./components/pages/Playlists"
 import Likes from "./components/pages/Likes"

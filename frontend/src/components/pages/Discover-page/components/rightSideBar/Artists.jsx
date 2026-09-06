@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-import usersService from "../../services/users.service";
-import { useThemeContext } from "../../contexts/ThemeProvider";
-import TopArtistsLinkBtn from "../ui/TopArtistsLinkBtn";
+import usersService from "../../../../../services/users.service";
+import { useThemeContext } from "../../../../../contexts/ThemeProvider";
+import TopArtistsLinkBtn from "../../../../ui/TopArtistsLinkBtn";
 function Artists() {
   const { isDark } = useThemeContext();
-  const [bestArtists, setBestArtists] = useState('')
+  const [bestArtists, setBestArtists] = useState("");
   useEffect(() => {
     const getTopArtists = async () => {
       try {
@@ -14,8 +14,7 @@ function Artists() {
           "the top five artist receive from the backend ",
           topArtists,
         );
-        setBestArtists(topArtists)
-
+        setBestArtists(topArtists);
       } catch (error) {
         console.log("error message while fetching top artists ", error.message);
       }
@@ -25,14 +24,13 @@ function Artists() {
   }, []);
 
   return (
-    <div className="w-full  flex flex-col items-center-safe gap-6" >
+    <div className="w-full  flex flex-col items-center-safe gap-6">
       <h2 className="text-[20px] font-semibold w-fit mx-auto">Top Artists</h2>
 
-   {
-    bestArtists && bestArtists.map(artist=>{
-      return <TopArtistsLinkBtn artist={artist} />
-    })
-   }
+      {bestArtists &&
+        bestArtists.map((artist) => {
+          return <TopArtistsLinkBtn artist={artist} />;
+        })}
       {/* <Link
         to={"something-good"}
         className={`${isDark? "dark":""} flex justify-center items-center gap-2`}

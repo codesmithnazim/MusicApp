@@ -2,7 +2,7 @@ import Artists from "./Artists";
 
 function RSBMain() {
   return (
-    <div className="w-65 self-end-safe pr-5 ">
+    <div className="w-60 border-l-2">
       <Artists />
     </div>
   );
