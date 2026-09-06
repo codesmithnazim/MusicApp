@@ -8,11 +8,13 @@ import b2Client from "../config/b2Client.js";
 import config from "./config.js";
 
 const getSignedFileUrl = async (key, expiresIn = 3600) => {
-  const commond =new GetObjectCommand({
-    Bucket: config.BUCKET_NAME,
-    Key :key
-  });
-  return await getSignedUrl(b2Client, commond, { expiresIn });
+  if (key) {
+    const commond = new GetObjectCommand({
+      Bucket: config.BUCKET_NAME,
+      Key: key,
+    });
+    return await getSignedUrl(b2Client, commond, { expiresIn });
+  } else return;
 };
 
-export default getSignedFileUrl
+export default getSignedFileUrl;

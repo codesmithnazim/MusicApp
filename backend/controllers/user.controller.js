@@ -144,7 +144,8 @@ const TopArtists = async (req, res, next) => {
     const topArtistsCompleteRecord=await Promise.all(topArtists.map(async artistCompleteRecord=>{
       const artistDetails= await User.findById(artistCompleteRecord._id)
       artistCompleteRecord.details=artistDetails
-      artistCompleteRecord.profilePicture =await getSignedFileUrl(artistCompleteRecord.profilePicture)
+      artistCompleteRecord.id= artistCompleteRecord._id
+      artistCompleteRecord.profilePicture =await getSignedFileUrl(artistDetails.profilePicture)
       return artistCompleteRecord
     }))
     console.log("The top artists = ", topArtistsCompleteRecord);

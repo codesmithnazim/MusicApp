@@ -1,8 +1,41 @@
+import { Link } from "react-router-dom";
+import { MdPerson2 } from "react-icons/md";
+import { IoPlaySharp } from "react-icons/io5";
+import { useThemeContext } from "../../contexts/ThemeProvider";
+import Avator from "../utils/Avator"
 
-function TopArtistsLinkBtn() {
+function TopArtistsLinkBtn({artist}) {
+  const { isDark } = useThemeContext();
   return (
-    <div>TopArtistsLinkBtn</div>
-  )
+    <Link
+      to={"something-good"}
+      className={`${isDark ? "dark" : ""}  w-full flex justify-between items-center `}
+    >
+     <Avator user={artist} />
+      <div className="flex gap-3 ">
+        <div className={`${isDark ? "dark" : ""} info flex flex-col w-25 overflow-clip`}>
+          <span className="text-foreground">{artist?.details?.name}</span>
+          <div className="flex gap-2">
+            <span
+              className={`${isDark ? "dark" : ""} flex items-center justify-center w-fit text-muted`}
+            >
+              <MdPerson2 /> {artist?.details.followers}
+            </span>
+            <span
+              className={`${isDark ? "dark" : ""} flex items-center justify-center w-fit text-muted`}
+            >
+              <IoPlaySharp /> {artist?.totalPlays}
+            </span>
+          </div>
+        </div>
+        <button
+          className={`${isDark ? "dark" : ""} px-4 py-1 tracking-wider h-fit w-fit bg-primary rounded-sm text-sm text-white self-end-safe`}
+        >
+          {"follow"}
+        </button>
+      </div>
+    </Link>
+  );
 }
 
-export default TopArtistsLinkBtn
+export default TopArtistsLinkBtn;

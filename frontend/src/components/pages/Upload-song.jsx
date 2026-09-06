@@ -3,16 +3,19 @@ import { useThemeContext } from "../../contexts/ThemeProvider";
 import { LuCloudUpload } from "react-icons/lu";
 import { TbCircleDotted } from "react-icons/tb";
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthProvider";
 import songsServis from "../../services/songs.servis";
 
 function UploadSong() {
   const { isDark } = useThemeContext();
+  const { user } = useAuth();
   const songInputRef = useRef();
   const coverPicInputRef = useRef();
   const [errorMessage, setErrorMessage] = useState("");
   const [songInfo, setSongInfo] = useState("");
   const [coverPicName, setCoverPicName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [successfulUpload, setSuccessfulUpload] = useState(false);
   const handleSongSelect = (e) => {
     const file = e.target.files[0];
     setErrorMessage("");
@@ -41,8 +44,9 @@ function UploadSong() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsUploading(true);
+    setSuccessfulUpload(false)
     try {
-      setIsUploading(true);
       const songData = new FormData(e.currentTarget);
       console.log(
         "the song details = ",
@@ -72,9 +76,9 @@ function UploadSong() {
         error.response?.data?.error,
       );
       setErrorMessage(error.response?.data?.error);
-    }
-    finally{
-      setIsUploading(false)
+    } finally {
+      setIsUploading(false);
+      setSuccessfulUpload(true);
     }
   };
 
@@ -165,6 +169,7 @@ function UploadSong() {
             id="artist"
             name="artist"
             type="text"
+            defaultValue={`${user?.name}`}
             required
             minLength={2}
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary"
@@ -183,6 +188,7 @@ function UploadSong() {
           <select
             name="genre"
             id="cars"
+            required
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary text-zinc-500"
           >
             <option
@@ -300,18 +306,22 @@ function UploadSong() {
 
         <button
           type="submit"
-          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer`}
+          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer  `}
         >
-          {isUploading ? (
+          {successfulUpload ? (
+            <>
+              <LuCloudUpload size={20} className="text-green-500" /> uploaded{" "}
+            </>
+          ) : isUploading ? (
             <>
               <TbCircleDotted size={20} className="text-white animate-spin" />{" "}
               uploading...{" "}
             </>
-          ) : 
+          ) : (
             <>
               <LuCloudUpload size={20} /> upload{" "}
             </>
-          }
+          )}
         </button>
       </form>
     </div>
