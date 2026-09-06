@@ -2,18 +2,21 @@ import { Link } from "react-router-dom";
 import { MdPerson2 } from "react-icons/md";
 import { IoPlaySharp } from "react-icons/io5";
 import { useThemeContext } from "../../contexts/ThemeProvider";
-import Avator from "../utils/Avator"
+import Avator from "../utils/Avator";
+import FollowButton from "./FollowButton";
 
-function TopArtistsLinkBtn({artist}) {
+function TopArtistsLinkBtn({ artist }) {
   const { isDark } = useThemeContext();
   return (
     <Link
       to={"something-good"}
       className={`${isDark ? "dark" : ""}  w-full flex justify-between items-center `}
     >
-     <Avator user={artist} />
+      <Avator user={artist} />
       <div className="flex gap-3 ">
-        <div className={`${isDark ? "dark" : ""} info flex flex-col w-25 overflow-clip`}>
+        <div
+          className={`${isDark ? "dark" : ""} info flex flex-col w-25 overflow-clip`}
+        >
           <span className="text-foreground">{artist?.details?.name}</span>
           <div className="flex gap-2">
             <span
@@ -28,11 +31,7 @@ function TopArtistsLinkBtn({artist}) {
             </span>
           </div>
         </div>
-        <button
-          className={`${isDark ? "dark" : ""} px-4 py-1 tracking-wider h-fit w-fit bg-primary rounded-sm text-sm text-white self-end-safe`}
-        >
-          {"follow"}
-        </button>
+        <FollowButton artist={artist} />
       </div>
     </Link>
   );
