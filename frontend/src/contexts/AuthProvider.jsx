@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import usersService from "../services/users.service";
 import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./contexts";
 
 function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
