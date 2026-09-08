@@ -11,7 +11,7 @@ function Featured() {
   useLayoutEffect(() => {
     const musicCard = cardRef?.current.offsetWidth;
     setPixelsToscroll(musicCard + 28);
-    // console.log("the card width = ",musicCard);
+    console.log("the card width = ",musicCard);
   }, []);
 
   const maxIndex = document.querySelectorAll(".song").length - 2;
