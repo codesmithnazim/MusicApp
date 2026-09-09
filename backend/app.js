@@ -16,6 +16,7 @@ mongoose
   .then(logger.info("MongoDB is connected ✔✔✔"))
   .catch((error) => logger.error("error while connecting to mongoDB", error));
 
+
 const app = express();
 app.use(
   cors({
@@ -33,12 +34,13 @@ app.use(unknownEndpoints);
 app.use(errorHandler);
 export { app };
 
-// mongoose
-//   .connect(config.MONGODB_URI, { family: 4 })
-//   .then(() => {
-//     (logger.info("MongoDB is connected ✔✔✔"),
-//       mongoose.connection.db
-//         .dropCollection("usersjkkl")
-//         .then(console.log("the collection is drobbed successfully")));
-//   })
-//   .catch((error) => logger.error("error while connecting to mongoDB", error));
+
+  // mongoose
+  // .connect(config.MONGODB_URI, { family: 4 })
+  // .then(() => {
+  //   (logger.info("MongoDB is connected ✔✔✔"),
+  //     mongoose.connection
+  //       .dropCollection("songs")
+  //       .then(console.log("the collection is drobbed successfully")));
+  // })
+  // .catch((error) => logger.error("error while connecting to mongoDB", error));

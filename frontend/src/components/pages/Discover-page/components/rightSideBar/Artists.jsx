@@ -29,7 +29,7 @@ function Artists() {
 
       {bestArtists &&
         bestArtists.map((artist) => {
-          return <TopArtistsLinkBtn artist={artist} />;
+          return <TopArtistsLinkBtn artist={artist} key={artist?.id}/>;
         })}
       {/* <Link
         to={"something-good"}

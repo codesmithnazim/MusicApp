@@ -10,4 +10,9 @@ const uploadSong = async (songDetails) => {
   return data;
 };
 
-export default {uploadSong}
+const featuredSongs =async ()=>{
+  const {data} = await api.get('/featured-songs')
+  return data
+}
+
+export default {uploadSong, featuredSongs}

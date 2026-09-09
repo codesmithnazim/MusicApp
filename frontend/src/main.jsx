@@ -5,15 +5,21 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider.jsx";
 import ThemeProvider from "./contexts/ThemeProvider.jsx";
+import PlayerContextP from "./contexts/PlayerContext.jsx";
+import ReactQueryContextProvider from "./contexts/ReactQueryContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     {/* <StrictMode> */}
-      <AuthProvider>
+    <AuthProvider>
+      <PlayerContextP>
         <ThemeProvider>
-          <App />
+          <ReactQueryContextProvider>
+            <App />
+          </ReactQueryContextProvider>
         </ThemeProvider>
-      </AuthProvider>
+      </PlayerContextP>
+    </AuthProvider>
     {/* </StrictMode> */}
   </BrowserRouter>,
 );

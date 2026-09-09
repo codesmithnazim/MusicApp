@@ -12,9 +12,9 @@ const musicSchema = new mongoose.Schema(
       required: [true, "the artist name is a required field"],
       trim: true,
     },
-    isfeatured: {
+    isFeatured: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     audioUrl: {
       type: String,

@@ -4,6 +4,7 @@ import createFileUpload from "../utils/createFileUpload.js";
 import { parseBuffer } from "music-metadata";
 import logger from "../utils/logger.js";
 import { User } from "../models/user.model.js";
+import getSignedFileUrl from "../utils/b2SignedUrl.js"
 
 // songsRouter.get("/", async (req, res, next) => {
 //   try {
@@ -70,5 +71,34 @@ const songsUploader = async (req, res, next) => {
   }
 };
 
-export { songsUploader };
+const getFeaturedSongs=async (req, res, next)=>{
+
+  try {
+    const featuredSongs= await Song.aggregate([
+      {$match: {visibility: "public",status : "approved" }},
+      {$addFields: {ageInDays:{$add:[{$divide:[{$subtract:[new Date(), "$createdAt"]}, 24*60*60*1000]}, 2]}}},
+      {$addFields: {featuredScore:{$divide:["$ageInDays", {$add:["$plays", {$multiply: [1, 3]}]}]}}},
+      {$sort: {featuredScore: -1}},
+      {$limit: 12},
+      {$project: {title:1,likes:1, description: 1, coverUrl:1, audioUrl: 1, artist:1, ageInDays:1 }}
+    ])
+    
+const optimizedFeatureSongs =await Promise.all(featuredSongs.map(async song=>{
+  song.songCover=await getSignedFileUrl(song.coverUrl)
+  song.songAudio=await  getSignedFileUrl(song.audioUrl)
+  delete song.coverUrl
+  delete song.audioUrl
+  delete song.ageInDays
+  return song
+}))
+
+    logger.info('the best featured songs of all time =', optimizedFeatureSongs)
+    res.status(200).json({featuredSongs: optimizedFeatureSongs})
+  } catch (error) {
+    next(error)
+  }
+
+}
+
+export { songsUploader , getFeaturedSongs};
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}
