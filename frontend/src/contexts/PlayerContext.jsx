@@ -18,4 +18,4 @@ const usePlayBar=()=>{
 }
 
 export default PlayerContextP
-export { usePlayBar }
+export {  usePlayBar }

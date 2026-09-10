@@ -11,12 +11,13 @@ import Charts from "./components/pages/Charts";
 import Playlist from "./components/pages/Playlists"
 import Likes from "./components/pages/Likes"
 import UploadSong from "./components/pages/Upload-song";
+import PlayingBar from "./components/ui/PlayingBar";
 
 function App() {
   const { isDark } = useThemeContext();
   return (
     <div
-      className={`${isDark ? "dark" : ""} musicApp flex  max-w-screen min-h-screen bg-background text-foreground `}
+      className={`${isDark ? "dark" : ""} musicApp flex  max-w-screen min-h-screen bg-background text-foreground relative`}
     >
       <LSMain className={`justify-self-start`} />
       <div className="flex flex-col flex-1 ">
@@ -32,6 +33,7 @@ function App() {
           <Route path="/upload-song" element={<UploadSong/>} />
         </Routes>
       </div>
+      <PlayingBar/>
     </div>
   );
 }

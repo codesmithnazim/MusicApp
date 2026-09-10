@@ -26,7 +26,7 @@ function Featured() {
     console.log("the card width = ", musicCard)
   }, []);
 
-  const maxIndex = (featuredSongs.length ?? 0) - 2;
+  const maxIndex = (featuredSongs?.length ?? 0) - 2;
   // const maxIndex = featuredSongs;
 
   const handleNext = () => setIndex((i) => Math.min(i + 1, maxIndex));
@@ -46,7 +46,7 @@ function Featured() {
 
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">
-      <LessThanBtn func={handlePrev} />
+      <LessThanBtn handlePrev={handlePrev} />
       <GreatorThanBtn handleNext={handleNext} />
 
       <div className="text-2xl font-semibold">Featured</div>
