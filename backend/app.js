@@ -29,6 +29,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 // app.use("/api/blogs", blogRouter);
 app.use("/api/songs", songsRouter);
+app.use("/api/song", songsRouter);
 app.use("/api/user", usersRouter);
 app.use(unknownEndpoints);
 app.use(errorHandler);

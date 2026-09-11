@@ -85,10 +85,11 @@ const getFeaturedSongs=async (req, res, next)=>{
     
 const optimizedFeatureSongs =await Promise.all(featuredSongs.map(async song=>{
   song.songCover=await getSignedFileUrl(song.coverUrl)
-  song.songAudio=await  getSignedFileUrl(song.audioUrl)
+  song.id= song._id
   delete song.coverUrl
   delete song.audioUrl
   delete song.ageInDays
+  delete song._id
   return song
 }))
 
@@ -100,5 +101,21 @@ const optimizedFeatureSongs =await Promise.all(featuredSongs.map(async song=>{
 
 }
 
-export { songsUploader , getFeaturedSongs};
+
+
+const getSong=async (req, res, next)=>{
+  try {
+    const {id:wantedSongId}= req.params
+    console.log("the id of the song received by the backend = ", wantedSongId )
+    const wantedSong= await Song.findById(wantedSongId)
+    wantedSong.audioUrl= await getSignedFileUrl(wantedSong.audioUrl)
+    res.status(200).json({song: wantedSong})
+  } catch (error) {
+    logger.error(error)
+    next(error)
+  }
+  
+}
+
+export { songsUploader , getFeaturedSongs, getSong};
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

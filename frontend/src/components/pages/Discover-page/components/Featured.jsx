@@ -14,7 +14,7 @@ function Featured() {
   const { data } = useQuery({
     queryKey: ["featuredSongs"],
     queryFn: songsServis.featuredSongs,
-    staleTime: 10 * 60 * 1000,
+    staleTime: 8 * 60 * 1000, 
   });
 
   const featuredSongs = data?.featuredSongs; // Don't need useMemo() because useQuery() will preserved the data(object's value and memory address )
@@ -40,7 +40,7 @@ function Featured() {
   }, [isHoverd, maxIndex]);
 
 
-  // console.log("The featured songs = ", featuredSongs);
+  console.log("The featured songs = ", !!featuredSongs, "c i ", index);
 
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">
@@ -63,7 +63,7 @@ function Featured() {
         >
           {featuredSongs &&
             featuredSongs.map((song) => (
-              <SongMainCard key={song._id} cardRef={cardRef} song={song} />
+              <SongMainCard key={song.id} cardRef={cardRef} song={song} />
             ))}
         </div>
       </div>
