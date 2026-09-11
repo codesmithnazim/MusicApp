@@ -11,19 +11,46 @@ function PlayingBar() {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlay, setIsPlay] = useState(false);
+  const [isloading, setIsloading] = useState(true);
   const songAudioRef = useRef();
   const { currentSong } = usePlayBar();
 
+
   useEffect(() => {
-    if (!songAudioRef.current) return;
-    isPlay
-      ? songAudioRef.current
-          .play()
-          .then(() => setIsPlay(true))
-          .catch(() => setIsPlay(false))
-      : songAudioRef.current.pause();
-    console.log("song is playing = ", isPlay);
-  }, [isPlay, currentSong]);
+    setIsPlay(false)
+    setIsloading(true)
+  
+    return () => {
+      
+    }
+  }, [currentSong])
+  
+
+  // useEffect(() => {
+  //   if (!songAudioRef.current) {
+  //     setIsPlay(false)
+  //     return;
+  //   }
+  //   isPlay
+  //     ? songAudioRef.current
+  //         .play()
+  //         .then(() => {
+  //           setIsPlay(true);
+  //           setIsloading(false);
+  //         })
+  //         .catch(() => setIsPlay(false))
+  //     : songAudioRef.current.pause();
+  //   console.log("song is playing = ", isPlay);
+
+  // }, [ currentSong ]);
+  const playController =async () => {
+    try {
+     await isPlay ? songAudioRef.current.pause() : songAudioRef.current.play();
+      setIsPlay(curr=> !curr)
+    } catch (error) {
+      console.error("error ", error)
+    }
+  };
 
   console.log("The current song = ", currentSong);
 
@@ -47,10 +74,12 @@ function PlayingBar() {
     console.log("the current time of the song = ", currentTime);
   };
 
-  const handleLoadedMetadata = (e) => {
+  const handleLoadedMetadata =async (e) => {
     const songduration = e.target.duration;
     setDuration(songduration);
     setIsPlay(true);
+   await songAudioRef.current.play();
+   setIsloading(false)
     console.log("The song duration = ", songduration);
   };
 
@@ -70,7 +99,7 @@ function PlayingBar() {
           <div className="playOrStop relative w-5.5 h-5.5">
             <button
               className="cursor-pointer outline-none"
-              onClick={() => setIsPlay((current) => !current)}
+              onClick={() => playController()}
             >
               {isPlay ? (
                 <FaRegCirclePause className="text-foreground" size={22} />
@@ -78,7 +107,9 @@ function PlayingBar() {
                 <FaRegCirclePlay className="text-foreground" size={22} />
               )}
             </button>
-            <div className="absolute top-0 left-0 w-full h-full border-[2.5px]  border-gray-400 border-b-white animate-spin rounded-full"></div>
+            {isloading && (
+              <div className="absolute top-0 left-0 w-full h-full border-[2.5px]  border-gray-400 border-b-white animate-spin rounded-full pointer-events-none"></div>
+            )}
           </div>
           {/* <button>{<FaRegCirclePause className="text-foreground" size={22} />}</button> */}
           <MdOutlineSkipNext className="text-foreground" size={26} />
