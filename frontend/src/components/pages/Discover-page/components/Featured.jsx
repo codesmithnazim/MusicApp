@@ -40,12 +40,12 @@ function Featured() {
     return () => clearInterval(id);
   }, [isHoverd, maxIndex]);
 
-  // const {}= data
-
+  
   // console.log("The featured songs = ", featuredSongs);
 
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">
+
       <LessThanBtn handlePrev={handlePrev} />
       <GreatorThanBtn handleNext={handleNext} />
 
