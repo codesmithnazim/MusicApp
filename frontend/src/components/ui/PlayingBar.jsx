@@ -5,12 +5,29 @@ import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
 import { IoShuffleOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
+import { usePlayBar } from "../../contexts/PlayerContext";
 
 function PlayingBar() {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlay, setIsPlay] = useState(false);
   const songAudioRef = useRef();
+  const { currentSong } = usePlayBar();
+
+  useEffect(() => {
+    if (!songAudioRef.current) return;
+    isPlay
+      ? songAudioRef.current
+          .play()
+          .then(() => setIsPlay(true))
+          .catch(() => setIsPlay(false))
+      : songAudioRef.current.pause();
+    console.log("song is playing = ", isPlay);
+  }, [isPlay, currentSong]);
+
+  console.log("The current song = ", currentSong);
+
+  if (!currentSong) return;
   // console.log("song is playing ", isPlay);
 
   // Helper function to format raw seconds into MM:SS
@@ -25,14 +42,6 @@ function PlayingBar() {
     return `${displayMinutes}:${displaySeconds}`;
   }
 
-  useEffect(() => {
-    if (!songAudioRef.current) return;
-    isPlay
-      ? songAudioRef.current.play().catch(() => setIsPlay(false))
-      : songAudioRef.current.pause();
-    console.log("song is playing = ", isPlay);
-  }, [isPlay]);
-
   const timeChangeHandler = (e) => {
     setCurrentTime(e.target.currentTime);
     console.log("the current time of the song = ", currentTime);
@@ -46,28 +55,31 @@ function PlayingBar() {
   };
 
   const handleSeek = (e) => {
-    const newTime= parseFloat(e.target.value)
-    if(songAudioRef.current){
-      songAudioRef.current.currentTime= newTime
-      setCurrentTime(newTime)
+    const newTime = parseFloat(e.target.value);
+    if (songAudioRef.current) {
+      songAudioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
   };
 
   return (
-    <div className="w-screen h-12 border border-red-600  absolute bottom-0 left-0 flex items-center">
+    <div className="w-screen h-12 border border-t-primary bg-background  absolute bottom-0 left-0 flex items-center">
       <section className="main w-4/6 mx-auto flex gap-8">
         <div className="controls flex gap-5 items-center">
           <MdOutlineSkipPrevious className="text-foreground" size={26} />
-          <button
-            className="cursor-pointer outline-none"
-            onClick={() => setIsPlay((current) => !current)}
-          >
-            {isPlay ? (
-              <FaRegCirclePause className="text-foreground" size={22} />
-            ) : (
-              <FaRegCirclePlay className="text-foreground" size={22} />
-            )}
-          </button>
+          <div className="playOrStop relative w-5.5 h-5.5">
+            <button
+              className="cursor-pointer outline-none"
+              onClick={() => setIsPlay((current) => !current)}
+            >
+              {isPlay ? (
+                <FaRegCirclePause className="text-foreground" size={22} />
+              ) : (
+                <FaRegCirclePlay className="text-foreground" size={22} />
+              )}
+            </button>
+            <div className="absolute top-0 left-0 w-full h-full border-[2.5px]  border-gray-400 border-b-white animate-spin rounded-full"></div>
+          </div>
           {/* <button>{<FaRegCirclePause className="text-foreground" size={22} />}</button> */}
           <MdOutlineSkipNext className="text-foreground" size={26} />
         </div>
@@ -80,7 +92,7 @@ function PlayingBar() {
           <IoShuffleOutline className="text-foreground" size={20} />
         </div>
         <audio
-          src="../../../Da Khkulo Yari - Ma Wail Ka Tokey Maskharey Dey - Shan Khan & Faisal Salman Khan.mp3.m4a"
+          src={currentSong.songAudio}
           // controls
           className="absolute -top-40"
           onTimeUpdate={timeChangeHandler}

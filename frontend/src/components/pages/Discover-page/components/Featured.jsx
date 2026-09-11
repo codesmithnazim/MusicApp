@@ -9,7 +9,6 @@ function Featured() {
   const [index, setIndex] = useState(0);
   const [pixelsToscroll, setPixelsToscroll] = useState(0);
   const [isHoverd, setIsHoverd] = useState(false);
-  // const cardRef = useMemo(() =>useRef() , [])
   const cardRef = useRef();
 
   const { data } = useQuery({
@@ -40,7 +39,7 @@ function Featured() {
     return () => clearInterval(id);
   }, [isHoverd, maxIndex]);
 
-  
+
   // console.log("The featured songs = ", featuredSongs);
 
   return (

@@ -17,7 +17,7 @@ function FullScreenButton() {
     document.addEventListener("fullscreenchange", () => {
       setFullScreen(!!document.fullscreenElement);
     });
-    return () => document.removeEventListener("fullscreenchange");
+    return () => document.removeEventListener("fullscreenchange", ()=> setFullScreen(false));
   }, []);
 
   return (

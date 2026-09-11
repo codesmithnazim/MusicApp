@@ -2,7 +2,7 @@ import  { useContext, useState } from 'react'
 import {playBarContext} from "./contexts"
 
 function PlayerContextP({children}) {
-  const [currentSong, setCurrentSong] = useState()
+  const [currentSong, setCurrentSong] = useState("")
 
   return (
     <playBarContext.Provider value={{currentSong, setCurrentSong}}>
@@ -13,7 +13,7 @@ function PlayerContextP({children}) {
 }
 
 const usePlayBar=()=>{
-     const context = useContext(PlayerContextP)
+     const context = useContext(playBarContext)
      return context
 }
 

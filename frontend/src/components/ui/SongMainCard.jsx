@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { FaPlay } from "react-icons/fa";
+import { usePlayBar } from "../../contexts/PlayerContext";
 
 function SongMainCard({ cardRef, song }) {
   // console.log("the song details = ", imageSrc, audioSongSrc, content)
@@ -12,7 +13,9 @@ function SongMainCard({ cardRef, song }) {
   // cardRef.current.style.color= "black"
   // }
 
-  console.log("the song deatils from the main songCard ", song);
+  const { currentSong, setCurrentSong } = usePlayBar();
+
+  // console.log("the song deatils from the main songCard ", song);
 
   return (
     <div
@@ -27,10 +30,11 @@ function SongMainCard({ cardRef, song }) {
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
-      <FaPlay 
-  className="absolute top-28 left-52 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]" 
-  size={40} 
-/>
+        <FaPlay
+          className="absolute top-28 left-52 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+          size={40}
+          onClick={() => setCurrentSong(song)}
+        />
       </div>
       <div>{song.title}</div>
       <div>{song.artist}</div>
