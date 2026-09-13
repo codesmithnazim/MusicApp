@@ -10,6 +10,7 @@ import config from "./utils/config.js";
 import logger from "./utils/logger.js";
 import { usersRouter } from "./routes/user.route.js";
 import { songsRouter } from "./routes/song.route.js";
+// import playWorker from "./workers/play.worker.js";
 
 mongoose
   .connect(config.MONGODB_URI, { family: 4 })

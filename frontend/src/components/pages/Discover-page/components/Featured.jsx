@@ -14,7 +14,7 @@ function Featured() {
   const { data } = useQuery({
     queryKey: ["featuredSongs"],
     queryFn: songsServis.featuredSongs,
-    staleTime: 8 * 60 * 1000, 
+    staleTime: 8 * 60 * 1000,
   });
 
   const featuredSongs = data?.featuredSongs; // Don't need useMemo() because useQuery() will preserved the data(object's value and memory address )
@@ -22,7 +22,7 @@ function Featured() {
   useLayoutEffect(() => {
     const musicCard = cardRef?.current?.offsetWidth;
     setPixelsToscroll(musicCard + 28);
-    console.log("the card width = ", musicCard)
+    console.log("the card width = ", musicCard);
   }, []);
 
   const maxIndex = (featuredSongs?.length ?? 0) - 2;
@@ -39,12 +39,10 @@ function Featured() {
     return () => clearInterval(id);
   }, [isHoverd, maxIndex]);
 
-
   console.log("The featured songs = ", !!featuredSongs, "c i ", index);
 
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">
-
       <LessThanBtn handlePrev={handlePrev} />
       <GreatorThanBtn handleNext={handleNext} />
 
@@ -73,6 +71,8 @@ function Featured() {
 
 export default Featured;
 
-  {/* <SongMainCard cardRef={cardRef} imageSrc={"../../../../../songCover2.jpg"} alt={"songCoverPic"} content={"Narai Baran de sapalwaar ye waara we na"} />
+{
+  /* <SongMainCard cardRef={cardRef} imageSrc={"../../../../../songCover2.jpg"} alt={"songCoverPic"} content={"Narai Baran de sapalwaar ye waara we na"} />
   <SongMainCard cardRef={cardRef} imageSrc={"../../../../../songCover3.jpg"} alt={"songCoverPic"} content={"Narai Baran de sapalwaar ye waara we na"} />
-  <SongMainCard cardRef={cardRef} imageSrc={"../../../../../songCover4.jpg"} alt={"songCoverPic"} content={"Narai Baran de sapalwaar ye waara we na"} /> */}
+  <SongMainCard cardRef={cardRef} imageSrc={"../../../../../songCover4.jpg"} alt={"songCoverPic"} content={"Narai Baran de sapalwaar ye waara we na"} /> */
+}

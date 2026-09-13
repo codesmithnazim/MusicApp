@@ -5,6 +5,7 @@ import { parseBuffer } from "music-metadata";
 import logger from "../utils/logger.js";
 import { User } from "../models/user.model.js";
 import getSignedFileUrl from "../utils/b2SignedUrl.js"
+import playQueue from "../queues/play.queue.js";
 
 // songsRouter.get("/", async (req, res, next) => {
 //   try {
@@ -109,6 +110,12 @@ const getSong=async (req, res, next)=>{
     console.log("the id of the song received by the backend = ", wantedSongId )
     const wantedSong= await Song.findById(wantedSongId)
     wantedSong.audioUrl= await getSignedFileUrl(wantedSong.audioUrl)
+    await playQueue.add("record-play",{
+      eventId: crypto.randomUUID(),
+      songId: wantedSong?._id,
+      userId: wantedSong?.user,
+      playedAt: new Date().toISOString()
+    })
     res.status(200).json({song: wantedSong})
   } catch (error) {
     logger.error(error)
