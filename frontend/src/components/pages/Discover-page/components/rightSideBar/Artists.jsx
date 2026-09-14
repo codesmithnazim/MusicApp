@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
 import usersService from "../../../../../services/users.service";
-import { useThemeContext } from "../../../../../contexts/ThemeProvider";
 import TopArtistsLinkBtn from "../../../../ui/TopArtistsLinkBtn";
 function Artists() {
-  const { isDark } = useThemeContext();
   const [bestArtists, setBestArtists] = useState("");
   useEffect(() => {
     const getTopArtists = async () => {

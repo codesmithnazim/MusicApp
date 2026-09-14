@@ -4,9 +4,9 @@ import createFileUpload from "../utils/createFileUpload.js";
 import { parseBuffer } from "music-metadata";
 import logger from "../utils/logger.js";
 import { User } from "../models/user.model.js";
-import getSignedFileUrl from "../utils/b2SignedUrl.js"
+import getSignedFileUrl from "../utils/b2SignedUrl.js";
 import playQueue from "../queues/play.queue.js";
-
+import sharp from "sharp";
 // songsRouter.get("/", async (req, res, next) => {
 //   try {
 //     // res.status(200).json({ message: "Everything is fine" });
@@ -43,6 +43,12 @@ const songsUploader = async (req, res, next) => {
           .json({ error: "Audio Cover Picture size should be less than 8 MB" });
       }
 
+      const customisedSongCoverBuffer = await sharp(songCoverFile.buffer)
+        .resize(300)
+        .webp({ quality: 80 })
+        .toBuffer();
+      songCoverFile.buffer = customisedSongCoverBuffer
+
       const songKey = `audioSongs/${user.id}-${crypto.randomUUID()}${path.extname(songFile.originalname)}`;
       const songCoverPicKey = `audioSongsCoverPics/${user.id}-${crypto.randomUUID()}${path.extname(songCoverFile.originalname)}`;
       console.log("Both the generated keys = ", songKey, songCoverPicKey);
@@ -72,57 +78,88 @@ const songsUploader = async (req, res, next) => {
   }
 };
 
-const getFeaturedSongs=async (req, res, next)=>{
-
+const getFeaturedSongs = async (req, res, next) => {
   try {
-    const featuredSongs= await Song.aggregate([
-      {$match: {visibility: "public",status : "approved" }},
-      {$addFields: {ageInDays:{$add:[{$divide:[{$subtract:[new Date(), "$createdAt"]}, 24*60*60*1000]}, 2]}}},
-      {$addFields: {featuredScore:{$divide:["$ageInDays", {$add:["$plays", {$multiply: [1, 3]}]}]}}},
-      {$sort: {featuredScore: -1}},
-      {$limit: 12},
-      {$project: {title:1,likes:1, description: 1, coverUrl:1, audioUrl: 1, artist:1, ageInDays:1 }}
-    ])
-    
-const optimizedFeatureSongs =await Promise.all(featuredSongs.map(async song=>{
-  song.songCover=await getSignedFileUrl(song.coverUrl)
-  song.id= song._id
-  delete song.coverUrl
-  delete song.audioUrl
-  delete song.ageInDays
-  delete song._id
-  return song
-}))
+    const featuredSongs = await Song.aggregate([
+      { $match: { visibility: "public", status: "approved" } },
+      {
+        $addFields: {
+          ageInDays: {
+            $add: [
+              {
+                $divide: [
+                  { $subtract: [new Date(), "$createdAt"] },
+                  24 * 60 * 60 * 1000,
+                ],
+              },
+              2,
+            ],
+          },
+        },
+      },
+      {
+        $addFields: {
+          featuredScore: {
+            $divide: [
+              "$ageInDays",
+              { $add: ["$plays", { $multiply: [1, 3] }] },
+            ],
+          },
+        },
+      },
+      { $sort: { featuredScore: -1 } },
+      { $limit: 12 },
+      {
+        $project: {
+          title: 1,
+          likes: 1,
+          plays: 1,
+          description: 1,
+          coverUrl: 1,
+          audioUrl: 1,
+          artist: 1,
+          ageInDays: 1,
+        },
+      },
+    ]);
 
-    logger.info('the best featured songs of all time =', optimizedFeatureSongs)
-    res.status(200).json({featuredSongs: optimizedFeatureSongs})
+    const optimizedFeatureSongs = await Promise.all(
+      featuredSongs.map(async (song) => {
+        song.songCover = await getSignedFileUrl(song.coverUrl);
+        song.id = song._id;
+        delete song.coverUrl;
+        delete song.audioUrl;
+        delete song.ageInDays;
+        delete song._id;
+        return song;
+      }),
+    );
+
+    logger.info("the best featured songs of all time =", optimizedFeatureSongs);
+    res.status(200).json({ featuredSongs: optimizedFeatureSongs });
   } catch (error) {
-    next(error)
+    next(error);
   }
+};
 
-}
-
-
-
-const getSong=async (req, res, next)=>{
+const getSong = async (req, res, next) => {
   try {
-    const {id:wantedSongId}= req.params
-    console.log("the id of the song received by the backend = ", wantedSongId )
-    const wantedSong= await Song.findById(wantedSongId)
-    wantedSong.audioUrl= await getSignedFileUrl(wantedSong.audioUrl)
-    await playQueue.add("record-play",{
+    const { id: wantedSongId } = req.params;
+    logger.info("the id of the song received by the backend = ", wantedSongId);
+    const wantedSong = await Song.findById(wantedSongId);
+    wantedSong.audioUrl = await getSignedFileUrl(wantedSong.audioUrl);
+    await playQueue.add("record-play", {
       eventId: crypto.randomUUID(),
       songId: wantedSong?._id,
       userId: wantedSong?.user,
-      playedAt: new Date().toISOString()
-    })
-    res.status(200).json({song: wantedSong})
+      playedAt: new Date().toISOString(),
+    });
+    res.status(200).json({ song: wantedSong });
   } catch (error) {
-    logger.error(error)
-    next(error)
+    logger.error(error);
+    next(error);
   }
-  
-}
+};
 
-export { songsUploader , getFeaturedSongs, getSong};
+export { songsUploader, getFeaturedSongs, getSong };
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

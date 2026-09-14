@@ -1,19 +1,20 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { FaPlay } from "react-icons/fa";
 import { usePlayBar } from "../../contexts/PlayerContext";
-// import { useQuery } from "@tanstack/react-query";
 import songServise from "../../services/song.servise";
+import { IoPlaySharp } from "react-icons/io5";
+
 
 function SongMainCard({ cardRef, song }) {
   // const [newSongID, setNewSongID] = useState("");
-  const { currentSong, setCurrentSong } = usePlayBar();
+  const { setCurrentSong } = usePlayBar();
 
   // console.log("the song deatils from the main songCard ", song);
   // const { data } = useQuery({
   //   queryKey: ["specificSong"],
   //   queryFn: ()=> songServise.getSong(newSongID),
   // });
- console.log("sng mainCard is re-rtendered")
+  console.log("SMC is re-rendered");
 
   // useEffect(() => {
   //  const getSong = async () => {
@@ -30,19 +31,16 @@ function SongMainCard({ cardRef, song }) {
   //   getSong();
   // }, [newSongID])
 
-
-
   const handlePlayClick = async () => {
-  console.log("clicked, song id =", song?.id);
-  try {
-    const { song: fetchedSong } = await songServise.getSong(song.id);
-    console.log("fetched song data:", fetchedSong);
-    setCurrentSong(fetchedSong); // you already have this from usePlayBar
-  } catch (error) {
-    console.log(error);
-  }
-};
-  
+    console.log("clicked, song id =", song?.id);
+    try {
+      const { song: fetchedSong } = await songServise.getSong(song.id);
+      console.log("fetched song data:", fetchedSong);
+      setCurrentSong(fetchedSong); // you already have this from usePlayBar
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const playBtnClickHandler = async () => {};
 
@@ -64,12 +62,19 @@ function SongMainCard({ cardRef, song }) {
           size={40}
           onClick={() => {
             console.log("successful click and the current id = ", song.id);
-             handlePlayClick()
+            handlePlayClick();
           }}
         />
       </div>
-      <div>{song.title}</div>
-      <div>{song.artist}</div>
+      <div className="details flex justify-between">
+        <div>
+          <div>{song.title}</div>
+          <div>{song.artist}</div>
+        </div>
+        <div className="playsAndLikes self-end w-fit text-foreground ">
+          <div className="plays flex items-center gap-1 text-muted">{<IoPlaySharp/>}{song?.plays || 0}</div>
+        </div>
+      </div>
     </div>
   );
 }

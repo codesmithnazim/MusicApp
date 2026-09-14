@@ -14,10 +14,12 @@ function Featured() {
   const { data } = useQuery({
     queryKey: ["featuredSongs"],
     queryFn: songsServis.featuredSongs,
-    staleTime: 8 * 60 * 1000,
+    staleTime: 8 * 60 * 1000,  
   });
 
   const featuredSongs = data?.featuredSongs; // Don't need useMemo() because useQuery() will preserved the data(object's value and memory address )
+
+console.log("the features songs ", data)
 
   useLayoutEffect(() => {
     const musicCard = cardRef?.current?.offsetWidth;
@@ -39,7 +41,7 @@ function Featured() {
     return () => clearInterval(id);
   }, [isHoverd, maxIndex]);
 
-  console.log("The featured songs = ", !!featuredSongs, "c i ", index);
+  console.log("The featured songs = ", !!featuredSongs, "c index ", index);
 
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">

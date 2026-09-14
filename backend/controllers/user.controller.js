@@ -146,6 +146,8 @@ const TopArtists = async (req, res, next) => {
       artistCompleteRecord.details=artistDetails
       artistCompleteRecord.id= artistCompleteRecord._id
       artistCompleteRecord.profilePicture =await getSignedFileUrl(artistDetails.profilePicture)
+      delete artistCompleteRecord._id
+      delete artistCompleteRecord.totalScore
       return artistCompleteRecord
     }))
     console.log("The top artists = ", topArtistsCompleteRecord);

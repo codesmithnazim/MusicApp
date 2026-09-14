@@ -29,7 +29,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.4",
     "multer": "^2.3.0",
-    "music-metadata": "^11.15.0"
+    "music-metadata": "^11.15.0",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

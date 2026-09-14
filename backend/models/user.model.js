@@ -38,6 +38,15 @@ const userSchema = new mongoose.Schema({
       ref: "Song",
     },
   ],
+
+  plays: {
+    type: Number,
+    default: 0,
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
   favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Song" }],
 });
 

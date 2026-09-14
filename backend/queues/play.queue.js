@@ -1,6 +1,8 @@
 import {Queue} from "bullmq"
 
-const playQueue= new Queue('play-music', {
+console.log("the ctrl of excution came in play.queue.js yes! ")
+
+const playQueue= new Queue('music-play', {
     connection:{
         host: "localhost",
         port:6379
