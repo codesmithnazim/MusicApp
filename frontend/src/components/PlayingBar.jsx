@@ -4,17 +4,22 @@ import { MdOutlineSkipPrevious } from "react-icons/md";
 import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
 import { IoShuffleOutline } from "react-icons/io5";
-import { HiOutlineSpeakerWave } from "react-icons/hi2";
+import { IoHeart } from "react-icons/io5";
+import {  RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
-import { usePlayBar } from "../../contexts/PlayerContext";
-import Scruber from "./Scruber";
+import Scruber from "./ui/Scruber";
+import { usePlayBar } from "../contexts/PlayerContext";
+import LikeButton from "./ui/LikeButton";
 
 function PlayingBar() {
   const [duration, setDuration] = useState(0);
   const [isPlay, setIsPlay] = useState(false);
   const [isloading, setIsloading] = useState(true);
+  const [isrepeat, setIsrepeat] = useState(false);
   const songAudioRef = useRef();
   const { currentSong } = usePlayBar();
+
+  console.log("current song at the playingBar ", currentSong)
 
   useEffect(() => {
     setIsPlay(false);
@@ -68,9 +73,12 @@ function PlayingBar() {
     console.log("The song duration = ", songduration);
   };
 
+
+
+
   return (
-    <div className="w-screen h-12 border border-t-primary bg-background  absolute bottom-0 left-0 flex items-center">
-      <section className="main w-4/6 mx-auto flex gap-8 items-center">
+    <div className="w-screen h-12 border-t border-t-primary bg-background  absolute bottom-0 left-0 flex items-center justify-end">
+      <section className="main w-5/6  flex gap-8 items-center">
         <div className="controls flex gap-5 items-center">
           <MdOutlineSkipPrevious className="text-foreground" size={26} />
           <div className="playOrStop relative w-5.5 h-5.5">
@@ -93,9 +101,10 @@ function PlayingBar() {
         </div>
         <div className="modernControls flex gap-3 items-center">
           <TiArrowRepeat
-            className="text-foreground"
+            className={`${isrepeat ? "text-primary" : "text-foreground"} cursor-pointer`}
             size={20}
             strokeWidth={0}
+            onClick={() => setIsrepeat((curr) => !curr)}
           />
           <IoShuffleOutline className="text-foreground" size={20} />
         </div>
@@ -105,10 +114,27 @@ function PlayingBar() {
           currentSong={currentSong}
           handleLoadedMetadata={handleLoadedMetadata}
           setIsPlay={setIsPlay}
+          isrepeat={isrepeat}
         />
-
-        <div>
-          <HiOutlineSpeakerWave size={20} />
+        <section className="about flex gap-1 items-center ">
+          <div className="songCoverImage h-10 w-10 overflow-hidden rounded gap-0.5 object-contain ">
+            <img
+              src={currentSong?.coverUrl}
+              alt="coverPic of the media"
+              className="h-10 w-10"
+            />
+          </div>
+          <div className="about flex flex-col justify-center h-10 ">
+            {/* <div className="singer text-xs font-semibold text-muted">Zartash Khan 🌺</div>
+            <div className="songName text-foreground text-xs font-semibold"> { "Alia Ansari - Khayat ✨✨✨".length>22?"Alia Ansari - Khayat ✨✨✨".slice(0,22).concat("..."):"Alia Ansari - Khayat ✨✨✨" }</div> */}
+            <div className="singer text-xs font-semibold text-muted"> {currentSong.artist.length>17?currentSong.artist.slice(0,22).concat("..."):currentSong.artist }</div>
+            <div className="songName text-foreground text-xs font-semibold"> {currentSong.title.length>22?currentSong.title.slice(0,22).concat("..."):currentSong.title }</div>
+          </div>
+        </section>
+        <div className="CTA flex  gap-4 text-muted">
+          <LikeButton/>
+          <RiUserFollowLine className={`hover:text-zinc-600 cursor-pointer`} />
+          {/* <RiUserUnfollowLine className={`hover:text-zinc-600`} /> */}
         </div>
       </section>
     </div>

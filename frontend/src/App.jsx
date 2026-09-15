@@ -11,7 +11,7 @@ import Charts from "./components/pages/Charts";
 import Playlist from "./components/pages/Playlists"
 import Likes from "./components/pages/Likes"
 import UploadSong from "./components/pages/Upload-song";
-import PlayingBar from "./components/ui/PlayingBar";
+import PlayingBar from "./components/PlayingBar";
 
 function App() {
   const { isDark } = useThemeContext();

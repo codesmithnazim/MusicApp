@@ -44,7 +44,7 @@ const songsUploader = async (req, res, next) => {
       }
 
       const customisedSongCoverBuffer = await sharp(songCoverFile.buffer)
-        .resize(300)
+        .resize(450)
         .webp({ quality: 80 })
         .toBuffer();
       songCoverFile.buffer = customisedSongCoverBuffer
@@ -148,6 +148,7 @@ const getSong = async (req, res, next) => {
     logger.info("the id of the song received by the backend = ", wantedSongId);
     const wantedSong = await Song.findById(wantedSongId);
     wantedSong.audioUrl = await getSignedFileUrl(wantedSong.audioUrl);
+    wantedSong.coverUrl = await getSignedFileUrl(wantedSong.coverUrl);
     await playQueue.add("record-play", {
       eventId: crypto.randomUUID(),
       songId: wantedSong?._id,
@@ -161,5 +162,22 @@ const getSong = async (req, res, next) => {
   }
 };
 
-export { songsUploader, getFeaturedSongs, getSong };
+
+const likesIncrementor =async (req,res,next) =>{
+const {id}=req.params
+const {user}= req
+// console.log("the current user ", user)
+try {
+  const updatedSongs= await Song.findByIdAndUpdate(id, {$inc: {likes: 1}}, {returnDocument: "after"})
+ await Song.findByIdAndUpdate(updatedSongs.user, {$inc: {likes: 1}}, {returnDocument: "after"})
+  const favouritesUpdated=await User.findByIdAndUpdate(user.id, {$push: {favourites: id}}, {returnDocument: "after"})
+  console.log("The updated songs = ", updatedSongs)
+  console.log("the favouritesUpdated = ", favouritesUpdated)
+  res.status(200).json({ok: true})
+} catch (error) {
+  next(error)
+}
+}
+
+export { songsUploader, getFeaturedSongs, getSong , likesIncrementor};
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

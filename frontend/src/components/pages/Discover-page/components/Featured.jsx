@@ -10,7 +10,7 @@ function Featured() {
   const [pixelsToscroll, setPixelsToscroll] = useState(0);
   const [isHoverd, setIsHoverd] = useState(false);
   const cardRef = useRef();
-
+  
   const { data } = useQuery({
     queryKey: ["featuredSongs"],
     queryFn: songsServis.featuredSongs,

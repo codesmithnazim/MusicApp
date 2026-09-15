@@ -5,12 +5,14 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const getSong = async (id) => {
+  const { data } = await api.get(`/${id}`);
+  return data;
+};
 
-const getSong= async (id)=>{
-  const {data}= await api.get(`/${id}`)
-  return data
-}
+const likesIncrementor = async (id) => {
+  const { data } = await api.patch(`${id}`, {});
+  return data;
+};
 
-
-export default {getSong}
-
+export default { getSong, likesIncrementor };

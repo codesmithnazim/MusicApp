@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SoundScubber from "./SoundScubber";
 
 function Scruber({
   songAudioRef,
   duration,
   currentSong,
   handleLoadedMetadata,
-  setIsPlay
+  setIsPlay,
+  isrepeat
 }) {
   const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState(0.8);
+
+  useEffect(() => {
+    songAudioRef.current.volume = volume;
+  }, [volume]);
 
   // console.log("the data of scrubber audio url ", currentSong)
 
@@ -34,8 +41,11 @@ function Scruber({
     return `${displayMinutes}:${displaySeconds}`;
   }
 
+        // {isrepeat?( songAudioRef.loop= true) : ""}
+
+
   return (
-    <>
+    <div className="flex items-center gap-3">
       {" "}
       <audio
         src={currentSong.audioUrl}
@@ -44,11 +54,12 @@ function Scruber({
         onTimeUpdate={timeChangeHandler}
         ref={songAudioRef}
         onLoadedMetadata={handleLoadedMetadata}
+        loop={isrepeat}
         // onPlay={() => setIsPlay(true)}
         // onPause={() => setIsPlay(false)}
         onEnded={() => setIsPlay(false)}
       ></audio>
-      <div className="scrubber flex items-center gap-4">
+      <div className="scrubber flex items-center gap-3">
         {/* <input type="range" name="audioSlider" id="audioSlider" className="w-120 h-1  accent-foreground cursor-pointer" /> */}
         <input
           type="range"
@@ -88,12 +99,12 @@ function Scruber({
          [&::-moz-range-thumb]:transition-colors
          [&::-moz-range-thumb]:duration-150"
         />
-        <div className="duration flex ">
-          {" "}
+        <div className="duration text-sm ">
           {formatTime(currentTime)}/ {formatTime(duration)}{" "}
         </div>
       </div>
-    </>
+      <SoundScubber setVolume={setVolume} volume={volume} />
+    </div>
   );
 }
 
