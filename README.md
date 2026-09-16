@@ -1,5 +1,5 @@
-My learnings from this project:
-
+**My learnings from this project:**
+#
 **Aws SDK client S3**
 
 I get know about client s3 of AWS SDK in this project, when I need to use it for the uploading songs, profile avators, and song cover pics.
@@ -16,11 +16,26 @@ I understood the use cases of those 4 different navigating React tools
 **Jwt Tokens**
 
 How to make the jwt secure using different parameters specially like expiresIn.
-I understood that how to set different parameters while saving any cookie.    
+I understood that how to set different parameters while saving any cookie.
 
-
-**CSS variables Inheritance**
+***CSS variables Inheritance***
 
 Regular CSS properties (background-color, padding) only apply to the element they're set on — they don't cascade to children unless the property is one of the specific inheritable ones (like color, font-family).
 Custom properties (--anything) are always inherited, on every element, whether or not that element "does" anything with them. They're pure data flowing down the tree, invisible until something (var(--color-primary)) actually asks for the value.
 So when ever the parent have for example dark class then all the css variables' definitions(colors) will be changed respectively, now all the childs can use the updated css variable values.
+
+***Sharp.js for image compressors***
+
+Sharp's literals allow us to change the uploaded images' qulaity(optimized) for better performance.
+
+```javascript
+const customisedSongCoverBuffer = await sharp(songCoverFile.buffer)
+  .resize(450)
+  .webp({ quality: 80 })
+  .toBuffer();
+//customisedSongCoverBuffer is a  buffer that we can use .
+```
+
+***TenStack(react query) queries , jobs and workers***
+
+For doing the tasks that is not compulsory for the desired response towards the frontend we make queues and we put such tasks as jobs with unique names inside that queues, and at last we have worker(s) for doing the task that are queued in the queues.
