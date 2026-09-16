@@ -1,11 +1,11 @@
 import usersService from "./users.service";
 
-const followUserToggler = async (currentSong, user, setUser) => {
+const followUserToggler = async (targetArtistId, user, setUser) => {
   try {
-    if (user.followings.includes(currentSong.user)) {
-      const { success } = await usersService.followArtist(currentSong?.user);
+    if (user.followings.includes(targetArtistId)) {
+      const { success } = await usersService.followArtist(targetArtistId);
       if (success) {
-        const index = user.followings.indexOf(currentSong?.user);
+        const index = user.followings.indexOf(targetArtistId);
         console.log("already followed ", index);
         // setUser((curr) => curr.followings.toSpliced(index, 1));
         setUser((curr) => {
@@ -17,13 +17,13 @@ const followUserToggler = async (currentSong, user, setUser) => {
         return;
       }
     }
-    const { success } = await usersService.followArtist(currentSong?.user);
+    const { success } = await usersService.followArtist(targetArtistId);
 
     if (success) {
       setUser((curr) => {
         return {
           ...curr,
-          followings: [...curr.followings.concat(currentSong?.user)],
+          followings: [...curr.followings.concat(targetArtistId)],
         };
       });
     }

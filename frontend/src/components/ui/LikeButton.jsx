@@ -10,7 +10,7 @@ function LikeButton() {
   return (
     <IoHeart
       className={`${user?.favourites?.includes(currentSong.id) ? "text-primary" : "hover:text-zinc-600 "} cursor-pointer`}
-      onClick={() => likeSongToggler(currentSong, user, setUser)}
+      onClick={() => likeSongToggler(currentSong?.id, user, setUser)}
     />
   );
 }

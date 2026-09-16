@@ -13,9 +13,9 @@ function TopArtistsLinkBtn({ artist }) {
       <Avator user={artist} />
       <div className="flex gap-3 ">
         <div
-          className={`info flex flex-col w-25 overflow-clip`}
+          className={`info flex flex-col w-25 overflow-clip text-[13px] font-medium`}
         >
-          <span className="text-foreground">{artist?.details?.name}</span>
+          <span className="text-foreground ">{artist?.details?.name}</span>
           <div className="flex gap-2">
             <span
               className={`flex items-center justify-center w-fit text-muted`}

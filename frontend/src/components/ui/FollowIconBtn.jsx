@@ -28,7 +28,7 @@ console.log("user's details from the FollowIconBtn = ", user)
 
 
   return (
-    <div className="cursor-pointer" onClick={()=>followUserToggler(currentSong, user, setUser)}>
+    <div className="cursor-pointer" onClick={()=>followUserToggler(currentSong?.user, user, setUser)}>
       {user?.songs?.includes(currentSong.id) ? (
         ""
       ) : (

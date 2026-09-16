@@ -1,12 +1,12 @@
 import songServise from "./song.servise";
 
-const likeSongToggler = async (currentSong, user, setUser) => {
-  // console.log("the user", currentSong," and the song = ", userFullDetails)
+const likeSongToggler = async (targetSongId, user, setUser) => {
+  // console.log("the user", targetSongId," and the song = ", userFullDetails)
   try {
-    if (user?.favourites?.includes(currentSong.id)) {
-      const { ok } = await songServise.liker(currentSong.id);
+    if (user?.favourites?.includes(targetSongId)) {
+      const { ok } = await songServise.liker(targetSongId);
       if (ok) {
-        const index = user.favourites.indexOf(currentSong.id);
+        const index = user.favourites.indexOf(targetSongId);
         return setUser((prev) => {
           return {
             ...prev,
@@ -16,12 +16,12 @@ const likeSongToggler = async (currentSong, user, setUser) => {
       }
       return;
     }
-    const { ok } = await songServise.liker(currentSong.id);
+    const { ok } = await songServise.liker(targetSongId);
     if (ok) {
       return setUser((prev) => {
         return {
           ...prev,
-          favourites: [...prev.favourites.concat(currentSong.id)], //here we can it directly through [,] but it is safe method.
+          favourites: [...prev.favourites.concat(targetSongId)], //here we can it directly through [,] but it is safe method.
         };
       });
     }

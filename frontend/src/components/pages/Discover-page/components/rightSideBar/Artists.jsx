@@ -20,7 +20,7 @@ function Artists() {
     getTopArtists();
     return () => {};
   }, []);
-
+ 
   return (
     <div className="w-full  flex flex-col items-center-safe gap-6">
       <h2 className="text-[20px] font-semibold w-fit mx-auto">Top Artists</h2>
