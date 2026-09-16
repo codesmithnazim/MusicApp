@@ -5,10 +5,10 @@ import { usePlayBar } from "../../contexts/PlayerContext";
 import followUserToggler from "../../services/followUserToggler";
 
 function FollowIconBtn() {
-  const [isFollowing, setIsFollowing] = useState(false);
-  // const [completeUserRecord, setcompleteUserRecord] = useState("");
   const { user , setUser} = useAuth();
   const { currentSong } = usePlayBar();
+  // const [isFollowing, setIsFollowing] = useState(false);
+  // const [completeUserRecord, setcompleteUserRecord] = useState("");
 
   // useEffect(() => {
   //   const setUserDetails = async () => {
@@ -28,7 +28,7 @@ console.log("user's details from the FollowIconBtn = ", user)
 
 
   return (
-    <div className="cursor-pointer" onClick={()=>followUserToggler(currentSong, user, setUser, setIsFollowing)}>
+    <div className="cursor-pointer" onClick={()=>followUserToggler(currentSong, user, setUser)}>
       {user?.songs?.includes(currentSong.id) ? (
         ""
       ) : (

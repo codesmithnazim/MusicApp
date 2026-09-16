@@ -1,0 +1,42 @@
+[33me7b6b2f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/play-bar[m[33m)[m modified follow feature 09/16/2026 15:48:41
+[33m31179a2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/feature/play-bar[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m like button of playBar is working now 100% fine Shukar Alhamdullilah 09/16/2026 13:34:47
+[33m4ab35e1[m follow button of playBar is working now 100% fine Shukar Alhamdullilah 09/16/2026 10:03:23
+[33m836767e[m break point; between implementing likes of songs entire feature
+[33m49e73a0[m working state 09/14/2026 12:18:34
+[33m873f97d[m emergency push
+[33m9dd80d9[m 09/11/2026 22:47:23
+[33maefef5b[m finally the scruber entire component is working fine
+[33mc181335[m 09/11/2026 11:00:03 things are fine
+[33m2eea54a[m 09/11/2026 09:35:07
+[33md008ed6[m[33m ([m[1;31morigin/features/play-bar[m[33m)[m Now the player-bar can do basic functionalities good
+[33m933c0f1[m featured Section is done successfully at 09/09/2026 13:45:52 Shukar AlhamduLlilah's
+[33m9f6a90e[m[33m ([m[1;31morigin/features/browse-page[m[33m)[m Featured Section is done Shukar AlhamduLlilah's 09/08/2026 07:38:59
+[33mf3e0a1f[m Featured Section is done Shukar AlhamduLlilah's 09/08/2026 07:37:10
+[33mf94e649[m songs box's animation is done Alhamdullilah's 09/07/2026 19:29:11
+[33mc3411cf[m 09/06/2026 16:14:16
+[33m289e817[m[33m ([m[1;31morigin/features/discoverPage[m[33m)[m the top artists part is done I think Shukar Alhamdullilah
+[33mb91cf49[m topArtists are done Shukar Alhamdullilah 09/06/2026 11:45:32
+[33medfc364[m 09/05/2026 22:37:25
+[33m2d49c0b[m working on the top artists feature
+[33m187dac2[m[33m ([m[1;31morigin/features/uploadsongs[m[33m)[m now users can upload songs sucessfully
+[33mf3b8b4a[m now users can upload songs sucessfully
+[33m81d4c52[m song form is done 09/02/2026 13:22:04
+[33m373553a[m work starts on  uploadsongs feature
+[33mf8cee86[m profile picture is now successfully fetchable for the frotned by sign-in and browser relaod/new visit
+[33mab05fc5[m now user can upload its profile picture
+[33m2a24aed[m now user can upload its profile picture
+[33md3ba867[m user avator b3 url can be saved in the database but unfetchable, becuase of the bucket is private
+[33m1aee0a8[m check point 08/31/2026 15:47:25
+[33m07a3af9[m moving toward user avator  08/29/2026 13:35:04
+[33m1d7e8a2[m check point 08/29/2026 13:06:39
+[33m0acae2f[m check point 08/29/2026 10:17:31
+[33md4e3abf[m check point 08/29/2026 09:49:04
+[33m708f3fb[m check point
+[33m1e56695[m check point
+[33m9037f4c[m authentication is added is successfully Alhamdulialh
+[33mdac4cc8[m authenticatin and authorization
+[33m18b74b1[m authentication and authorization
+[33m08b434b[m header is completed and work on backend has been started
+[33mbb4d54b[m header is started
+[33m727bf89[m Shukar Alhamdullialh LS bar is completed
+[33mb9cb5d6[m first commit
