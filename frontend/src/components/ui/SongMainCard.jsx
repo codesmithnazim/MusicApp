@@ -75,7 +75,7 @@ function SongMainCard({ cardRef, song }) {
         </div>
         <div className="playsAndLikes self-end w-fit text-foreground flex gap-3">
           <div className="plays flex items-center gap-1 text-muted">{<IoPlaySharp/>}{song?.plays || 0}</div>
-          <div className="plays flex items-center gap-1 text-muted">{<IoHeart/>}{song?.likes || 0}</div>
+          <div className="plays flex items-center gap-1 text-muted">{<IoHeart/>}{song?.likes?.length || 0}</div>
         </div>
       </div>
     </div>

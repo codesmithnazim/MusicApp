@@ -10,11 +10,11 @@ const getSong = async (id) => {
   return data;
 };
 
-const likesIncrementor = async (id) => {
+const liker = async (id) => {
   const { data } = await api.patch(`${id}`, {});
   return data;
 };
 
 
 
-export default { getSong, likesIncrementor };
+export default { getSong, liker};

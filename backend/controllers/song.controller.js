@@ -167,18 +167,18 @@ const likesIncrementor = async (req, res, next) => {
   const { user } = req;
   // console.log("the current user ", user)
   try {
+    if(user.favourites.includes(id)){
+      await User.findByIdAndUpdate(user._id, {$pull :{favourites:id}},{returnDocument: "after"})
+      await Song.findByIdAndUpdate(id, {$pull : {likes : user._id}},{returnDocument: "after"})
+      return res.status(201).json({ ok : true })
+    }
     const updatedSongs = await Song.findByIdAndUpdate(
       id,
-      { $inc: { likes: 1 } },
-      { returnDocument: "after" },
-    );
-    await Song.findByIdAndUpdate(
-      updatedSongs.user,
-      { $inc: { likes: 1 } },
+      { $push : {likes : user._id}},
       { returnDocument: "after" },
     );
     const favouritesUpdated = await User.findByIdAndUpdate(
-      user.id,
+      user._id,
       { $push: { favourites: id } },
       { returnDocument: "after" },
     );
