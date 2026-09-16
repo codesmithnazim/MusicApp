@@ -4,12 +4,11 @@ import { MdOutlineSkipPrevious } from "react-icons/md";
 import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
 import { IoShuffleOutline } from "react-icons/io5";
-import { IoHeart } from "react-icons/io5";
-import {  RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
 import Scruber from "./ui/Scruber";
 import { usePlayBar } from "../contexts/PlayerContext";
 import LikeButton from "./ui/LikeButton";
+import FollowIconBtn from "./ui/FollowIconBtn";
 
 function PlayingBar() {
   const [duration, setDuration] = useState(0);
@@ -19,13 +18,14 @@ function PlayingBar() {
   const songAudioRef = useRef();
   const { currentSong } = usePlayBar();
 
-  console.log("current song at the playingBar ", currentSong)
+  console.log("current song at the playingBar ", currentSong);
 
   useEffect(() => {
-    setIsPlay(false);
-    setIsloading(true);
-
-    return () => {};
+    const helper = () => {
+      setIsPlay(false);
+      setIsloading(true);
+    };
+    helper();
   }, [currentSong]);
 
   // useEffect(() => {
@@ -72,9 +72,6 @@ function PlayingBar() {
     setIsloading(false);
     console.log("The song duration = ", songduration);
   };
-
-
-
 
   return (
     <div className="w-screen h-12 border-t border-t-primary bg-background  absolute bottom-0 left-0 flex items-center justify-end">
@@ -127,14 +124,23 @@ function PlayingBar() {
           <div className="about flex flex-col justify-center h-10 ">
             {/* <div className="singer text-xs font-semibold text-muted">Zartash Khan 🌺</div>
             <div className="songName text-foreground text-xs font-semibold"> { "Alia Ansari - Khayat ✨✨✨".length>22?"Alia Ansari - Khayat ✨✨✨".slice(0,22).concat("..."):"Alia Ansari - Khayat ✨✨✨" }</div> */}
-            <div className="singer text-xs font-semibold text-muted"> {currentSong.artist.length>17?currentSong.artist.slice(0,22).concat("..."):currentSong.artist }</div>
-            <div className="songName text-foreground text-xs font-semibold"> {currentSong.title.length>22?currentSong.title.slice(0,22).concat("..."):currentSong.title }</div>
+            <div className="singer text-xs font-semibold text-muted">
+              {" "}
+              {currentSong.artist.length > 17
+                ? currentSong.artist.slice(0, 22).concat("...")
+                : currentSong.artist}
+            </div>
+            <div className="songName text-foreground text-xs font-semibold">
+              {" "}
+              {currentSong.title.length > 22
+                ? currentSong.title.slice(0, 22).concat("...")
+                : currentSong.title}
+            </div>
           </div>
         </section>
         <div className="CTA flex  gap-4 text-muted">
-          <LikeButton/>
-          <RiUserFollowLine className={`hover:text-zinc-600 cursor-pointer`} />
-          {/* <RiUserUnfollowLine className={`hover:text-zinc-600`} /> */}
+          <LikeButton />
+          <FollowIconBtn />
         </div>
       </section>
     </div>

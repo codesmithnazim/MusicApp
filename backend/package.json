@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=TEST  node --test",
     "start": "cross-env NODE_ENV=PRODUCTION node index.js",
-    "dualServer": " concurrently \"cross-env NODE_ENV=DEVELOPMENT  node --watch index.js \" \"npm run dev --prefix ../frontend\""
+    "tripleServer": " concurrently \"cross-env NODE_ENV=DEVELOPMENT  node --watch index.js \" \"npm run dev --prefix ../frontend\" \"node --watch .\\workers\\play.worker.js\""
   },
   "keywords": [],
   "author": "",

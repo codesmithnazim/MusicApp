@@ -24,14 +24,18 @@ const userSchema = new mongoose.Schema({
     default: "",
     // It will store the key only. We will have to produce a signed url from the key for the frontend.
   },
-  followers: {
-    type: Number,
-    default: 0,
-  },
-  followings: {
-    type: Number,
-    default: 0,
-  },
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  followings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   songs: [
     {
       type: mongoose.Schema.Types.ObjectId,

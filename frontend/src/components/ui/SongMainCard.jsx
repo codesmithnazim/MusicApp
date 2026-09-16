@@ -3,6 +3,8 @@ import { FaPlay } from "react-icons/fa";
 import { usePlayBar } from "../../contexts/PlayerContext";
 import songServise from "../../services/song.servise";
 import { IoPlaySharp } from "react-icons/io5";
+import { IoHeart } from "react-icons/io5";
+
 
 
 function SongMainCard({ cardRef, song }) {
@@ -71,8 +73,9 @@ function SongMainCard({ cardRef, song }) {
           <div>{song.title}</div>
           <div>{song.artist}</div>
         </div>
-        <div className="playsAndLikes self-end w-fit text-foreground ">
+        <div className="playsAndLikes self-end w-fit text-foreground flex gap-3">
           <div className="plays flex items-center gap-1 text-muted">{<IoPlaySharp/>}{song?.plays || 0}</div>
+          <div className="plays flex items-center gap-1 text-muted">{<IoHeart/>}{song?.likes || 0}</div>
         </div>
       </div>
     </div>

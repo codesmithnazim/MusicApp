@@ -20,7 +20,7 @@ function TopArtistsLinkBtn({ artist }) {
             <span
               className={`flex items-center justify-center w-fit text-muted`}
             >
-              <MdPerson2 /> {artist?.details.followers}
+              <MdPerson2 /> {artist?.details.followers.length}
             </span>
             <span
               className={` flex items-center justify-center w-fit text-muted`}

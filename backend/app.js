@@ -10,24 +10,12 @@ import config from "./utils/config.js";
 import logger from "./utils/logger.js";
 import { usersRouter } from "./routes/user.route.js";
 import { songsRouter } from "./routes/song.route.js";
-import { Song } from "./models/song.model.js";
 // import playWorker from "./workers/play.worker.js";
 
 mongoose
 .connect(config.MONGODB_URI, { family: 4 })
 .then(logger.info("MongoDB is connected ✔✔✔"))
 .catch((error) => logger.error("error while connecting to mongoDB", error));
-// await Song.findByIdAndDelete("6aa6df7b99171ca1ef9c317e")
-
-// mongoose
-// .connect(config.MONGODB_URI, { family: 4 })
-// .then(() => {
-//   (logger.info("MongoDB is connected ✔✔✔"),
-//     mongoose.connection
-//       .dropCollection("songs")
-//       .then(console.log("the collection is drobbed successfully")));
-// })
-// .catch((error) => logger.error("error while connecting to mongoDB", error));
 
 const app = express();
 app.use(
@@ -47,3 +35,15 @@ app.use(unknownEndpoints);
 app.use(errorHandler);
 export { app };
 
+
+// await Song.findByIdAndDelete("6aa6df7b99171ca1ef9c317e")
+
+// mongoose
+// .connect(config.MONGODB_URI, { family: 4 })
+// .then(() => {
+//   (logger.info("MongoDB is connected ✔✔✔"),
+//     mongoose.connection
+//       .dropCollection("Users")
+//       .then(console.log("the collection is drobbed successfully")));
+// })
+// .catch((error) => logger.error("error while connecting to mongoDB", error));

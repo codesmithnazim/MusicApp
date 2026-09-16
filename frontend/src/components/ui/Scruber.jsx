@@ -20,7 +20,7 @@ function Scruber({
 
   const timeChangeHandler = (e) => {
     setCurrentTime(e.target.currentTime);
-    console.log("current time= ", currentTime);
+    // console.log("current time= ", currentTime);
   };
 
   const handleSeek = (e) => {

@@ -19,6 +19,17 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const getUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userCompleteRecord = await User.findById(id);
+    logger.info("the single user complete record = ", userCompleteRecord);
+    res.status(200).json({ userDetails: userCompleteRecord });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const registerUser = async (req, res, next) => {
   try {
     // let fileURL = new String();
@@ -117,7 +128,7 @@ const logInUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}; 
 
 // User profile
 const myProfile = async (req, res, next) => {
@@ -129,6 +140,7 @@ const myProfile = async (req, res, next) => {
     }
     return res.status(200).json({ user, success: true });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
@@ -136,26 +148,77 @@ const TopArtists = async (req, res, next) => {
   try {
     const topArtists = await Song.aggregate([
       { $match: { visibility: "public", status: "approved" } },
-      { $group: { _id: "$user", totalPlays: {$sum : "$plays"}, totalLikes: {$sum : "$likes" } } },
-      {$addFields: { "totalScore" : {$add : [{$multiply:["$totalPlays", 1]},{$multiply:["$totalLikes", 3] }] }}},
-      {$sort: {"totalScore" : -1}},
-      {$limit: 5}
+      {
+        $group: {
+          _id: "$user",
+          totalPlays: { $sum: "$plays" },
+          totalLikes: { $sum: "$likes" },
+        },
+      },
+      {
+        $addFields: {
+          totalScore: {
+            $add: [
+              { $multiply: ["$totalPlays", 1] },
+              { $multiply: ["$totalLikes", 3] },
+            ],
+          },
+        },
+      },
+      { $sort: { totalScore: -1 } },
+      { $limit: 5 },
     ]);
-    const topArtistsCompleteRecord=await Promise.all(topArtists.map(async artistCompleteRecord=>{
-      const artistDetails= await User.findById(artistCompleteRecord._id)
-      artistCompleteRecord.details=artistDetails
-      artistCompleteRecord.id= artistCompleteRecord._id
-      artistCompleteRecord.profilePicture =await getSignedFileUrl(artistDetails.profilePicture)
-      delete artistCompleteRecord._id
-      delete artistCompleteRecord.totalScore
-      return artistCompleteRecord
-    }))
+    const topArtistsCompleteRecord = await Promise.all(
+      topArtists.map(async (artistCompleteRecord) => {
+        const artistDetails = await User.findById(artistCompleteRecord._id);
+        artistCompleteRecord.details = artistDetails;
+        artistCompleteRecord.id = artistCompleteRecord._id;
+        artistCompleteRecord.profilePicture = await getSignedFileUrl(
+          artistDetails.profilePicture,
+        );
+        delete artistCompleteRecord._id;
+        delete artistCompleteRecord.totalScore;
+        return artistCompleteRecord;
+      }),
+    );
     console.log("The top artists = ", topArtistsCompleteRecord);
-    res.status(200).json({topArtists: topArtistsCompleteRecord})
+    res.status(200).json({ topArtists: topArtistsCompleteRecord });
   } catch (error) {
     console.log(error.message);
     next(error);
   }
 };
 
-export { getAllUsers, registerUser, logInUser, myProfile, TopArtists };
+const followArtist = async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req;
+  try {
+    // console.log("the entire user details ", user)
+    if(user.followings.includes(id)){
+         await User.findByIdAndUpdate(user._id, {
+      $pull : { followings: id } }, {returnDocument: "after"});
+         await User.findByIdAndUpdate(id, {
+      $pull : { followers: user._id } }, {returnDocument: "after"});
+      return  res.status(201).json({ success: true });
+    }
+   await User.findByIdAndUpdate(id, {
+      $push: { followers: user._id },
+    }); //updatedArtists and updatedUsers are one thing.
+   await User.findByIdAndUpdate(user._id, {
+      $push: { followings: id },
+    });
+    res.status(201).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  getAllUsers,
+  registerUser,
+  logInUser,
+  myProfile,
+  TopArtists,
+  followArtist,
+  getUser
+};
