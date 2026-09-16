@@ -2,25 +2,26 @@ import usersService from "./users.service";
 
 const followUserToggler = async (
   currentSong,
-  completeUserRecord,
-  setcompleteUserRecord,
-  setIsFollowing,
+  user,
+  setUser,
 ) => {
   try {
-    if (completeUserRecord.followings.includes(currentSong.user)) {
+    if (user.followings.includes(currentSong.user)) {
       const { success } = await usersService.followArtist(currentSong?.user);
       if (success) {
-        const index = completeUserRecord.followings.indexOf(currentSong?.user);
+        const index = user.followings.indexOf(currentSong?.user);
         console.log("already followed ", index);
-        setcompleteUserRecord((curr) => curr.followings.toSpliced(index, 1));
-        return setIsFollowing(false);
+        // setUser((curr) => curr.followings.toSpliced(index, 1));
+      setUser((curr) =>{return {...curr, followings :[ ...curr.followings.toSpliced(index, 1)]}});
+        // return setIsFollowing(false);
+        return;
       }
     }
     const { success } = await usersService.followArtist(currentSong?.user);
 
     if (success) {
-      setcompleteUserRecord((curr) => curr.followings.push(currentSong?.user));
-      setIsFollowing(true);
+      setUser((curr) =>{return {...curr, followings :[...curr.followings.concat(currentSong?.user)]}});
+      // setIsFollowing(true);
     }
   } catch (error) {
     console.error(error);
