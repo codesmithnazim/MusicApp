@@ -9,6 +9,7 @@ import config from "../utils/config.js";
 import mongoose from "mongoose";
 import getSignedFileUrl from "../utils/b2SignedUrl.js";
 import { Song } from "../models/song.model.js";
+import sharp from "sharp";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -53,7 +54,14 @@ const registerUser = async (req, res, next) => {
         "the key generated for the profile picture of this user ",
         key,
       );
-      // logger.info("the bucket name = ", config.BUCKET_NAME)
+
+      const customisedProfilePicBuffer = await sharp(req.file.buffer)
+        .resize(60)
+        .webp({ quality: 80 })
+        .toBuffer();
+      req.file.buffer = customisedProfilePicBuffer;
+
+
       const upload = new Upload({
         client: b2Client,
         params: {
@@ -128,7 +136,7 @@ const logInUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}; 
+};
 
 // User profile
 const myProfile = async (req, res, next) => {
@@ -140,7 +148,7 @@ const myProfile = async (req, res, next) => {
     }
     return res.status(200).json({ user, success: true });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(error);
   }
 };
@@ -194,17 +202,27 @@ const followArtist = async (req, res, next) => {
   const { user } = req;
   try {
     // console.log("the entire user details ", user)
-    if(user.followings.includes(id)){
-         await User.findByIdAndUpdate(user._id, {
-      $pull : { followings: id } }, {returnDocument: "after"});
-         await User.findByIdAndUpdate(id, {
-      $pull : { followers: user._id } }, {returnDocument: "after"});
-      return  res.status(201).json({ success: true });
+    if (user.followings.includes(id)) {
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          $pull: { followings: id },
+        },
+        { returnDocument: "after" },
+      );
+      await User.findByIdAndUpdate(
+        id,
+        {
+          $pull: { followers: user._id },
+        },
+        { returnDocument: "after" },
+      );
+      return res.status(201).json({ success: true });
     }
-   await User.findByIdAndUpdate(id, {
+    await User.findByIdAndUpdate(id, {
       $push: { followers: user._id },
     }); //updatedArtists and updatedUsers are one thing.
-   await User.findByIdAndUpdate(user._id, {
+    await User.findByIdAndUpdate(user._id, {
       $push: { followings: id },
     });
     res.status(201).json({ success: true });
@@ -220,5 +238,5 @@ export {
   myProfile,
   TopArtists,
   followArtist,
-  getUser
+  getUser,
 };

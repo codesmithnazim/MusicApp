@@ -27,12 +27,12 @@ const playWorker = new Worker(
 
 playWorker.on("completed", (job) => {
   console.log(`${job.id} job is completed `);
-  mongoose.connection.close()
+  // mongoose.connection.close()
 });
 
 playWorker.on("failed", (job, error) => {
   logger.error(`job id ${job.id} is failed`, error);
-  mongoose.connection.close()
+  // mongoose.connection.close()
 });
 
 export default playWorker;
