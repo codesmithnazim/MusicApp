@@ -3,32 +3,24 @@ import { RiUserFollowLine } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthProvider";
 import { usePlayBar } from "../../contexts/PlayerContext";
 import followUserToggler from "../../services/followUserToggler";
+import { useNavigate } from "react-router-dom";
 
 function FollowIconBtn() {
-  const { user , setUser} = useAuth();
+  const { user, setUser, isAuthenticated } = useAuth();
   const { currentSong } = usePlayBar();
-  // const [isFollowing, setIsFollowing] = useState(false);
-  // const [completeUserRecord, setcompleteUserRecord] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const setUserDetails = async () => {
-  //     // const { userDetails } = await usersService.getUser(user.id);
-  //     // setcompleteUserRecord(userDetails);
-  //     if () {
-  //       return setIsFollowing(true);
-  //     }
-  //     // console.log("the user full detail ", userDetails);
-  //     return setIsFollowing(false);
-  //   };
-  //   setUserDetails();
-  // }, [user, isFollowing]);
-
- 
-console.log("user's details from the FollowIconBtn = ", user)
-
+  console.log("user's details from the FollowIconBtn = ", user);
 
   return (
-    <div className="cursor-pointer" onClick={()=>followUserToggler(currentSong?.user, user, setUser)}>
+    <div
+      className="cursor-pointer"
+      onClick={() => {
+        isAuthenticated
+          ? followUserToggler(currentSong?.user, user, setUser)
+          : navigate("/login");
+      }}
+    >
       {user?.songs?.includes(currentSong.id) ? (
         ""
       ) : (
