@@ -199,7 +199,7 @@ const getNewSongs = async (req, res, next) => {
   console.log("Control of execution came in song.controller.js ")
   try {
     let newSongs = await Song.aggregate([
-      { $match: { visibility: "public", status: "approved" } },
+      { $match: { visibility: "public", status: "approved" } }, 
       {
         $project: {
           id: "$_id",

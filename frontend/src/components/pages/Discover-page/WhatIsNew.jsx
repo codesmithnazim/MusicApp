@@ -7,11 +7,13 @@ import { useQuery } from "@tanstack/react-query";
 function WhatIsNew() {
   // const [newSongs, setNewSongs] = useState([]);
 
-  const { data: {latestSongs} } = useQuery({
+  const { data } = useQuery({
     queryKey: ["new-songs"],
     queryFn: songsServis.newSongs,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 8 * 60 * 1000,
   });
+
+  const latestSongs= data?.latestSongs
 
   console.log("the new songs ", latestSongs)
 
@@ -21,7 +23,7 @@ function WhatIsNew() {
       <h1 className="text-xl font-medium">What's New</h1>
       <div className="new-songs-container grid grid-rows-2 grid-cols-5 gap-2">
         {latestSongs?.map((song) => (
-          <NewSongsCards song={song} />
+          <NewSongsCards song={song} key={song?.id} />
         ))}
       </div>
     </div>

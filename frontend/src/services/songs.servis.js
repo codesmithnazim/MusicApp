@@ -5,7 +5,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-const uploadSong = async (songDetails) => {
+const uploadSong = async (songDetails) => { 
   const { data } = await api.post(`/upload`, songDetails);
   return data;
 };

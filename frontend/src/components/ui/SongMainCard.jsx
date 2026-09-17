@@ -1,15 +1,13 @@
-import { memo } from "react";
-import { FaPlay } from "react-icons/fa";
+import { memo, useState } from "react";
+import { FaPause, FaPlay } from "react-icons/fa";
 import { usePlayBar } from "../../contexts/PlayerContext";
 import songServise from "../../services/song.servise";
 import { IoPlaySharp } from "react-icons/io5";
 import { IoHeart } from "react-icons/io5";
 
-
-
 function SongMainCard({ cardRef, song }) {
-  // const [newSongID, setNewSongID] = useState("");
-  const { setCurrentSong } = usePlayBar();
+  const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
+  const { currentSong, setCurrentSong } = usePlayBar();
 
   // console.log("the song deatils from the main songCard ", song);
   // const { data } = useQuery({
@@ -17,21 +15,6 @@ function SongMainCard({ cardRef, song }) {
   //   queryFn: ()=> songServise.getSong(newSongID),
   // });
   console.log("SMC is re-rendered");
-
-  // useEffect(() => {
-  //  const getSong = async () => {
-  //     console.log("successfully clicked");
-  //     if (!newSongID) return;
-  //     console.log("new song id = ", newSongID);
-  //     try {
-  //       const { song } = await songServise.getSong(newSongID);
-  //       console.log("the data of special song ", song);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getSong();
-  // }, [newSongID])
 
   const handlePlayClick = async () => {
     console.log("clicked, song id =", song?.id);
@@ -44,11 +27,12 @@ function SongMainCard({ cardRef, song }) {
     }
   };
 
-
   return (
     <div
       className="song  flex flex-col w-120 h-83 text-foreground"
       ref={cardRef}
+      onMouseEnter={() => setIsPlayBtnVisible(true)}
+      onMouseLeave={() => setIsPlayBtnVisible(false)}
     >
       <div className="relative w-full group">
         <img
@@ -56,23 +40,43 @@ function SongMainCard({ cardRef, song }) {
           alt={song.artist}
           className="w-full object-fill object-center h-68 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
         />
-        <FaPlay
-          className="absolute top-28 left-52 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
-          size={40}
-          onClick={() => {
-            console.log("successful click and the current id = ", song.id);
-            handlePlayClick();
-          }}
-        />
+        {currentSong.id === song.id ? (
+          <FaPause
+            className="absolute top-28 left-53 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+            size={40}
+            onClick={()=> setCurrentSong("")}
+          />
+        ) : (
+          isPlayBtnVisible && (
+            <FaPlay
+              className="absolute top-28 left-55 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+              size={40}
+              onClick={() => {
+                console.log("successful click and the current id = ", song.id);
+                handlePlayClick();
+              }}
+            />
+          )
+        )}
       </div>
       <div className="details flex justify-between">
         <div>
-          <div>{song.title}</div>
-          <div>{song.artist}</div>
+          <div className="font-medium ">
+            {song.title.length > 10
+              ? song.title.slice(0, 32).concat("...")
+              : song.title}
+          </div>
+          <div className="text-xs text-muted">{song.artist}</div>
         </div>
         <div className="playsAndLikes self-end w-fit text-foreground flex gap-3">
-          <div className="plays flex items-center gap-1 text-muted">{<IoPlaySharp/>}{song?.plays || 0}</div>
-          <div className="plays flex items-center gap-1 text-muted">{<IoHeart/>}{song?.likes?.length || 0}</div>
+          <div className="plays flex items-center gap-1 text-muted">
+            {<IoPlaySharp />}
+            {song?.plays || 0}
+          </div>
+          <div className="plays flex items-center gap-1 text-muted">
+            {<IoHeart />}
+            {song?.likes?.length || 0}
+          </div>
         </div>
       </div>
     </div>

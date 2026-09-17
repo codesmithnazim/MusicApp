@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import { FaPause, FaPlay } from "react-icons/fa";
 import { IoHeart, IoPlaySharp } from "react-icons/io5";
 import { usePlayBar } from "../../contexts/PlayerContext";
 import songServise from "../../services/song.servise";
 function NewSongsCards({ song }) {
   const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
-  const { setCurrentSong } = usePlayBar();
+  const { currentSong, setCurrentSong } = usePlayBar();
 
   const handlePlayClick = async () => {
     console.log("clicked, song id =", song?.id);
@@ -20,7 +20,7 @@ function NewSongsCards({ song }) {
 
   return (
     <div
-      className="song  flex flex-col w-45 h-27 text-foreground"
+      className="song  flex flex-col w-45  text-foreground"
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
     >
@@ -28,22 +28,30 @@ function NewSongsCards({ song }) {
         <img
           src={song.songCover}
           alt={song.artist}
-          className="w-full object-fill   h-45 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
+          className="w-full object-fill  h-42 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
         />
-        {isPlayBtnVisible && (
-          <FaPlay
+        {currentSong.id === song.id ? (
+          <FaPause
             className="absolute top-18 left-20 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={25}
-            onClick={() => {
-              console.log("successful click and the current id = ", song.id);
-              handlePlayClick();
-            }}
+            onClick={() => setCurrentSong("")}
           />
+        ) : (
+          isPlayBtnVisible && (
+            <FaPlay
+              className="absolute top-18 left-20 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+              size={25}
+              onClick={() => {
+                console.log("successful click and the current id = ", song.id);
+                handlePlayClick();
+              }}
+            />
+          )
         )}
       </div>
       <div className="details flex justify-between">
         <div>
-          <div className="text-[12px]">
+          <div className="text-[12px] font-medium">
             {song.title.length > 10
               ? song.title.slice(0, 17).concat("...")
               : song.title}
