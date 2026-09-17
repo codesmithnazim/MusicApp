@@ -11,7 +11,7 @@ const getSong = async (id) => {
 };
 
 const liker = async (id) => {
-  const { data } = await api.patch(`${id}`, {});
+  const { data } = await api.patch(`/like/${id}`, {});
   return data;
 };
 

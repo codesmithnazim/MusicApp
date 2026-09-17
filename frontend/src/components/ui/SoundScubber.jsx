@@ -28,7 +28,7 @@ function SoundScubber({ volume, setVolume }) {
             type="range"
             min={0}
             max={1}
-            step={0.1}
+            step={0.025}
             value={volume}
             onChange={handleSeek}
             className=" w-20 h-1  bg-primary rounded-full appearance-none cursor-pointer outline-none

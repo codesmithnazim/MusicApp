@@ -54,7 +54,7 @@ function SongMainCard({ cardRef, song }) {
         <img
           src={song.songCover}
           alt={song.artist}
-          className="w-full object-cover object-top-right h-68 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
+          className="w-full object-fill object-center h-68 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
         />
         <FaPlay
           className="absolute top-28 left-52 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"

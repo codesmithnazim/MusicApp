@@ -7,16 +7,6 @@ import { User } from "../models/user.model.js";
 import getSignedFileUrl from "../utils/b2SignedUrl.js";
 import playQueue from "../queues/play.queue.js";
 import sharp from "sharp";
-// songsRouter.get("/", async (req, res, next) => {
-//   try {
-//     // res.status(200).json({ message: "Everything is fine" });
-//     const mongoRes= await Song.find()
-//     res.status(200).json(mongoRes)
-//   } catch (error) {
-//     logger.error(error);
-//     next(error);
-//   }
-// });
 
 const songsUploader = async (req, res, next) => {
   const { user } = req;
@@ -27,11 +17,6 @@ const songsUploader = async (req, res, next) => {
       const songFile = songFiles["songAudio"][0];
       const songCoverFile = songFiles["songCoverPic"][0];
 
-      // logger.info(
-      //   "details of files uloaded with the song detail form ",
-      //   songFile, songCoverFile
-      // );
-      // Files size cheacker
       if (songFile.size > 20 * 1024 * 1024) {
         return res
           .status(413)
@@ -167,16 +152,28 @@ const likesIncrementor = async (req, res, next) => {
   const { user } = req;
   // console.log("the current user ", user)
   try {
-    const completeSongDetails = await Song.findById(id)
-    if(user.favourites.includes(id)){
-      await User.findByIdAndUpdate(user._id, {$pull :{favourites:id}},{returnDocument: "after"})
-      await User.findByIdAndUpdate(completeSongDetails.user,{ $inc : { likes: -1 } },{ returnDocument: "after" }, );
-      await Song.findByIdAndUpdate(id, {$pull : {likes : user._id}},{returnDocument: "after"})
-      return res.status(201).json({ ok : true })
+    const completeSongDetails = await Song.findById(id);
+    if (user.favourites.includes(id)) {
+      await User.findByIdAndUpdate(
+        user._id,
+        { $pull: { favourites: id } },
+        { returnDocument: "after" },
+      );
+      await User.findByIdAndUpdate(
+        completeSongDetails.user,
+        { $inc: { likes: -1 } },
+        { returnDocument: "after" },
+      );
+      await Song.findByIdAndUpdate(
+        id,
+        { $pull: { likes: user._id } },
+        { returnDocument: "after" },
+      );
+      return res.status(201).json({ ok: true });
     }
     const updatedSongs = await Song.findByIdAndUpdate(
       id,
-      { $push : {likes : user._id}},
+      { $push: { likes: user._id } },
       { returnDocument: "after" },
     );
     const favouritesUpdated = await User.findByIdAndUpdate(
@@ -184,8 +181,12 @@ const likesIncrementor = async (req, res, next) => {
       { $push: { favourites: id } },
       { returnDocument: "after" },
     );
-    await User.findByIdAndUpdate(completeSongDetails.user,{ $inc: { likes: 1 } },{ returnDocument: "after" }, );
-    
+    await User.findByIdAndUpdate(
+      completeSongDetails.user,
+      { $inc: { likes: 1 } },
+      { returnDocument: "after" },
+    );
+
     console.log("The updated songs = ", updatedSongs);
     console.log("the favouritesUpdated = ", favouritesUpdated);
     res.status(200).json({ ok: true });
@@ -194,7 +195,44 @@ const likesIncrementor = async (req, res, next) => {
   }
 };
 
+const getNewSongs = async (req, res, next) => {
+  console.log("Control of execution came in song.controller.js ")
+  try {
+    let newSongs = await Song.aggregate([
+      { $match: { visibility: "public", status: "approved" } },
+      {
+        $project: {
+          id: "$_id",
+          _id : 0,
+          title: 1,
+          artist: 1,
+          user: 1,
+          plays: 1,
+          likes: 1,
+          coverUrl: 1,
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      { $limit: 10 },
+    ]);
 
+     newSongs =await  Promise.all(newSongs.map(async song=>{
+     song.songCover = await getSignedFileUrl(song.coverUrl);
+     delete song.coverUrl
+      return song
+    }))
+    console.log("new latest songs ", newSongs)
+    res.status(200).json({latestSongs: newSongs})
+  } catch (error) {
+    next(error);
+  }
+};
 
-export { songsUploader, getFeaturedSongs, getSong, likesIncrementor,  };
+export {
+  songsUploader,
+  getFeaturedSongs,
+  getSong,
+  likesIncrementor,
+  getNewSongs,
+};
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

@@ -16,7 +16,10 @@ const featuredSongs =async ()=>{
 }
 
 
+const newSongs =async ()=>{
+  const {data} = await api.get('/new')
+  return data
+}
 
 
-
-export default {uploadSong, featuredSongs}
+export default {uploadSong, featuredSongs , newSongs}
