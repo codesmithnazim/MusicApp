@@ -19,6 +19,6 @@ songsRouter.post(
 songsRouter.get('/featured-songs', getFeaturedSongs)
 songsRouter.get('/new', getNewSongs)
 songsRouter.get('/:id', getSong)
-songsRouter.patch('/:id',   tokenValidator,loadUser ,likesIncrementor)
+songsRouter.patch('/like/:id',   tokenValidator,loadUser ,likesIncrementor)
 
 export { songsRouter };

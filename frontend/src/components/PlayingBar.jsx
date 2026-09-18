@@ -5,6 +5,7 @@ import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
 import { IoShuffleOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
 import Scruber from "./ui/Scruber";
 import { usePlayBar } from "../contexts/PlayerContext";
 import LikeButton from "./ui/LikeButton";
@@ -16,7 +17,7 @@ function PlayingBar() {
   const [isloading, setIsloading] = useState(true);
   const [isrepeat, setIsrepeat] = useState(false);
   const songAudioRef = useRef();
-  const { currentSong } = usePlayBar();
+  const { setCurrentSong, currentSong } = usePlayBar();
 
   console.log("current song at the playingBar ", currentSong);
 
@@ -42,7 +43,6 @@ function PlayingBar() {
   console.log("The current song = ", currentSong);
 
   if (!currentSong) return;
-  // console.log("song is playing ", isPlay);
 
   // Helper function to format raw seconds into MM:SS
   console.log("It should not re-render. Ok!");
@@ -57,7 +57,7 @@ function PlayingBar() {
   };
 
   return (
-    <div className=" w-full h-12 border-t border-t-primary bg-background  fixed top-182.5 left-0 flex items-center justify-end">
+    <div className=" w-full h-12 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end ">
       <section className="main w-5/6  flex gap-8 items-center">
         <div className="controls flex gap-5 items-center">
           <MdOutlineSkipPrevious className="text-foreground" size={26} />
@@ -125,6 +125,10 @@ function PlayingBar() {
           <LikeButton />
           <FollowIconBtn />
         </div>
+        <RxCross2
+          className="absolute top-1 right-1 cursor-pointer text-muted"
+          onClick={() => setCurrentSong("")}
+        />
       </section>
     </div>
   );

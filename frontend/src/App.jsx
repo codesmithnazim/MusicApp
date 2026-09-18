@@ -33,7 +33,7 @@ function App() {
           <Route path="/upload-song" element={<UploadSong/>} />
         </Routes>
       </div>
-      <PlayingBar/>
+      <PlayingBar  />
     </div>
   );
 }
