@@ -28,23 +28,6 @@ function PlayingBar() {
     helper();
   }, [currentSong]);
 
-  // useEffect(() => {
-  //   if (!songAudioRef.current) {
-  //     setIsPlay(false)
-  //     return;
-  //   }
-  //   isPlay
-  //     ? songAudioRef.current
-  //         .play()
-  //         .then(() => {
-  //           setIsPlay(true);
-  //           setIsloading(false);
-  //         })
-  //         .catch(() => setIsPlay(false))
-  //     : songAudioRef.current.pause();
-  //   console.log("song is playing = ", isPlay);
-
-  // }, [ currentSong ]);
   const playController = async () => {
     try {
       (await isPlay)
@@ -74,7 +57,7 @@ function PlayingBar() {
   };
 
   return (
-    <div className="w-screen h-12 border-t border-t-primary bg-background  absolute bottom-0 left-0 flex items-center justify-end">
+    <div className=" w-full h-12 border-t border-t-primary bg-background  fixed top-182.5 left-0 flex items-center justify-end">
       <section className="main w-5/6  flex gap-8 items-center">
         <div className="controls flex gap-5 items-center">
           <MdOutlineSkipPrevious className="text-foreground" size={26} />
