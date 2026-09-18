@@ -150,6 +150,7 @@ function UploadSong() {
             type="text"
             required
             minLength={5}
+            maxLength={50}
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
           />
           <span
@@ -293,8 +294,8 @@ function UploadSong() {
             id="description"
             name="description"
             type="text"
-            required
             minLength={2}
+            maxLength={60}
             className={` ${isDark ? "dark" : ""} border-b-3 border-b-muted outline-none focus:border-b-foreground hover:border-b-foreground placeholder:text-muted `}
             placeholder="tracks with descriptions tend to get more plays and engagements "
           />
@@ -306,7 +307,7 @@ function UploadSong() {
 
         <button
           type="submit"
-          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer  `}
+          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer  z-10 `}
         >
           {successfulUpload ? (
             <>
