@@ -29,7 +29,7 @@ const songsUploader = async (req, res, next) => {
       }
 
       const customisedSongCoverBuffer = await sharp(songCoverFile.buffer)
-        .resize(450)
+        .resize(480)
         .webp({ quality: 80 })
         .toBuffer();
       songCoverFile.buffer = customisedSongCoverBuffer;
@@ -86,8 +86,17 @@ const getFeaturedSongs = async (req, res, next) => {
         $addFields: {
           featuredScore: {
             $divide: [
-              "$ageInDays",
-              { $add: ["$plays", { $multiply: [1, 3] }] },
+              {
+                $add: [
+                  "$plays",
+                  { $multiply: [{ $size: { $ifNull: ["$likes", []] } }, 5] },
+                  1,
+                ],
+              }, // Add 1 so 0 plays won't give a 0 score if you want to give new songs a chance
+              { $pow: ["$ageInDays", 1.5] },
+
+              // { $add: ["$plays", { $multiply: [1, 3] }] },
+              // "$ageInDays",
             ],
           },
         },
@@ -196,33 +205,64 @@ const likesIncrementor = async (req, res, next) => {
 };
 
 const getNewSongs = async (req, res, next) => {
-  console.log("Control of execution came in song.controller.js ")
+  console.log("Control of execution came in song.controller.js ");
   try {
     let newSongs = await Song.aggregate([
-      { $match: { visibility: "public", status: "approved" } }, 
+      { $match: { visibility: "public", status: "approved" } },
       {
         $project: {
           id: "$_id",
-          _id : 0,
+          _id: 0,
           title: 1,
           artist: 1,
           user: 1,
           plays: 1,
           likes: 1,
           coverUrl: 1,
+          createdAt: 1,
         },
       },
       { $sort: { createdAt: -1 } },
       { $limit: 10 },
     ]);
 
-     newSongs =await  Promise.all(newSongs.map(async song=>{
-     song.songCover = await getSignedFileUrl(song.coverUrl);
-     delete song.coverUrl
-      return song
-    }))
-    console.log("new latest songs ", newSongs)
-    res.status(200).json({latestSongs: newSongs})
+    newSongs = await Promise.all(
+      newSongs.map(async (song) => {
+        song.songCover = await getSignedFileUrl(song.coverUrl);
+        delete song.coverUrl;
+        return song;
+      }),
+    );
+    console.log("new latest songs ", newSongs);
+    res.status(200).json({ latestSongs: newSongs });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUserAllSongs = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let userAllSongs = await Song.find({ user: id }).lean();
+    logger.info("specific user all songs un-modified = ", userAllSongs);
+     userAllSongs = await Promise.all(
+      userAllSongs.map(async (song) => {
+        song.songCover = await getSignedFileUrl(song.coverUrl);
+        song.id = song._id;
+        delete song.coverUrl;
+        delete song.audioUrl;
+        delete song._id;
+        delete song.createdAt;
+        delete song.updatedAt;
+        delete song.visibility;
+        delete song.duration;
+        delete song.isFeatured;
+        delete song.__v;
+        return song;
+      }),
+    );
+    logger.info("specific user all songs modified = ", userAllSongs);
+    res.status(200).json({ userAllSongs });
   } catch (error) {
     next(error);
   }
@@ -234,5 +274,6 @@ export {
   getSong,
   likesIncrementor,
   getNewSongs,
+  getUserAllSongs,
 };
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

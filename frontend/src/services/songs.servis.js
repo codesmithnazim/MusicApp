@@ -5,21 +5,21 @@ const api = axios.create({
   withCredentials: true,
 });
 
-const uploadSong = async (songDetails) => { 
+const uploadSong = async (songDetails) => {
   const { data } = await api.post(`/upload`, songDetails);
   return data;
 };
 
-const featuredSongs =async ()=>{
-  const {data} = await api.get('/featured-songs')
-  return data
-}
+const featuredSongs = async () => {
+  const { data } = await api.get("/featured-songs");
+  return data;
+};
+
+const newSongs = async () => {
+  const { data } = await api.get("/new");
+  return data;
+};
 
 
-const newSongs =async ()=>{
-  const {data} = await api.get('/new')
-  return data
-}
 
-
-export default {uploadSong, featuredSongs , newSongs}
+export default { uploadSong, featuredSongs, newSongs };

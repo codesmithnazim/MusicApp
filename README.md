@@ -36,9 +36,11 @@ const customisedSongCoverBuffer = await sharp(songCoverFile.buffer)
 //customisedSongCoverBuffer is a  buffer that we can use .
 ```
 
-**_queries , jobs and workers_**
+**_bullMQ---> queries , jobs and workers_**
 
 For doing the tasks that is not compulsory for the desired response towards the frontend we make queues and we put such tasks as jobs with unique names inside that queues, and at last we have worker(s) for doing the task that are queued in the queues.
+
+For this purpose we need to import bullMQ's , and redis's libraries.
 
 **_TenStack(react query)_**
 

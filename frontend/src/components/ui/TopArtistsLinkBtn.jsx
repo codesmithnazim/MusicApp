@@ -7,7 +7,8 @@ import FollowButton from "./FollowButton";
 function TopArtistsLinkBtn({ artist }) {
   return (
     <Link
-      to={"something-good"}
+      to={`/user/${artist?.details?.id}`}
+      // to={`/user/${artist.details.name.toLowerCase().replaceAll(" ", "-")}`}
       className={` w-full flex justify-between items-center `}
     >
       <Avator user={artist} />

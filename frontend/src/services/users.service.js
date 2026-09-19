@@ -5,7 +5,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-const getUser = async (id) => {
+const getProfile = async (id) => {
   const { data } = await api.get(id);
   return data;
 };
@@ -36,4 +36,9 @@ const followArtist = async (id) => {
   return data;
 };
 
-export default { registerUser, logInUser, getMe, TopArtists, followArtist , getUser};
+const userAllSongs = async (id) => {
+  const { data } = await api.get(`/user-songs/${id}`);
+  return data;
+};
+
+export default { registerUser, logInUser, getMe, TopArtists, followArtist , getProfile, userAllSongs};

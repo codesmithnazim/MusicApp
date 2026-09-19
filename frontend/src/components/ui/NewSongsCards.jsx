@@ -3,7 +3,7 @@ import { FaPause, FaPlay } from "react-icons/fa";
 import { IoHeart, IoPlaySharp } from "react-icons/io5";
 import { usePlayBar } from "../../contexts/PlayerContext";
 import songServise from "../../services/song.servise";
-function NewSongsCards({ song }) {
+function NewSongsCards({ song , cardWidth }) {
   const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
   const { currentSong, setCurrentSong } = usePlayBar();
 
@@ -20,7 +20,7 @@ function NewSongsCards({ song }) {
 
   return (
     <div
-      className="song  flex flex-col w-45  text-foreground"
+      className={`song  flex flex-col w-${cardWidth? cardWidth : 48 } text-foreground`}
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
     >
@@ -32,14 +32,14 @@ function NewSongsCards({ song }) {
         />
         {currentSong.id === song.id ? (
           <FaPause
-            className="absolute top-18 left-20 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+            className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={25}
             onClick={() => setCurrentSong("")}
           />
         ) : (
           isPlayBtnVisible && (
             <FaPlay
-              className="absolute top-18 left-20 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+              className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
               size={25}
               onClick={() => {
                 console.log("successful click and the current id = ", song.id);

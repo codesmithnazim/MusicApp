@@ -20,12 +20,12 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-const getUser = async (req, res, next) => {
+const getProfile = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userCompleteRecord = await User.findById(id);
-    logger.info("the single user complete record = ", userCompleteRecord);
-    res.status(200).json({ userDetails: userCompleteRecord });
+    const profileDetails = await User.findById(id);
+    logger.info("the single user complete record = ", profileDetails);
+    res.status(200).json({ profileDetails });
   } catch (error) {
     next(error);
   }
@@ -60,7 +60,6 @@ const registerUser = async (req, res, next) => {
         .webp({ quality: 80 })
         .toBuffer();
       req.file.buffer = customisedProfilePicBuffer;
-
 
       const upload = new Upload({
         client: b2Client,
@@ -231,6 +230,9 @@ const followArtist = async (req, res, next) => {
   }
 };
 
+
+
+
 export {
   getAllUsers,
   registerUser,
@@ -238,5 +240,5 @@ export {
   myProfile,
   TopArtists,
   followArtist,
-  getUser,
+  getProfile,
 };
