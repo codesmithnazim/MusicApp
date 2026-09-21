@@ -1,13 +1,16 @@
+import { useAuth } from "../../../../../contexts/AuthProvider";
 import usersService from "../../../../../services/users.service";
 import TopArtistsLinkBtn from "../../../../ui/TopArtistsLinkBtn";
 import { useQuery } from "@tanstack/react-query";
 function Artists() {
+  const { user } = useAuth();
   const { data } = useQuery({
     queryKey: ["top-artists"],
     queryFn: usersService.TopArtists,
     staleTime: 60 * 60 * 1000,
   });
   const topArtists = data?.topArtists;
+  // const {topArtists} = data;
 
   // useEffect(() => {
   //   const getTopArtists = async () => {
@@ -31,7 +34,9 @@ function Artists() {
       <h2 className="text-[20px] font-semibold w-fit mx-auto">Top Artists</h2>
 
       {topArtists &&
-        topArtists.map((artist) => {
+        topArtists?.map((artist) => {
+          if (artist?.id === user?.id)
+            artist = { ...artist, profilePicture : user.profilePicture };
           return <TopArtistsLinkBtn artist={artist} key={artist?.id} />;
         })}
     </div>

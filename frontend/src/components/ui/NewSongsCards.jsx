@@ -52,8 +52,8 @@ function NewSongsCards({ song , cardWidth }) {
       <div className="details flex justify-between">
         <div>
           <div className="text-[12px] font-medium">
-            {song.title.length > 10
-              ? song.title.slice(0, 17).concat("...")
+            {song.title.length >20
+              ? song.title.slice(0, 20).concat("...")
               : song.title}
           </div>
         </div>
@@ -64,7 +64,7 @@ function NewSongsCards({ song , cardWidth }) {
           </div>
           <div className="plays flex items-center gap-0.5 text-muted">
             {<IoHeart />}
-            {song?.likes?.length || 0}
+            {song?.likes?.length || song.totalLikes ||0}
           </div>
         </div>
       </div>

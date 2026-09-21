@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import getSignedFileUrl from "../utils/b2SignedUrl.js";
 import { Song } from "../models/song.model.js";
 import sharp from "sharp";
+import deleteFile from "../utils/deleteFile.js";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -23,7 +24,24 @@ const getAllUsers = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const profileDetails = await User.findById(id);
+    const profileDetails = await User.findById(id).lean();
+    if (!profileDetails)
+      return res.status(404).json({ error: "user not found" });
+    profileDetails.profilePicture = await getSignedFileUrl(
+      profileDetails.profilePicture,
+    );
+    profileDetails.id = profileDetails._id;
+    profileDetails.totalFollowers = profileDetails.followers.length;
+    // profileDetails.totalFollowings = profileDetails.followings.length;
+    profileDetails.totalSongs = profileDetails.songs.length;
+    delete profileDetails.songs;
+    // delete profileDetails.followings;
+    delete profileDetails.followers;
+    delete profileDetails.favourites;
+    delete profileDetails.password;
+    delete profileDetails.email;
+    delete profileDetails.__v;
+    delete profileDetails._id;
     logger.info("the single user complete record = ", profileDetails);
     res.status(200).json({ profileDetails });
   } catch (error) {
@@ -56,8 +74,8 @@ const registerUser = async (req, res, next) => {
       );
 
       const customisedProfilePicBuffer = await sharp(req.file.buffer)
-        .resize(60)
-        .webp({ quality: 80 })
+        .resize(180)
+        .webp({ quality: 90 })
         .toBuffer();
       req.file.buffer = customisedProfilePicBuffer;
 
@@ -230,8 +248,100 @@ const followArtist = async (req, res, next) => {
   }
 };
 
+const getUserAllFollowers = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ _id: id });
 
+    logger.info(" the intended user ", user);
+    // const users = await User.aggregate([
+    //   {
+    //     $match: { _id: id },
+    //   },
+    //   {
+    //     $project: {
+    //       id: "$_id",
+    //       _id: -1,
+    //       name: 1,
+    //       profilePicture: 1,
+    //       followers: 1
 
+    //     },
+    //   },
+    // ]);
+    const userAllFollowers = await Promise.all(
+      user.followers?.map(async (user) => {
+        const follower = await User.findById(user).lean();
+        follower.profilePicture = await getSignedFileUrl(
+          follower.profilePicture,
+        );
+        follower.id = follower._id;
+        follower.totalSongs = follower?.songs.length;
+        (delete follower._id,
+          delete follower.password,
+          delete follower.songs,
+          delete follower.followings);
+        delete follower.followers;
+        delete follower.email;
+        delete follower.favourites;
+        delete follower.__v;
+        return follower;
+      }),
+    );
+    logger.info("the intended user followers = ", userAllFollowers);
+    res.status(200).json({ userAllFollowers });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateProfilePicture = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log("the control of execution came in the intended route handler ");
+    if (req.file) {
+      let key = "";
+      logger.info("Yes the file is uploaded successfully I think ");
+      const { profilePicture } = await User.findOne({ _id: id });
+      logger.info("received id for deletion = ", profilePicture);
+      await deleteFile(profilePicture);
+      console.log("File is successfully deleted");
+      console.log("Now we are going to uplaod the new picture guys");
+      const fileExtension = path.extname(req.file.originalname);
+      logger.info(
+        "the extension generated for the profile picture of this user ",
+        fileExtension,
+      );
+      key = `avators/${id}-${Date.now()}${fileExtension}`;
+      logger.info(
+        "the key generated for the profile picture of this user ",
+        key,
+      );
+
+      const customisedProfilePicBuffer = await sharp(req.file.buffer)
+        .resize(180)
+        .webp({ quality:100})
+        .toBuffer();
+      req.file.buffer = customisedProfilePicBuffer;
+
+      const upload = new Upload({
+        client: b2Client,
+        params: {
+          Bucket: config.BUCKET_NAME,
+          Key: key,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        },
+      });
+      await upload.done();
+      const updateUserDetails= await User.findByIdAndUpdate(id, {profilePicture: key}, {returnDocument: "after"})
+
+      res.status(200).json({profilePicture: await getSignedFileUrl(updateUserDetails.profilePicture)})
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 export {
   getAllUsers,
@@ -241,4 +351,6 @@ export {
   TopArtists,
   followArtist,
   getProfile,
+  getUserAllFollowers,
+  updateProfilePicture,
 };

@@ -5,6 +5,11 @@
   transition-duration: 300ms;
 }
 
+@theme {
+  --font-tiktok:
+    "TikTok Display Font", Arial, Tahoma, "PingFang SC", sans-serif;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -14,7 +19,7 @@
   --color-muted: #9fa1a2;
   --color-hover-background: oklch(96.7% 0.003 264.542);
   --color-searchBarBackground: oklch(96.7% 0.001 286.375);
-  --color-partitioner:oklch(96.7% 0.001 286.375);
+  --color-partitioner: oklch(96.7% 0.001 286.375);
 }
 
 .dark {
@@ -24,8 +29,7 @@
   --color-muted: #7f8186;
   --color-hover-background: oklch(44.23% 0.01723 268.304);
   --color-searchBarBackground: #1f1f22;
-  --color-partitioner:oklch(27.4% 0.006 286.033);
-
+  --color-partitioner: oklch(27.4% 0.006 286.033);
 }
 
 @theme inline {
@@ -36,5 +40,5 @@
   --color-hcolor: var(--color-hover-color);
   --color-hbackground: var(--color-hover-background);
   --color-sbBackground: var(--color-searchBarBackground);
-  --color-partitioner: var(--color-partitioner)
+  --color-partitioner: var(--color-partitioner);
 }

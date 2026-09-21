@@ -7,7 +7,7 @@ import FollowButton from "./FollowButton";
 function TopArtistsLinkBtn({ artist }) {
   return (
     <Link
-      to={`/user/${artist?.details?.id}`}
+      to={`/user/${artist?.details?.id}/songs`}
       // to={`/user/${artist.details.name.toLowerCase().replaceAll(" ", "-")}`}
       className={` w-full flex justify-between items-center `}
     >
@@ -16,17 +16,17 @@ function TopArtistsLinkBtn({ artist }) {
         <div
           className={`info flex flex-col w-25 overflow-clip text-[13px] font-medium`}
         >
-          <span className="text-foreground ">{artist?.details?.name}</span>
+          <span className="text-foreground ">{artist?.details?.name || 0 }</span>
           <div className="flex gap-2">
             <span
               className={`flex items-center justify-center w-fit text-muted`}
             >
-              <MdPerson2 /> {artist?.details.followers.length}
+              <MdPerson2 /> {artist?.details.followers.length  || 0}
             </span>
             <span
               className={` flex items-center justify-center w-fit text-muted`}
             >
-              <IoPlaySharp /> {artist?.totalPlays}
+              <IoPlaySharp /> {artist?.totalPlays || 0}
             </span>
           </div>
         </div>

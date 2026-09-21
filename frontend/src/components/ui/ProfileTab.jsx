@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-function ProfileTab({ to, name , id}) {
+function ProfileTab({ to, name, }) {
   return (
     <NavLink
       to={to}

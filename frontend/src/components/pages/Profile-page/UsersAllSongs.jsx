@@ -8,15 +8,16 @@ function UsersAllSongs() {
   const { id } = useParams();
   console.log("the id of the interested user ", id);
   const { data } = useQuery({
-    queryKey: ["user-all-songs"],
+    queryKey: ["profile", id, "songs"],
     queryFn: () => usersService.userAllSongs(id),
+    staleTime: 8 * 60 * 1000,
   });
   const userAllSongs = data?.userAllSongs;
   console.log("users all songs ", userAllSongs);
   return (
     <div className=" grid grid-rows-2 grid-cols-5 gap-2">
       {userAllSongs?.map((song) => (
-        <NewSongsCards song={song} key={song?.id} cardWidth={60}  />
+        <NewSongsCards song={song} key={song?.id} cardWidth={60} />
       ))}
     </div>
   );

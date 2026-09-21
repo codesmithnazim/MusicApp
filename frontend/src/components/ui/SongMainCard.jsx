@@ -42,14 +42,14 @@ function SongMainCard({ cardRef, song }) {
         />
         {currentSong.id === song.id ? (
           <FaPause
-            className="absolute top-28 left-53 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+            className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={40}
             onClick={() => setCurrentSong("")}
           />
         ) : (
           isPlayBtnVisible && (
             <FaPlay
-              className="absolute top-28 left-55 text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
+              className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
               size={40}
               onClick={() => {
                 console.log("successful click and the current id = ", song.id);

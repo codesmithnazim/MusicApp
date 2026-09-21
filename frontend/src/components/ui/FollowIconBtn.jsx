@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { RiUserFollowLine } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthProvider";
 import { usePlayBar } from "../../contexts/PlayerContext";
@@ -10,7 +9,7 @@ function FollowIconBtn() {
   const { currentSong } = usePlayBar();
   const navigate = useNavigate();
 
-  console.log("user's details from the FollowIconBtn = ", user);
+  // console.log("user's details from the FollowIconBtn = ", user);
 
   return (
     <div

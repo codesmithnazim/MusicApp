@@ -15,7 +15,7 @@ import PlayingBar from "./components/PlayingBar";
 import ProfileMainPage from "./components/pages/Profile-page/ProfileMainPage";
 import UsersAllSongs from "./components/pages/Profile-page/UsersAllSongs";
 import UsersAllFollowers from "./components/pages/Profile-page/UsersAllFollowers";
-import UsersAllFollowings from "./components/pages/Profile-page/UsersAllFollowings";
+import UsersAllFavSongs from "./components/pages/Profile-page/UsersAllFavSongs";
 
 function App() {
   const { isDark } = useThemeContext();
@@ -38,7 +38,7 @@ function App() {
           <Route path="/user/:id" element={<ProfileMainPage />}>
             <Route path="songs" element={<UsersAllSongs />} />
             <Route path="followers" element={<UsersAllFollowers />} />
-            <Route path="followings" element={<UsersAllFollowings />} />
+            <Route path="favorites" element={<UsersAllFavSongs />} />
           </Route>
         </Routes>
       </div>

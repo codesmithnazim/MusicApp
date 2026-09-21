@@ -245,7 +245,7 @@ const getUserAllSongs = async (req, res, next) => {
     const { id } = req.params;
     let userAllSongs = await Song.find({ user: id }).lean();
     logger.info("specific user all songs un-modified = ", userAllSongs);
-     userAllSongs = await Promise.all(
+    userAllSongs = await Promise.all(
       userAllSongs.map(async (song) => {
         song.songCover = await getSignedFileUrl(song.coverUrl);
         song.id = song._id;
@@ -268,6 +268,40 @@ const getUserAllSongs = async (req, res, next) => {
   }
 };
 
+const getUserFavoriteSongs = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let {favourites: userFavSongs} = await User.findOne({_id: id })
+    logger.info("specific user all songs un-modified = ", userFavSongs);
+    userFavSongs = await Promise.all(
+      userFavSongs.map(async (songId) => {
+        const song= await Song.findById(songId).lean()
+        song.songCover = await getSignedFileUrl(song.coverUrl);
+        song.id = song._id;
+        song.totalLikes= song.likes.length;
+        delete song.description;
+        delete song.genre;
+        delete song.status;
+        delete song.likes;
+        delete song.coverUrl;
+        delete song.audioUrl;
+        delete song._id;
+        delete song.createdAt;
+        delete song.updatedAt;
+        delete song.visibility;
+        delete song.duration;
+        delete song.isFeatured;
+        delete song.__v;
+        return song;
+      }),
+    );
+    logger.info("specific user all songs modified = ", userFavSongs);
+    res.status(200).json({ userFavSongs });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   songsUploader,
   getFeaturedSongs,
@@ -275,5 +309,6 @@ export {
   likesIncrementor,
   getNewSongs,
   getUserAllSongs,
+  getUserFavoriteSongs,
 };
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

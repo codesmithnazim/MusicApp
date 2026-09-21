@@ -1,0 +1,8 @@
+GET http://localhost:3000/api/user/user-followers/6aa97fd38d2ed2feeef96b13
+
+###
+GET http://localhost:3000/api/user/user-liked-songs/6aaac8653d3c244569e88a37
+
+
+###
+GET http://localhost:3000/api/user/6aaac8653d3c244569e88a37

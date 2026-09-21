@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UNSAFE_getTurboStreamSingleFetchDataStrategy } from "react-router-dom";
 const baseUrl = "http://localhost:3000/api/user";
 const api = axios.create({
   baseURL: baseUrl,
@@ -41,4 +42,27 @@ const userAllSongs = async (id) => {
   return data;
 };
 
-export default { registerUser, logInUser, getMe, TopArtists, followArtist , getProfile, userAllSongs};
+
+const userAllFollowers = async (id) => {
+  const { data } = await api.get(`/user-followers/${id}`);
+  return data;
+};
+
+
+
+const getFavoriteSongs = async (id) => {
+  const { data } = await api.get(`/user-liked-songs/${id}`);
+  return data;
+};
+
+
+const updateProfilePicture= async (id , file)=>{
+  const formFormat= new FormData()
+  formFormat.append('profilePic',file)
+  const {data}= await api.put(`/${id}/update/profilePicture`,formFormat)
+  return data 
+}
+
+
+
+export default { registerUser, logInUser, getMe, TopArtists, followArtist , getProfile, userAllSongs, userAllFollowers, getFavoriteSongs, updateProfilePicture};

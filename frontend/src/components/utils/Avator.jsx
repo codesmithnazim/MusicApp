@@ -1,18 +1,36 @@
 // import { useAuth } from "../../contexts/AuthProvider";
 
-function Avator({user}) {
-  // const { user } = useAuth();
-  
-  console.log('inspecting avator for the artists name ', user)
+import { Link } from "react-router-dom";
+
+function Avator({ user, width, height }) {
+  let exportedWidth = "";
+  if (width) {
+    exportedWidth = `w-${width}`;
+  }
+  let exportedHeight = "";
+  if (height) {
+    exportedHeight = `h-${height}`;
+  }
+  console.log(
+    "inspecting avator for the artists name ",
+    user,
+    "nzad the height and width of the profile pic = ",
+    width,
+    height,
+  );
   if (user?.profilePicture)
     return (
-      <div className="w-9 h-9 rounded-full overflow-hidden" key={user.id}>
+      <Link
+        className={`inline-block ${width ? exportedWidth : "w-9"}  ${height ? exportedHeight : "h-9"} rounded-full overflow-hidden`}
+        key={user.id}
+        to={`/user/${user?.details?.id ?? user?.id}/songs`}
+      >
         <img
-          className="h-full w-full object-cover object-top-right"
+          className={`inline-block h-full w-full object-cover object-center`}
           src={`${user.profilePicture}`}
-          alt={`${user.name}`}
+          alt={`${user.name || user?.details?.name}`}
         />
-      </div>
+      </Link>
     );
 
   const setColor = () => {
@@ -24,15 +42,26 @@ function Avator({user}) {
       "#f59e0b",
       "#ef4444",
     ];
-    const index = user?.name?.charCodeAt(0) % colors.length || user?.details?.name?.charCodeAt(0) % colors.length || 0;
+    const index =
+      user?.name?.charCodeAt(0) % colors.length ||
+      user?.details?.name?.charCodeAt(0) % colors.length ||
+      0;
     return colors[index];
   };
   return (
-    <div className="w-9 h-9 rounded-full overflow-hidden" key={user.id}>
-      <div className={`w-full h-full  font-bold flex items-center justify-center text-white`} style={{backgroundColor: setColor()}}>
-        {user?.name?.charAt(0).toUpperCase() || user?.details?.name?.charAt(0).toUpperCase()}
+    <Link
+      className={`inline-block  ${width ? exportedWidth : "w-9"}  ${height ? exportedHeight : "h-9"}  rounded-full overflow-hidden`}
+      key={user?.id || user?.details?.id}
+      to={`/user/${user?.details?.id ?? user?.id}/songs`}
+    >
+      <div
+        className={`w-full h-full  font-bold flex items-center justify-center text-white w-`}
+        style={{ backgroundColor: setColor() }}
+      >
+        {user?.name?.charAt(0).toUpperCase() ||
+          user?.details?.name?.charAt(0).toUpperCase()}
       </div>
-    </div>
+    </Link>
   );
 }
 
