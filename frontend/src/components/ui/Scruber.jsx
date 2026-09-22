@@ -14,7 +14,7 @@ function Scruber({
 
   useEffect(() => {
     songAudioRef.current.volume = volume;
-  }, [volume]);
+  }, [ volume ]);
 
   // console.log("the data of scrubber audio url ", currentSong)
 

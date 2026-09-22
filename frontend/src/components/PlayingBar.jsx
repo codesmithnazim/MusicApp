@@ -7,9 +7,10 @@ import { IoShuffleOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Scruber from "./ui/Scruber";
-import { usePlayBar } from "../contexts/PlayerContext";
 import LikeButton from "./ui/LikeButton";
 import FollowIconBtn from "./ui/FollowIconBtn";
+import { useSongsQueue } from "../contexts/songsQueue";
+import songServise from "../services/song.servise";
 
 function PlayingBar() {
   const [duration, setDuration] = useState(0);
@@ -17,17 +18,27 @@ function PlayingBar() {
   const [isloading, setIsloading] = useState(true);
   const [isrepeat, setIsrepeat] = useState(false);
   const songAudioRef = useRef();
-  const { setCurrentSong, currentSong } = usePlayBar();
+  const [ currentSong, setCurrentSong] = useState();
+  const { songsQueue, currentIndex , playPrevious, playNext} = useSongsQueue();
 
-  console.log("current song at the playingBar ", currentSong);
+  // console.log("current song at the playingBar ", songsQueue[currentIndex]);
 
   useEffect(() => {
-    const helper = () => {
+    const helper = async () => {
+      try {
+        const { song: fetchedSong } = await songServise.getSong(
+          songsQueue[currentIndex]?.id,
+        );
+        console.log("fetched song data:", fetchedSong);
+        setCurrentSong(fetchedSong); // you already have this from usePlayBar
+      } catch (error) {
+        console.log(error);
+      }
       setIsPlay(false);
       setIsloading(true);
     };
     helper();
-  }, [currentSong]);
+  }, [songsQueue, currentIndex]);
 
   const playController = async () => {
     try {
@@ -60,7 +71,7 @@ function PlayingBar() {
     <div className=" w-full h-12 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end ">
       <section className="main w-5/6  flex gap-8 items-center">
         <div className="controls flex gap-5 items-center">
-          <MdOutlineSkipPrevious className="text-foreground" size={26} />
+          <MdOutlineSkipPrevious className="text-foreground cursor-pointer" size={26} title="previous" onClick={playPrevious} />
           <div className="playOrStop relative w-5.5 h-5.5">
             <button
               className="cursor-pointer outline-none"
@@ -77,7 +88,7 @@ function PlayingBar() {
             )}
           </div>
           {/* <button>{<FaRegCirclePause className="text-foreground" size={22} />}</button> */}
-          <MdOutlineSkipNext className="text-foreground" size={26} />
+          <MdOutlineSkipNext className="text-foreground cursor-pointer" size={26} title="next" onClick={playNext} />
         </div>
         <div className="modernControls flex gap-3 items-center">
           <TiArrowRepeat

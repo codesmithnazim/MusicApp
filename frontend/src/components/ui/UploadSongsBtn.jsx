@@ -1,15 +1,15 @@
 import { FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider";
-import { usePlayBar } from "../../contexts/PlayerContext";
+import { useSongsQueue } from "../../contexts/songsQueue";
 function UploadSongsBtn() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { setCurrentSong } = usePlayBar();
+  const { setSongsList } = useSongsQueue();
 
   const clickHandler = () => {
     if (!isAuthenticated) return navigate("/login");
-    setCurrentSong("");
+    setSongsList([]);
     return navigate("/upload-song");
   };
   return (

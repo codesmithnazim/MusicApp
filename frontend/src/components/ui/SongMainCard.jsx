@@ -1,31 +1,26 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { usePlayBar } from "../../contexts/PlayerContext";
-import songServise from "../../services/song.servise";
 import { IoPlaySharp } from "react-icons/io5";
 import { IoHeart } from "react-icons/io5";
+import { useSongsQueue } from "../../contexts/songsQueue";
 
-function SongMainCard({ cardRef, song }) {
+function SongMainCard({ cardRef, song, onClick }) {
   const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
-  const { currentSong, setCurrentSong } = usePlayBar();
-
-  // console.log("the song deatils from the main songCard ", song);
-  // const { data } = useQuery({
-  //   queryKey: ["specificSong"],
-  //   queryFn: ()=> songServise.getSong(newSongID),
-  // });
+  const [currentSong, setCurrentSong] = useState();
+  const { songsQueue, currentIndex } = useSongsQueue();
+  
   console.log("SMC is re-rendered");
 
-  const handlePlayClick = async () => {
-    console.log("clicked, song id =", song?.id);
-    try {
-      const { song: fetchedSong } = await songServise.getSong(song.id);
-      console.log("fetched song data:", fetchedSong);
-      setCurrentSong(fetchedSong); // you already have this from usePlayBar
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const helper = () => {
+      try {
+        setCurrentSong(songsQueue[currentIndex]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    helper();
+  }, [songsQueue]);
 
   return (
     <div
@@ -40,7 +35,7 @@ function SongMainCard({ cardRef, song }) {
           alt={song.artist}
           className="w-full object-fill object-center h-68 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
         />
-        {currentSong.id === song.id ? (
+        {currentSong?.id === song?.id ? (
           <FaPause
             className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={40}
@@ -53,7 +48,7 @@ function SongMainCard({ cardRef, song }) {
               size={40}
               onClick={() => {
                 console.log("successful click and the current id = ", song.id);
-                handlePlayClick();
+                onClick(song.id);
               }}
             />
           )

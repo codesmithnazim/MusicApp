@@ -5,20 +5,20 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider.jsx";
 import ThemeProvider from "./contexts/ThemeProvider.jsx";
-import PlayerContextP from "./contexts/PlayerContext.jsx";
+import SongsQueueContextP from "./contexts/songsQueue.jsx";
 import ReactQueryContextProvider from "./contexts/ReactQueryContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     {/* <StrictMode> */}
     <AuthProvider>
-      <PlayerContextP>
+      <SongsQueueContextP>
         <ThemeProvider>
           <ReactQueryContextProvider>
             <App />
           </ReactQueryContextProvider>
         </ThemeProvider>
-      </PlayerContextP>
+      </SongsQueueContextP>
     </AuthProvider>
     {/* </StrictMode> */}
   </BrowserRouter>,

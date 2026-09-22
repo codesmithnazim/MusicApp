@@ -4,22 +4,24 @@ import { useQuery } from "@tanstack/react-query";
 import songsServis from "../../../../services/songs.servis";
 import LessThanBtn from "../../../ui/lessThanBtn";
 import GreatorThanBtn from "../../../ui/GreatorThanBtn";
+import { useSongsQueue } from "../../../../contexts/songsQueue";
 
 function Featured() {
   const [index, setIndex] = useState(0);
   const [pixelsToscroll, setPixelsToscroll] = useState(0);
   const [isHoverd, setIsHoverd] = useState(false);
   const cardRef = useRef();
-  
+  const {  setSongsList } = useSongsQueue();
+
   const { data } = useQuery({
     queryKey: ["featuredSongs"],
     queryFn: songsServis.featuredSongs,
-    staleTime: 8 * 60 * 1000,  
+    staleTime: 8 * 60 * 1000,
   });
 
   const featuredSongs = data?.featuredSongs; // Don't need useMemo() because useQuery() will preserved the data(object's value and memory address )
 
-// console.log("the features songs ", data)
+  // console.log("the features songs ", data)
 
   useLayoutEffect(() => {
     const musicCard = cardRef?.current?.offsetWidth;
@@ -43,6 +45,11 @@ function Featured() {
 
   // console.log("The featured songs = ", !!featuredSongs, "c index ", index);
 
+  const songsQueueSetter = (currentSongId) => {
+    const currentSongIndex= featuredSongs.findIndex(song=> song.id === currentSongId)
+    setSongsList(featuredSongs,currentSongIndex, "featured-songs-section");
+  };
+
   return (
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out">
       <LessThanBtn handlePrev={handlePrev} />
@@ -63,7 +70,7 @@ function Featured() {
         >
           {featuredSongs &&
             featuredSongs.map((song) => (
-              <SongMainCard key={song.id} cardRef={cardRef} song={song} />
+              <SongMainCard key={song.id} cardRef={cardRef} song={song} onClick={songsQueueSetter} />
             ))}
         </div>
       </div>

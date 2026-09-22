@@ -1,26 +1,29 @@
 import { useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { IoHeart, IoPlaySharp } from "react-icons/io5";
-import { usePlayBar } from "../../contexts/PlayerContext";
-import songServise from "../../services/song.servise";
-function NewSongsCards({ song , cardWidth }) {
-  const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
-  const { currentSong, setCurrentSong } = usePlayBar();
+import { useSongsQueue } from "../../contexts/songsQueue";
+import { useEffect } from "react";
 
-  const handlePlayClick = async () => {
-    console.log("clicked, song id =", song?.id);
-    try {
-      const { song: fetchedSong } = await songServise.getSong(song.id);
-      console.log("fetched song data:", fetchedSong);
-      setCurrentSong(fetchedSong); // you already have this from usePlayBar
-    } catch (error) {
-      console.log(error);
-    }
-  };
+function NewSongsCards({ song, onClick, cardWidth }) {
+  const [isPlayBtnVisible, setIsPlayBtnVisible] = useState(false);
+  const [ currentSong, setCurrentSong ] = useState();
+  const { songsQueue, currentIndex } = useSongsQueue();
+
+
+  useEffect(() => {
+    const helper = () => {
+      try {
+        setCurrentSong(songsQueue[currentIndex]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    helper();
+  }, [songsQueue]);
 
   return (
     <div
-      className={`song  flex flex-col w-${cardWidth? cardWidth : 48 } text-foreground`}
+      className={`song  flex flex-col w-${cardWidth ? cardWidth : 48} text-foreground`}
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
     >
@@ -30,7 +33,7 @@ function NewSongsCards({ song , cardWidth }) {
           alt={song.artist}
           className="w-full object-fill  h-42 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 "
         />
-        {currentSong.id === song.id ? (
+        {currentSong?.id === song?.id ? (
           <FaPause
             className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={25}
@@ -43,7 +46,7 @@ function NewSongsCards({ song , cardWidth }) {
               size={25}
               onClick={() => {
                 console.log("successful click and the current id = ", song.id);
-                handlePlayClick();
+                onClick(song?.id);
               }}
             />
           )
@@ -52,7 +55,7 @@ function NewSongsCards({ song , cardWidth }) {
       <div className="details flex justify-between">
         <div>
           <div className="text-[12px] font-medium">
-            {song.title.length >20
+            {song.title.length > 20
               ? song.title.slice(0, 20).concat("...")
               : song.title}
           </div>
@@ -64,7 +67,7 @@ function NewSongsCards({ song , cardWidth }) {
           </div>
           <div className="plays flex items-center gap-0.5 text-muted">
             {<IoHeart />}
-            {song?.likes?.length || song.totalLikes ||0}
+            {song?.likes?.length || song.totalLikes || 0}
           </div>
         </div>
       </div>

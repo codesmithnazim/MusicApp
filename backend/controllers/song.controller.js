@@ -140,7 +140,7 @@ const getSong = async (req, res, next) => {
   try {
     const { id: wantedSongId } = req.params;
     logger.info("the id of the song received by the backend = ", wantedSongId);
-    const wantedSong = await Song.findById(wantedSongId);
+    const wantedSong = await Song.findById(wantedSongId).select("coverUrl audioUrl artist title duration ")
     wantedSong.audioUrl = await getSignedFileUrl(wantedSong.audioUrl);
     wantedSong.coverUrl = await getSignedFileUrl(wantedSong.coverUrl);
     await playQueue.add("record-play", {

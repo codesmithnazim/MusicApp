@@ -1,11 +1,11 @@
 import { IoHeart } from "react-icons/io5";
-import { usePlayBar } from "../../contexts/PlayerContext";
 import { useAuth } from "../../contexts/AuthProvider";
 import likeSongToggler from "../../services/likeSongToggler";
 import { useNavigate} from "react-router-dom"
+import { useSongsQueue } from "../../contexts/songsQueue";
 
 function LikeButton() {
-  const { currentSong } = usePlayBar();
+   const { songsQueue, currentIndex } = useSongsQueue();
   const { user, setUser, isAuthenticated } = useAuth();
   const navigate = useNavigate()
 
@@ -13,8 +13,8 @@ function LikeButton() {
 
   return (
     <IoHeart
-      className={`${user?.favourites?.includes(currentSong.id) ? "text-primary" : "hover:text-zinc-600 "} cursor-pointer`}
-      onClick={() =>{isAuthenticated? likeSongToggler(currentSong?.id, user, setUser) : navigate('/login') }}
+      className={`${user?.favourites?.includes(songsQueue[currentIndex]?.id) ? "text-primary" : "hover:text-zinc-600 "} cursor-pointer`}
+      onClick={() =>{isAuthenticated? likeSongToggler(songsQueue[currentIndex].id, user, setUser) : navigate('/login') }}
     />
   );
 }
