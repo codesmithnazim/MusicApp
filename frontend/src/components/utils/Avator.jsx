@@ -1,27 +1,28 @@
-// import { useAuth } from "../../contexts/AuthProvider";
-
 import { Link } from "react-router-dom";
 
-function Avator({ user, width, height }) {
-  let exportedWidth = "";
-  if (width) {
-    exportedWidth = `w-${width}`;
-  }
-  let exportedHeight = "";
-  if (height) {
-    exportedHeight = `h-${height}`;
-  }
+function Avator({ user, size = 9 }) {
+  const sizeMap = {
+    6: "w-6 h-6",
+    8: "w-8 h-8",
+    9: "w-9 h-9",
+    10: "w-10 h-10",
+    12: "w-12 h-12",
+    16: "w-16 h-16",
+    40: "w-40 h-40",
+  };
+
+  const sizeClasses= sizeMap[size]
+
   console.log(
     "inspecting avator for the artists name ",
     user,
-    "nzad the height and width of the profile pic = ",
-    width,
-    height,
+    " the height and width of the profile pic = ",
+    size,
   );
   if (user?.profilePicture)
     return (
       <Link
-        className={`inline-block ${width ? exportedWidth : "w-9"}  ${height ? exportedHeight : "h-9"} rounded-full overflow-hidden`}
+        className={`inline-block ${sizeClasses} rounded-full overflow-hidden`}
         key={user.id}
         to={`/user/${user?.details?.id ?? user?.id}/songs`}
       >
@@ -50,7 +51,7 @@ function Avator({ user, width, height }) {
   };
   return (
     <Link
-      className={`inline-block  ${width ? exportedWidth : "w-9"}  ${height ? exportedHeight : "h-9"}  rounded-full overflow-hidden`}
+      className={`inline-block  ${sizeClasses}   rounded-full overflow-hidden`}
       key={user?.id || user?.details?.id}
       to={`/user/${user?.details?.id ?? user?.id}/songs`}
     >

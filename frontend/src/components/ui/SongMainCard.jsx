@@ -20,7 +20,7 @@ function SongMainCard({ cardRef, song, onClick }) {
       }
     };
     helper();
-  }, [songsQueue]);
+  }, [songsQueue, currentIndex]);
 
   return (
     <div
@@ -39,7 +39,7 @@ function SongMainCard({ cardRef, song, onClick }) {
           <FaPause
             className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
             size={40}
-            onClick={() => setCurrentSong("")}
+            // onClick={() => setCurrentSong("")}
           />
         ) : (
           isPlayBtnVisible && (

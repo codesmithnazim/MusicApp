@@ -67,6 +67,7 @@ function Scruber({
           max={duration}
           value={currentTime}
           onChange={handleSeek}
+          step={0.05}
           className=" w-120 h-1 bg-primary rounded-full appearance-none cursor-pointer outline-none
          
          /* Webkit (Chrome, Safari, Edge, Opera) Thumb Styling */

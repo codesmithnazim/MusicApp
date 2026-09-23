@@ -5,14 +5,16 @@ function SongsQueueContextP({ children }) {
   const [songsQueue, setSongsQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const setSongsList = (list, currentSongPos, provider) => {
+  const setSongsList = (list, currentSongPos, provider="not given") => {
     setSongsQueue(list);
     setCurrentIndex(currentSongPos);
+    console.log("The songs queue updater section name ", provider);
   };
 
-  const playNext = () =>  setCurrentIndex((prev) => Math.min(prev + 1, songsQueue.length - 1));
-  const playPrevious = () =>   setCurrentIndex((prev) => Math.max(prev - 1, 0));
-  
+  const playNext = () =>
+    setCurrentIndex((prev) => Math.min(prev + 1, songsQueue.length - 1));
+  const playPrevious = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
+
   console.log(
     "the new songs queue ",
     songsQueue,

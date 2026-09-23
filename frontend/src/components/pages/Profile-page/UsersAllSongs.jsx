@@ -28,7 +28,7 @@ function UsersAllSongs() {
   return (
     <div className=" grid grid-rows-2 grid-cols-5 gap-2">
       {userAllSongs?.map((song) => (
-        <NewSongsCards song={song} key={song?.id} onClick={songsQueueSetter} cardWidth={60} />
+        <NewSongsCards song={song} key={song?.id}  onClick={songsQueueSetter} cardWidth={60} />
       ))}
     </div>
   );
