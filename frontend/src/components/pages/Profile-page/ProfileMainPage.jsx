@@ -57,8 +57,9 @@ function ProfileMainPage() {
           <Avator user={profileDetails} size={40} />
           {user?.id === id && (
             <FaPencil
-              className="absolute bottom-14 right-0.5 rotate-15 cursor-pointer"
+              className="absolute bottom-8 right-0 rotate-27 cursor-pointer"
               onClick={uploadPicHandler}
+              size={20}
             />
           )}
         </div>
