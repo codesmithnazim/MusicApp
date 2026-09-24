@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IoPlaySharp } from "react-icons/io5";
 import { IoHeart } from "react-icons/io5";
 
-function Hit({ hit, onClick }) {
+function Hit({ hit, onClick , setSearchedSongs}) {
   const { data } = useQuery({
     queryKey: ["song-cover", hit?.objectID],
     queryFn: () => songservice.getSongCover(hit?.objectID),
@@ -18,7 +18,7 @@ function Hit({ hit, onClick }) {
   return (
     <li
       className=" relative flex h-22 z-50 w-full gap-3 items-start border-2 cursor-pointer border-black/30 hover:border-primary bg-background p-2  rounded-lg shadow-lg"
-      onClick={(e) =>{ onClick(hit?.objectID); e.stopPropagation()}}
+      onClick={() =>{ onClick(hit?.objectID);setSearchedSongs([]) }}
       key={hit?.objectID}
     >
       {songCover && (

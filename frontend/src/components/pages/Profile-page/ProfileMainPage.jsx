@@ -51,8 +51,8 @@ function ProfileMainPage() {
   };
 
   return (
-    <div className="flex flex-col gap-5 font-tiktok ">
-      <div className="bio flex gap-4 border border-red-400 items-start">
+    <div className="flex flex-col gap-6 font-tiktok pt-12">
+      <div className="bio flex gap-4  items-start">
         <div className="picAndEditPencil relative">
           <Avator user={profileDetails} size={40} />
           {user?.id === id && (

@@ -80,7 +80,7 @@ function Searchbar() {
       {searchedSongs?.length > 0 && (
         <ul className="absolute flex flex-col top-full w-full left-0 mt-2 bg-foreground gap-2 p-3 rounded-md">
           {searchedSongs.map((hit) => (
-            <Hit hit={hit} key={hit?.objectID} onClick={songsQueueSetter} />
+            <Hit hit={hit} key={hit?.objectID} onClick={songsQueueSetter} setSearchedSongs={setSearchedSongs} />
           ))}
           <div className="pagination flex gap-4 items-center m-auto w-fit mt-0.5">
             {paginationArray.length > 1 &&
