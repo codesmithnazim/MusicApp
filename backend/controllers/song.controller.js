@@ -140,7 +140,9 @@ const getSong = async (req, res, next) => {
   try {
     const { id: wantedSongId } = req.params;
     logger.info("the id of the song received by the backend = ", wantedSongId);
-    const wantedSong = await Song.findById(wantedSongId).select("coverUrl audioUrl artist title duration ")
+    const wantedSong = await Song.findById(wantedSongId).select(
+      "coverUrl audioUrl artist title duration ",
+    );
     wantedSong.audioUrl = await getSignedFileUrl(wantedSong.audioUrl);
     wantedSong.coverUrl = await getSignedFileUrl(wantedSong.coverUrl);
     await playQueue.add("record-play", {
@@ -271,14 +273,14 @@ const getUserAllSongs = async (req, res, next) => {
 const getUserFavoriteSongs = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let {favourites: userFavSongs} = await User.findOne({_id: id })
+    let { favourites: userFavSongs } = await User.findOne({ _id: id });
     logger.info("specific user all songs un-modified = ", userFavSongs);
     userFavSongs = await Promise.all(
       userFavSongs.map(async (songId) => {
-        const song= await Song.findById(songId).lean()
+        const song = await Song.findById(songId).lean();
         song.songCover = await getSignedFileUrl(song.coverUrl);
         song.id = song._id;
-        song.totalLikes= song.likes.length;
+        song.totalLikes = song.likes.length;
         delete song.description;
         delete song.genre;
         delete song.status;
@@ -302,6 +304,16 @@ const getUserFavoriteSongs = async (req, res, next) => {
   }
 };
 
+const getSongCover = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { coverUrl } = await Song.findById(id);
+    res.status(200).json({ songCover: await getSignedFileUrl(coverUrl) });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   songsUploader,
   getFeaturedSongs,
@@ -310,5 +322,6 @@ export {
   getNewSongs,
   getUserAllSongs,
   getUserFavoriteSongs,
+  getSongCover,
 };
 // ${Math.floor(sec/60)}:${Math.floor(sec%60)}

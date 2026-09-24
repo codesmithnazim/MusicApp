@@ -4,7 +4,7 @@ import { tokenValidator } from "../middlewares/validateToken.js";
 // import { loadUser } from "../middlewares/loadUser.js"
 import uploadSong from "../middlewares/uploadSong.js";
 // import uploadSongCover from "../middlewares/uploadSongCover.js";
-import { songsUploader, getFeaturedSongs , getSong, likesIncrementor , getNewSongs} from "../controllers/song.controller.js";
+import { songsUploader, getFeaturedSongs , getSong, likesIncrementor , getNewSongs, getSongCover} from "../controllers/song.controller.js";
 const songsRouter = express.Router();
 import {loadUser} from "../middlewares/loadUser.js"
 
@@ -19,6 +19,7 @@ songsRouter.post(
 songsRouter.get('/featured-songs', getFeaturedSongs)
 songsRouter.get('/new', getNewSongs)
 songsRouter.patch('/like/:id',   tokenValidator,loadUser ,likesIncrementor)
+songsRouter.get("/cover/:id", getSongCover)
 songsRouter.get('/:id', getSong)
 
 export { songsRouter };

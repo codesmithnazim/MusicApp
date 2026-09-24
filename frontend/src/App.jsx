@@ -21,9 +21,9 @@ function App() {
   const { isDark } = useThemeContext();
   return (
     <div
-      className={`${isDark ? "dark" : ""} musicApp relative flex  max-w-screen min-h-screen bg-background text-foreground `}
+      className={`${isDark ? "dark" : ""} musicApp  flex relative max-w-screen min-h-screen bg-background text-foreground `}
     >
-      <LSMain className={`justify-self-start`} />
+      <LSMain />
       <div className="flex flex-col flex-1 ">
         <Header />
         <Routes>

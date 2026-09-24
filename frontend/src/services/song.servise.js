@@ -15,6 +15,9 @@ const liker = async (id) => {
   return data;
 };
 
+const getSongCover = async (id) => {
+  const { data } = await api.get(`/cover/${id}`);
+  return data;
+};
 
-
-export default { getSong, liker};
+export default { getSong, liker, getSongCover };

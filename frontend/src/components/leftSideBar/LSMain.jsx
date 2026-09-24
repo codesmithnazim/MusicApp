@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function Main() {
   return (
     <div
-      className={`w-54 h-screen bg-background sticky overflow-y-scroll scrollbar-none pl-4.5  flex flex-col items-start gap-3 overscroll-y-auto border-r border-r-partitioner`}
+      className={`w-54 h-screen bg-background sticky top-0 overflow-y-scroll scrollbar-none pl-4.5  flex flex-col items-start gap-3 overscroll-y-auto border-r border-r-partitioner `}
     >
       <SiteBrand />
       <div className={`text-muted font-normal text-sm`}>Browse</div>

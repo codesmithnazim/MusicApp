@@ -191,7 +191,7 @@ const TopArtists = async (req, res, next) => {
         },
       },
       { $sort: { totalScore: -1 } },
-      { $limit: 5 },
+      { $limit: 9 },
     ]);
     const topArtistsCompleteRecord = await Promise.all(
       topArtists.map(async (artistCompleteRecord) => {

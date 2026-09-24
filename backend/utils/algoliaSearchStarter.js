@@ -20,8 +20,8 @@ const songs = res.map((song) => {
     genre: song.genre,
     description: song.description,
     coverUrl: song.coverUrl,
-    audioUrl: song.audioUrl,
     plays: song.plays,
+    likes: song.likes.length,
     duration: song.duration,
     createdAt: song.createdAt,
   };
@@ -33,4 +33,3 @@ algoliaClient.saveObjects({
 });
 
 mongoose.connection.close();
-
