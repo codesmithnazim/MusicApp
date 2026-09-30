@@ -62,10 +62,10 @@ function Searchbar() {
 
   return (
     <div
-      className={`relative searchBar flex items-center gap-1 w-[45vw] h-fit bg-yellow-400 px-1   backdrop-blur-lg  border-white/20 rounded-lg z-50 sm:w-[35vw]`}
+      className={`relative searchBar flex items-center gap-1 w-[45vw] h-fit bg-yellow-400 px-1   backdrop-blur-lg  border-white/20 rounded-lg z-50 sm:w-[35vw] lg:w-[25vw] md:py-1 lg:py-1.5`}
       onClick={(e) => e.stopPropagation()}
     >
-      <CiSearch className={`text-xs text-foreground shrink-0 sm:text-sm`} />
+      <CiSearch className={`text-xs text-foreground shrink-0 sm:text-sm md:text-base`} />
       <input
         className={`w-3/4 outline-none placeholder:text-muted placeholder:italic placeholder:text-xs`}
         type="text"
@@ -73,7 +73,7 @@ function Searchbar() {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search..."
       />
-      <div className="flex justify-end flex-1 sm:py-1 sm:pr-5">
+      <div className="flex justify-end flex-1 sm:py-1 sm:pr-5 gap-0.5 sm:gap-1 md:gap-2">
       {isSearching && (
         <AiOutlineLoading3Quarters size={17} className="animate-spin" />
       )}

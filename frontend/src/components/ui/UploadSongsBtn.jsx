@@ -15,10 +15,10 @@ function UploadSongsBtn() {
   return (
     <div
       onClick={clickHandler}
-      className={`text-foreground cursor-pointer flex justify-between items-center gap-0.5 border border-muted py-0.5 px-1.5 rounded-2xl sm:px-2.5  `}
+      className={`text-foreground cursor-pointer flex justify-between items-center gap-0.5 border border-muted py-0.5 px-1.5 rounded-2xl sm:px-2.5  lg:px-3.5 lg:py-1 lg:gap-2`}
     >
       <FiUpload size={14} strokeWidth={1.5} color={`#ef1960`} />
-      <span className="font-semibold text-[8px] sm:text-sm">Songs</span>
+      <span className="font-semibold text-[8px] sm:text-sm lg:text-base">Songs</span>
     </div>
   );
 }

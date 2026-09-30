@@ -57,28 +57,28 @@ function Featured() {
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out w-full border-2 border-emerald-600">
       <div className="absolute inset-0 my-auto">
         <div
-          className=" text-black bg-white w-10 h-10 flex justify-center items-center rounded-full border border-zinc absolute -left-3 top-26 z-100 cursor-pointer"
+          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -left-2.5 top-26 z-100 cursor-pointer md:w-8 md:h-8"
           onClick={() => handlePrev()}
         >
-          <FaLessThan />
+          <FaLessThan size={8} strokeWidth={0} />
         </div>
         <div
-          className=" text-black bg-white w-10 h-10 flex justify-center items-center rounded-full border border-zinc absolute -right-3 top-26  z-100 cursor-pointer"
+          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -right-3 top-26  z-100 cursor-pointer md:w-8 md:h-8"
           onClick={() => handleNext()}
         >
-          <FaGreaterThan />
+          <FaGreaterThan size={8} strokeWidth={0}/>
         </div>
       </div>
       {/* <LessThanBtn handlePrev={handlePrev}  />
       <GreatorThanBtn handleNext={handleNext} /> */}
       <div className="text-2xl font-semibold">Featured</div>
       <div
-        className={`featuredSongs w-full min-w-0  2xl:w-247 flex items-center overflow-x-scroll scrollbar-none`}
+        className={`featuredSongs w-full min-w-0   flex items-center overflow-x-scroll scrollbar-none`}
         onMouseEnter={() => setIsHoverd(true)}
         onMouseLeave={() => setIsHoverd(false)}
       >
         <div
-          className="wider flex items-center gap-5 "
+          className="wider flex items-center gap-5 border-4  border-blue-500 "
           style={{
             transform: `translateX(${-pixelsToscroll * index}px)`,
             transition: "all 1200ms cubic-bezier(0.65, 0.06, 0.14, 0.92) ",

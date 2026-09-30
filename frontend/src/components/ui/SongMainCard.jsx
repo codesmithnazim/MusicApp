@@ -24,7 +24,7 @@ function SongMainCard({ cardRef, song, onClick }) {
 
   return (
     <div
-      className="song  flex flex-col w-80 h-60 text-foreground relative "
+      className="song  flex flex-col w-80 h-60 text-foreground relative  lg:w-88 lg:h-70"
       ref={cardRef}
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
@@ -34,7 +34,7 @@ function SongMainCard({ cardRef, song, onClick }) {
           src={song.songCover}
           alt={song.artist}
           className="w-full object-fill object-center h-40 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 
-          z-0 relative"
+          z-0 relative sm:h-44 md:h-48 lg:h-55"
         />
         {currentSong?.id === song?.id ? (
           <FaPause
