@@ -24,7 +24,7 @@ function SongMainCard({ cardRef, song, onClick }) {
 
   return (
     <div
-      className="song  flex flex-col w-120 h-83 text-foreground relative "
+      className="song  flex flex-col w-80 h-60 text-foreground relative "
       ref={cardRef}
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
@@ -33,20 +33,20 @@ function SongMainCard({ cardRef, song, onClick }) {
         <img
           src={song.songCover}
           alt={song.artist}
-          className="w-full object-fill object-center h-68 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 
+          className="w-full object-fill object-center h-40 rounded-md shadow-2xs group-hover:opacity-80 transition-all duration-1000 
           z-0 relative"
         />
         {currentSong?.id === song?.id ? (
           <FaPause
             className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
-            size={40}
+            size={30}
             // onClick={() => setCurrentSong("")}
           />
         ) : (
           isPlayBtnVisible && (
             <FaPlay
               className="absolute inset-0 m-auto text-white outline-none cursor-pointer drop-shadow-md transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]"
-              size={40}
+              size={30}
               onClick={() => {
                 console.log("successful click and the current id = ", song.id);
                 onClick(song.id);
@@ -80,3 +80,7 @@ function SongMainCard({ cardRef, song, onClick }) {
 }
 
 export default memo(SongMainCard);
+
+
+
+      // className="song  flex flex-col w-120 h-83 text-foreground relative "

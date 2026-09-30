@@ -12,7 +12,7 @@ const navigate= useNavigate()
   if (user?.id === artist?.id) {
     return (
       <div
-        className={`${isDark ? "dark" : ""} w-21 text-center py-1 tracking-wider h-fit  bg-primary rounded-sm text-sm text-white self-end-safe`}
+        className={`${isDark ? "dark" : ""} w-15 text-center px-1 py-0.5 tracking-wider h-fit  bg-primary rounded-sm  text-white  text-xs self-center`}
       >
         Profile
       </div>
@@ -21,7 +21,7 @@ const navigate= useNavigate()
   // console.log("the user details from the FollowButton component = ", user);
   return (
     <button
-      className={`${isDark ? "dark" : ""}  w-21 text-center py-1 tracking-wider h-fit  bg-primary rounded-sm text-sm text-white self-end-safe cursor-pointer`}
+      className={`${isDark ? "dark" : ""}  w-16 text-center px-1 py-0.5 tracking-wider h-fit  bg-primary rounded-sm text-xs text-white  cursor-pointer self-center`}
       onClick={(e) => {
         if(!isAuthenticated) {
           return navigate("/login")

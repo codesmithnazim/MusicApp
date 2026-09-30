@@ -24,7 +24,7 @@ function App() {
       className={`${isDark ? "dark" : ""} musicApp  flex relative max-w-screen min-h-screen bg-background text-foreground `}
     >
       <LSMain />
-      <div className="flex flex-col flex-1 ">
+      <div className="flex flex-1 flex-col min-w-0">
         <Header />
         <Routes>
           <Route path="/" element={<Discover />} />

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-function Avator({ user, size = 9 }) {
+function Avator({ user, size = 7 }) {
   const sizeMap = {
     6: "w-6 h-6",
     8: "w-8 h-8",
-    9: "w-9 h-9",
+    7: "w-7 h-7",
     10: "w-10 h-10",
     12: "w-12 h-12",
     16: "w-16 h-16",
@@ -22,12 +22,12 @@ function Avator({ user, size = 9 }) {
   if (user?.profilePicture)
     return (
       <Link
-        className={`inline-block ${sizeClasses} rounded-full overflow-hidden`}
+        className={`inline-block ${sizeClasses} rounded-full overflow-hidden shrink-0 `}
         key={user.id}
         to={`/user/${user?.details?.id ?? user?.id}/songs`}
       >
         <img
-          className={`inline-block h-full w-full object-cover object-center`}
+          className={`inline-block h-full w-full object-cover object-center shrink-0`}
           src={`${user.profilePicture}`}
           alt={`${user.name || user?.details?.name}`}
         />

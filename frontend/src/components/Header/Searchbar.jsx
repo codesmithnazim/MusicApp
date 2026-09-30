@@ -62,21 +62,23 @@ function Searchbar() {
 
   return (
     <div
-      className={`relative searchBar flex items-center gap-3 h-7 w-120 p-5 bg-sbBackground backdrop-blur-lg  border-white/20 rounded-lg z-50`}
+      className={`relative searchBar flex items-center gap-1 w-[45vw] h-fit bg-yellow-400 px-1   backdrop-blur-lg  border-white/20 rounded-lg z-50 sm:w-[35vw]`}
       onClick={(e) => e.stopPropagation()}
     >
-      <CiSearch size={24} className={` text-foreground`} />
+      <CiSearch className={`text-xs text-foreground shrink-0 sm:text-sm`} />
       <input
-        className={`flex-1 outline-none placeholder:text-muted placeholder:italic`}
+        className={`w-3/4 outline-none placeholder:text-muted placeholder:italic placeholder:text-xs`}
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search..."
       />
+      <div className="flex justify-end flex-1 sm:py-1 sm:pr-5">
       {isSearching && (
         <AiOutlineLoading3Quarters size={17} className="animate-spin" />
       )}
-      <FaAlgolia className="text-muted" />
+      <FaAlgolia className="text-red-500 shrink-0 text-[10px] sm:text-sm"  />
+      </div>
       {searchedSongs?.length > 0 && (
         <ul className="absolute flex flex-col top-full w-full left-0 mt-2 bg-foreground gap-2 p-3 rounded-md">
           {searchedSongs.map((hit) => (

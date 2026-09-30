@@ -5,6 +5,7 @@ import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
 import { IoShuffleOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import Scruber from "./ui/Scruber";
 import LikeButton from "./ui/LikeButton";
@@ -18,8 +19,8 @@ function PlayingBar() {
   const [isloading, setIsloading] = useState(true);
   const [isrepeat, setIsrepeat] = useState(false);
   const songAudioRef = useRef();
-  const [ currentSong, setCurrentSong] = useState();
-  const { songsQueue, currentIndex , playPrevious, playNext} = useSongsQueue();
+  const [currentSong, setCurrentSong] = useState();
+  const { songsQueue, currentIndex, playPrevious, playNext } = useSongsQueue();
 
   // console.log("current song at the playingBar ", songsQueue[currentIndex]);
 
@@ -68,36 +69,50 @@ function PlayingBar() {
   };
 
   return (
-    <div className=" w-full h-12 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end ">
-      <section className="main w-5/6  flex gap-8 items-center">
-        <div className="controls flex gap-5 items-center">
-          <MdOutlineSkipPrevious className="text-foreground cursor-pointer" size={26} title="previous" onClick={playPrevious} />
-          <div className="playOrStop relative w-5.5 h-5.5">
+    <div className=" h-10 w-full min-w-0 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end box-border px-0.5 sm:px-4 ">
+      <section className="main w-full  flex gap-2 items-center sm:gap-4 md:gap-8">
+        <div className="controls flex gap-1 items-start sm:gap-3">
+          <MdOutlineSkipPrevious
+            className="text-foreground cursor-pointer"
+            size={20}
+            title="previous"
+            onClick={playPrevious}
+          />
+          <div className="playOrStop relative w-4 h-4">
             <button
               className="cursor-pointer outline-none"
               onClick={() => playController()}
             >
               {isPlay ? (
-                <FaRegCirclePause className="text-foreground" size={22} />
+                <FaRegCirclePause className="text-foreground" size={15} />
               ) : (
-                <FaRegCirclePlay className="text-foreground" size={22} />
+                <FaRegCirclePlay className="text-foreground" size={15} />
               )}
             </button>
             {isloading && (
-              <div className="absolute top-0 left-0 w-full h-full border-[2.5px]  border-gray-400 border-b-white animate-spin rounded-full pointer-events-none"></div>
+              <AiOutlineLoading3Quarters
+                className="animate-spin absolute inset-0 top-1 text-background"
+                size={15}
+                strokeWidth={2}
+              />
             )}
           </div>
           {/* <button>{<FaRegCirclePause className="text-foreground" size={22} />}</button> */}
-          <MdOutlineSkipNext className="text-foreground cursor-pointer" size={26} title="next" onClick={playNext} />
+          <MdOutlineSkipNext
+            className="text-foreground cursor-pointer"
+            size={20}
+            title="next"
+            onClick={playNext}
+          />
         </div>
         <div className="modernControls flex gap-3 items-center">
           <TiArrowRepeat
             className={`${isrepeat ? "text-primary" : "text-foreground"} cursor-pointer`}
-            size={20}
+            size={18}
             strokeWidth={0}
             onClick={() => setIsrepeat((curr) => !curr)}
           />
-          <IoShuffleOutline className="text-foreground" size={20} />
+          {/* <IoShuffleOutline className="text-foreground" size={20} /> */}
         </div>
         <Scruber
           songAudioRef={songAudioRef}
@@ -107,37 +122,33 @@ function PlayingBar() {
           setIsPlay={setIsPlay}
           isrepeat={isrepeat}
         />
-        <section className="about flex gap-1 items-center ">
-          <div className="songCoverImage h-10 w-10 overflow-hidden rounded gap-0.5 object-contain ">
+        <section className="about flex gap-2 items-center text-xs sm:gap-3">
+          <div className="songCoverImage  w-6 h-6 overflow-hidden rounded gap-0.5 object-contain sm:h-8 sm:w-8">
             <img
               src={currentSong?.coverUrl}
               alt="coverPic of the media"
-              className="h-10 w-10"
+              className="w-full h-full "
             />
           </div>
-          <div className="about flex flex-col justify-center h-10 ">
-            {/* <div className="singer text-xs font-semibold text-muted">Zartash Khan 🌺</div>
-            <div className="songName text-foreground text-xs font-semibold"> { "Alia Ansari - Khayat ✨✨✨".length>22?"Alia Ansari - Khayat ✨✨✨".slice(0,22).concat("..."):"Alia Ansari - Khayat ✨✨✨" }</div> */}
-            <div className="singer text-xs font-semibold text-muted">
-              {" "}
+          <div className="about text-[6px] font-semibold flex flex-col items-start  sm:text-[10px] ">
+            <div className="singer text-muted ">
               {currentSong.artist.length > 17
                 ? currentSong.artist.slice(0, 22).concat("...")
                 : currentSong.artist}
             </div>
-            <div className="songName text-foreground text-xs font-semibold">
-              {" "}
+            <div className="songName text-foreground ">
               {currentSong.title.length > 22
                 ? currentSong.title.slice(0, 22).concat("...")
                 : currentSong.title}
             </div>
           </div>
         </section>
-        <div className="CTA flex  gap-4 text-muted">
+        <div className="CTA flex  gap-2 text-muted sm:gap-3 ">
           <LikeButton />
           <FollowIconBtn />
         </div>
         <RxCross2
-          className="absolute top-1 right-1 cursor-pointer text-muted"
+          className="absolute top-1 right-1 cursor-pointer text-muted text-xs"
           onClick={() => setCurrentSong("")}
         />
       </section>

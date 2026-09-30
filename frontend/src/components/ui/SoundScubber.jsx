@@ -14,13 +14,13 @@ function SoundScubber({ volume, setVolume }) {
   return (
     <div className=" relative cursor-pointer ">
       <HiOutlineSpeakerWave
-        size={20}
+        className="text-xs sm:text-sm"
         onMouseEnter={() => setVolumeRangeIsvisible(true)}
         onMouseLeave={() => setVolumeRangeIsvisible(false)}
       />
       {volumeRangeIsvisible && (
         <div
-          className="absolute flex items-center justify-center w-26 h-6 bottom-15.5 -left-11 bg-muted rotate-270 rounded-md"
+          className="absolute flex items-center justify-center w-16 h-4 bottom-15.5 -left-11 bg-muted rotate-270 rounded-md sm:w-26 sm:h-6"
           onMouseEnter={() => setVolumeRangeIsvisible(true)}
           onMouseLeave={() => setVolumeRangeIsvisible(false)}
         >

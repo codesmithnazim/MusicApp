@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import usersService from "../../../services/users.service";
+import usersService from "../../services/users.service";
 import { useParams } from "react-router-dom";
 import { memo } from "react";
-import NewSongsCards from "../../ui/NewSongsCards";
-import { useSongsQueue } from "../../../contexts/songsQueue";
+import NewSongsCards from "../ui/NewSongsCards";
+import { useSongsQueue } from "../../contexts/songsQueue";
 
 function UsersAllSongs() {
   const { id } = useParams();

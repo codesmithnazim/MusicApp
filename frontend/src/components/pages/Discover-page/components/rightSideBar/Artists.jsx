@@ -30,17 +30,20 @@ function Artists() {
   // }, []);
 
   return (
-    <div className="w-full  flex flex-col items-center-safe gap-6 h-fit">
+    <>
       <h2 className="text-[20px] font-semibold w-fit mx-auto">Top Artists</h2>
-
-      {topArtists &&
-        topArtists?.map((artist) => {
-          if (artist?.id === user?.id)
-            artist = { ...artist, profilePicture : user.profilePicture };
-          return <TopArtistsLinkBtn artist={artist} key={artist?.id} />;
-        })}
-    </div>
+      <div className="w-screen border border-red-800 gap-8 p-8 h-fit grid grid-cols-2 md:grid-cols-3 md:grid-rows-3 ">
+        {topArtists &&
+          topArtists?.map((artist) => {
+            if (artist?.id === user?.id)
+              artist = { ...artist, profilePicture: user.profilePicture };
+            return <TopArtistsLinkBtn artist={artist} key={artist?.id} />;
+          })}
+      </div>
+    </>
   );
 }
 
 export default Artists;
+
+// items-center-safe

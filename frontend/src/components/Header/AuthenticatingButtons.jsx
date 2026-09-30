@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom";
 function AuthenticatingButtons() {
   return (
-    <div className="flex gap-2">
+    <div className="flex  text-[8px] gap-1 item-center sm:text-sm sm:gap-2">
       <NavLink
         to={"login"}
-        className={`text-foreground w-fit py-1 px-2 rounded-sm `}
+        className={`inline-block text-foreground w-fit py-0.5 px-1 rounded-sm `}
       >
         Login
       </NavLink>
       <NavLink
         to={"register"}
-        className={` text-white flex items-center w-fit bg-primary  px-2 rounded-sm`}
+        className={` text-white flex items-center w-fit bg-primary leading-0  px-1 rounded-sm`}
       >
         Sign up
       </NavLink>

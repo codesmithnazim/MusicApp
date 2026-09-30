@@ -13,7 +13,7 @@ function LikeButton() {
 
   return (
     <IoHeart
-      className={`${user?.favourites?.includes(songsQueue[currentIndex]?.id) ? "text-primary" : "hover:text-zinc-600 "} cursor-pointer`}
+      className={`${user?.favourites?.includes(songsQueue[currentIndex]?.id) ? "text-primary" : "hover:text-zinc-600 "} cursor-pointer text-xs sm:text-sm`}
       onClick={() =>{isAuthenticated? likeSongToggler(songsQueue[currentIndex].id, user, setUser) : navigate('/login') }}
     />
   );

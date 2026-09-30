@@ -24,7 +24,7 @@ function FollowIconBtn() {
         ""
       ) : (
         <RiUserFollowLine
-          className={`${user?.followings?.includes(songsQueue[currentIndex]?.user) ? "text-primary" : ""} hover:text-zinc-600 `}
+          className={`${user?.followings?.includes(songsQueue[currentIndex]?.user) ? "text-primary" : ""} hover:text-zinc-600 text-xs sm:text-sm`}
         />
       )}
     </div>

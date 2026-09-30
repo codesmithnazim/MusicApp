@@ -7,14 +7,14 @@ function Scruber({
   currentSong,
   handleLoadedMetadata,
   setIsPlay,
-  isrepeat
+  isrepeat,
 }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.8);
 
   useEffect(() => {
     songAudioRef.current.volume = volume;
-  }, [ volume ]);
+  }, [volume]);
 
   // console.log("the data of scrubber audio url ", currentSong)
 
@@ -41,12 +41,10 @@ function Scruber({
     return `${displayMinutes}:${displaySeconds}`;
   }
 
-        // {isrepeat?( songAudioRef.loop= true) : ""}
-
+  // {isrepeat?( songAudioRef.loop= true) : ""}
 
   return (
-    <div className="flex items-center gap-3">
-      {" "}
+    <div className="flex items-center  w-2/5 border border-pink-400 justify-between">
       <audio
         src={currentSong.audioUrl}
         // controls
@@ -55,12 +53,9 @@ function Scruber({
         ref={songAudioRef}
         onLoadedMetadata={handleLoadedMetadata}
         loop={isrepeat}
-        // onPlay={() => setIsPlay(true)}
-        // onPause={() => setIsPlay(false)}
         onEnded={() => setIsPlay(false)}
       ></audio>
-      <div className="scrubber flex items-center gap-3">
-        {/* <input type="range" name="audioSlider" id="audioSlider" className="w-120 h-1  accent-foreground cursor-pointer" /> */}
+      <div className="scrubber flex items-center gap-2 w-9/10 sm:gap-4">
         <input
           type="range"
           min="0"
@@ -68,12 +63,12 @@ function Scruber({
           value={currentTime}
           onChange={handleSeek}
           step={0.05}
-          className=" w-120 h-1 bg-primary rounded-full appearance-none cursor-pointer outline-none
+          className=" w-full h-1 bg-primary rounded-full appearance-none cursor-pointer outline-none
          
          /* Webkit (Chrome, Safari, Edge, Opera) Thumb Styling */
          [&::-webkit-slider-thumb]:appearance-none 
          [&::-webkit-slider-thumb]:h-3
-         [&::-webkit-slider-thumb]:w-3 
+         [&::-webkit-slider-thumb]:w-3
          [&::-webkit-slider-thumb]:hover:w-4
          [&::-webkit-slider-thumb]:hover:h-4
          [&::-webkit-slider-thumb]:bg-background
@@ -100,8 +95,8 @@ function Scruber({
          [&::-moz-range-thumb]:transition-colors
          [&::-moz-range-thumb]:duration-150"
         />
-        <div className="duration text-sm ">
-          {formatTime(currentTime)}/ {formatTime(duration)}{" "}
+        <div className="duration text-[6px] whitespace-nowrap border border-yellow-400 text-center sm:text-xs">
+          {formatTime(currentTime)}/ {formatTime(duration)}
         </div>
       </div>
       <SoundScubber setVolume={setVolume} volume={volume} />
