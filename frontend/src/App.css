@@ -8,6 +8,7 @@
 @theme {
   --font-tiktok:
     "TikTok Display Font", Arial, Tahoma, "PingFang SC", sans-serif;
+    --breakpoint-mobile :29rem;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

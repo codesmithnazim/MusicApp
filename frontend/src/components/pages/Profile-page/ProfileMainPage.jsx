@@ -51,7 +51,7 @@ function ProfileMainPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 font-tiktok pt-12">
+    <div className="flex flex-col gap-6 font-tiktok pt-8 p-2 lg:pt-12 ">
       <div className="bio flex gap-4  items-start">
         <div className="picAndEditPencil relative">
           <Avator user={profileDetails} size={40} />
@@ -63,7 +63,7 @@ function ProfileMainPage() {
             />
           )}
         </div>
-        <div className="bio flex flex-col gap-3 w-130">
+        <div className="bio flex flex-col gap-3 w-44 md:w-68 lg:w-130">
           <div className="name text-[22px] font-semibold">
             {profileDetails?.name}
           </div>
@@ -72,7 +72,7 @@ function ProfileMainPage() {
             consectetur libero at eaque temporibus soluta asperiores, quam
             tenetur magni.
           </div>
-          <div className=" links grid gap-x-3 text-foreground  grid-cols-[80px_30px_30px_30px_30px_30px]  grid-rows-[30px_15px] w-80  gap-y-2 items-center content-center">
+          <div className=" links grid gap-x-3 text-foreground  grid-cols-[80px_30px_30px_30px_30px_30px]  grid-rows-[30px_15px] w-80  gap-y-2 items-center content-center ">
             {user?.id === profileDetails?.id ? (
               <button className="text-primary bg-background  py-1 w-fit row-span-2 self-start border border-primary rounded-md font-medium px-5">
                 Edit

@@ -8,8 +8,8 @@ function FollowerCard({ follower }) {
     <>
     <Link 
     to={`/user/${id}/songs`}
-      className="group flex items-center gap-4 rounded-2xl border border-zinc-100 bg-white p-4 w-fit pr-5
-                 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all duration-200
+      className="group flex items-center sm:gap-2 rounded-2xl border border-zinc-100 bg-red-800 w-38 sm:w-54 sm:p-2   sm:pr-5 text-xs
+lg:w-64                 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all duration-200
                  hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
     >
       {/* Avatar with brand gradient ring */}
@@ -18,18 +18,18 @@ function FollowerCard({ follower }) {
           <img
             src={profilePicture}
             alt={name}
-            className="h-14 w-14 rounded-full object-cover"
+            className="h-10 w-10 sm:h-14 sm:w-14 rounded-full object-cover"
           />
         </div>
       </div>
 
       {/* Name + stats */}
-      <div className=" flex-1 px-2">
-        <h3 className="truncate text-[15px] font-semibold text-zinc-900">
+      <div className=" flex-1 ">
+        <h3 className="truncate text-sm font-semibold text-zinc-900">
           {name}
         </h3>
 
-        <div className="mt-1.5 flex items-center gap-5 text-xs font-medium text-zinc-500">
+        <div className="mt-1.5 flex items-center gap-0.5 text-xs font-medium text-zinc-500">
           <span className="flex flex-col items-center">
             {totalSongs}
             <span className="flex ">
@@ -37,7 +37,7 @@ function FollowerCard({ follower }) {
               songs
             </span>
           </span>
-          <span className="flex flex-col items-center">
+          <span className=" flex-col items-center hidden md:flex">
             {plays}
             <span className="flex gap-1">
               <Play className="h-3.5 w-3.5 text-zinc-400" />

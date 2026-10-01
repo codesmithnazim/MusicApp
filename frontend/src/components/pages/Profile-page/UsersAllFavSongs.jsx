@@ -24,7 +24,7 @@ function UsersAllFavSongs() {
   };
 
   return (
-    <div className=" grid grid-rows-2 grid-cols-5 gap-2">
+    <div className=" grid grid-rows-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6  gap-1">
       {userFavSongs?.map((song) => (
         <NewSongsCards song={song} key={song?.id}  onClick={songsQueueSetter} cardWidth={60} />
       ))}

@@ -26,7 +26,7 @@ function WhatIsNew() {
   return (
     <div className="flex flex-col relative transition-all duration-500 ease-in-out gap-1">
       <h1 className="text-xl font-medium">What's New</h1>
-      <div className="new-songs-container grid gap-2 grid-rows-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 md:gap-6 sm:gap-4 lg:grid-cols-5">
+      <div className="new-songs-container border-2 border-amber-700 grid gap-2 grid-rows-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 md:gap-6 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
         {latestSongs?.map((song) => (
           <NewSongsCards song={song} key={song?.id} onClick={songsQueueSetter} />
         ))}

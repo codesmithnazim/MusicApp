@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import usersService from "../../../services/users.service";
 import FollowerCard from "../../ui/FollowerCard";
+// import '../../../App'
 
 function UsersAllFollowers() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function UsersAllFollowers() {
   const userAllFollowers = data?.userAllFollowers;
   console.log("users all followers ", userAllFollowers);
   return (
-    <div className=" grid grid-rows-2 grid-cols-4 gap-5 p-2">
+    <div className=" grid grid-cols-2 mobile:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 p-2">
       {userAllFollowers?.map((user) => (
         <FollowerCard follower={user} key={user?.id}  />
       ))}

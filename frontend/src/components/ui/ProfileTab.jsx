@@ -6,7 +6,7 @@ function ProfileTab({ to, name, }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `relative px-4 pt-1 pb-0 font-medium transition-colors duration-200
+        `relative px-4 pt-1 pb-0 font-medium transition-colors duration-200 outline-none
     ${isActive ? "text-primary" : "text-gray-400 hover:text-primary"}
     after:absolute after:left-1/2 after:-bottom-1
     after:h-0.5 after:-translate-x-1/2
