@@ -32,7 +32,7 @@ function Artists() {
   return (
     <>
       <h2 className="text-base md:text-[18px] font-semibold w-fit mx-auto 2xl:text-2xl">Top Artists</h2>
-      <div className="w-full border border-red-800 gap-2 p-2 h-fit grid grid-cols-2 sm:grid-cols-3 sm:p-5 lg:flex lg:flex-col lg:p-0 lg:gap-3">
+      <div className="w-full  gap-2 p-2 h-fit grid grid-cols-2 sm:grid-cols-3 sm:p-5 lg:flex lg:flex-col lg:p-0 lg:gap-3">
         {topArtists &&
           topArtists?.map((artist) => {
             if (artist?.id === user?.id)

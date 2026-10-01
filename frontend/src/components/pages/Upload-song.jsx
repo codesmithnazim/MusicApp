@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useThemeContext } from "../../contexts/ThemeProvider";
 import { LuCloudUpload } from "react-icons/lu";
 import { TbCircleDotted } from "react-icons/tb";
 import { useState } from "react";
@@ -7,7 +6,6 @@ import { useAuth } from "../../contexts/AuthProvider";
 import songsServis from "../../services/songs.servis";
 
 function UploadSong() {
-  const { isDark } = useThemeContext();
   const { user } = useAuth();
   const songInputRef = useRef();
   const coverPicInputRef = useRef();

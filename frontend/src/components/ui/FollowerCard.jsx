@@ -8,7 +8,7 @@ function FollowerCard({ follower }) {
     <>
     <Link 
     to={`/user/${id}/songs`}
-      className="group flex items-center sm:gap-2 rounded-2xl border border-zinc-100 bg-red-800 w-38 sm:w-54 sm:p-2   sm:pr-5 text-xs
+      className="group flex items-center sm:gap-2 rounded-2xl border border-zinc-100 bg-white w-38 sm:w-54 sm:p-2   sm:pr-5 text-xs
 lg:w-64                 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all duration-200
                  hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
     >

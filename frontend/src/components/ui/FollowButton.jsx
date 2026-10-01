@@ -10,7 +10,7 @@ function FollowButton({ artist }) {
   if (user?.id === artist?.id) {
     return (
       <div
-        className={` w-15  text-center py-0.5 tracking-wider h-fit  bg-primary rounded-sm  text-white  text-xs font-medium  cursor-pointer self-center lg:w-18 lg:py-1 lg:text-[14px] lg:px-2`}
+        className={` w-15  text-center py-0.5 tracking-wider h-fit  bg-primary rounded-sm  text-white  text-xs font-medium  cursor-pointer self-center lg:w-19 lg:py-1  lg:px-2 2xl:text-sm`}
       >
         Profile
       </div>
@@ -19,7 +19,7 @@ function FollowButton({ artist }) {
   // console.log("the user details from the FollowButton component = ", user);
   return (
     <button
-      className={` w-15  text-center py-0.5 tracking-wider h-fit  bg-primary rounded-sm  text-white  text-xs font-medium cursor-pointer self-center lg:w-18 lg:py-1 lg:text-[14px] lg:px-2 `}
+      className={` w-15  text-center py-0.5 tracking-wider h-fit  bg-primary rounded-sm  text-white  text-xs font-medium cursor-pointer self-center lg:w-19 lg:py-1  lg:px-2  2xl:text-sm`}
       onClick={(e) => {
         if (!isAuthenticated) {
           return navigate("/login");

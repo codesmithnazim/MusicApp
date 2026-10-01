@@ -51,10 +51,10 @@ function LogIn() {
   };
 
   return (
-    <div className="w-4/5 h-4/5  flex items-center justify-center ">
-      <div className="w-100 flex flex-col gap-3">
+    <div className="inset-0 m-auto  flex items-center justify-center ">
+      <div className="w-72  flex flex-col gap-3 2xl:text-2xl mobile:w-80 lg:w-92 xl:w-100 2xl:w-142">
         <div className="heading font-semibold text-3xl ">Login as a user</div>
-        <div className="text-sm">
+        <div className="text-sm xl:text-sm ">
           Create new account?
           <NavLink to={"/register"} className={"text-primary"}>
             Register

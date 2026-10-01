@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
@@ -7,8 +7,10 @@ import usersService from "../../services/users.service";
 function Register() {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailError, setEmailError] = useState("");
+  const [coverPicName, setCoverPicName] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
+  const coverPicInputRef = useRef();
   const formSubmitHandler = async (newUser) => {
     try {
       const backRes = await usersService.registerUser(newUser);
@@ -42,9 +44,17 @@ function Register() {
     setEmailError("");
   };
 
+  const handlePictureSelect = (e) => {
+    const file = e.target?.files[0];
+    if (file) {
+      setCoverPicName(file.name);
+      return;
+    }
+  };
+
   return (
-    <div className="w-4/5 h-4/5  flex items-center justify-center ">
-      <div className="w-100 flex flex-col gap-3">
+    <div className="inset-0 m-auto  flex items-center justify-center ">
+      <div className="w-72  flex flex-col gap-3 2xl:text-2xl mobile:w-80 lg:w-92 xl:w-100 2xl:w-142">
         <div className="heading font-semibold text-3xl ">Create an account</div>
         <div className="text-sm">
           Already have an account?
@@ -117,17 +127,28 @@ function Register() {
           </div>
 
           {/* Input for uploading the profile picture */}
-          <div className="email flex flex-col gap-1.5">
-            <label htmlFor="profilePic" className="text-muted font-light">
-              Upload profile picture
-            </label>
+          <div
+            className={`songUploader p-1 lg:py-1 border-dashed border-2 border-muted  relative cursor-pointer mb-5 hover:border-primary  hover:opacity-60 hover:blur-[0.5px] flex flex-col items-center`}
+            onClick={() => coverPicInputRef.current.click()} // coverPicInputRef.current have the input tag, so we are calling the onclick of that input here.
+          >
+            <img
+              src="../../../songCoverPicIdentifier.png"
+              alt="the songs upload png"
+              className="w-6 h-6"
+            />
+            <div className="text-muted hover:text-foreground">Profile Picture</div>
+
             <input
               type="file"
-              name="profilePic"
-              id="profilePic"
+              name="songCoverPic"
               accept="image/*"
-              className="cursor-pointer border-2 border-black"
+              ref={coverPicInputRef} // We're making the reference of this input equal to the reference stored in the coverPicInputRef varibale.
+              style={{ display: "none" }}
+              onChange={handlePictureSelect}
             />
+            <p className={`${coverPicName ? "" : "hidden"} text-primary`}>
+              {coverPicName}
+            </p>
           </div>
           <button
             type="submit"

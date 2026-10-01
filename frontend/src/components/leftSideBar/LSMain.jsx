@@ -25,7 +25,7 @@ function Main({ leftNavBarRef }) {
           Blogs
         </Link>
         <Link
-          to={"/pricing_plans"}
+          to={"/pricing-plans"}
           className={`text-muted font-normal text-sm`}
         >
           Pricing Plans
@@ -34,7 +34,7 @@ function Main({ leftNavBarRef }) {
           Privacy
         </Link>
         <Link
-          to={"terms_and_conditions"}
+          to={"terms-and-conditions"}
           className={`text-muted font-normal text-sm`}
         >
           Terms

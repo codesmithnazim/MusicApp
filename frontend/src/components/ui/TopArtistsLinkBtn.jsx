@@ -9,7 +9,7 @@ function TopArtistsLinkBtn({ artist }) {
     <Link
       to={`/user/${artist?.details?.id}/songs`}
       // to={`/user/${artist.details.name.toLowerCase().replaceAll(" ", "-")}`}
-      className={` flex  items-center  border border-yellow-300 justify-start gap-2 text-[10px] sm:text-sm md:text-base md:gap-5 lg:text-sm lg:w-full lg:gap-3 xl:text-[14px] 2xl:text-[20px]`}
+      className={` flex  items-center  justify-start gap-2 text-[10px] sm:text-sm md:text-base md:gap-5 lg:text-sm lg:w-full lg:gap-3  2xl:text-[18px]`}
     >
       <Avator user={artist} />
       <div className="flex flex-1 justify-between">
@@ -17,7 +17,7 @@ function TopArtistsLinkBtn({ artist }) {
           className={`info flex flex-col overflow-clip  font-medium`}
         >
           <span className="text-foreground leading-3.5">{artist?.details?.name  }</span>
-          <div className="flex gap-1 ">
+          <div className="flex gap-1 text-xs">
             <span
               className={`flex items-center justify-center w-fit text-muted`}
             >

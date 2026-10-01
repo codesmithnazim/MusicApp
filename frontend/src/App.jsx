@@ -33,7 +33,7 @@ function App() {
           <Route path="/browse" element={<Browse />} />
           <Route path="/charts" element={<Charts />} />
           <Route path="/Playlists" element={<Playlist />} />
-          <Route path="/likes" element={<Likes />} />
+          <Route path="/user/:id/likes" element={<Likes />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/upload-song" element={<UploadSong />} />
