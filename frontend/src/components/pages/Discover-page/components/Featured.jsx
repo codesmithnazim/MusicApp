@@ -57,13 +57,13 @@ function Featured() {
     <div className="featured flex flex-col relative transition-all duration-500 ease-in-out w-full border-2 border-emerald-600">
       <div className="absolute inset-0 my-auto">
         <div
-          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -left-2.5 top-26 z-100 cursor-pointer md:w-8 md:h-8"
+          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -left-1.5 top-26 z-40 cursor-pointer md:w-8 md:h-8 lg:top-32"
           onClick={() => handlePrev()}
         >
           <FaLessThan size={8} strokeWidth={0} />
         </div>
         <div
-          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -right-3 top-26  z-100 cursor-pointer md:w-8 md:h-8"
+          className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -right-3 top-26  z-100 cursor-pointer md:w-8 md:h-8 lg:top-32"
           onClick={() => handleNext()}
         >
           <FaGreaterThan size={8} strokeWidth={0}/>

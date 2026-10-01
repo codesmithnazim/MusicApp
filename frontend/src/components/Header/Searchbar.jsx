@@ -62,7 +62,7 @@ function Searchbar() {
 
   return (
     <div
-      className={`relative searchBar flex items-center gap-1 w-[45vw] h-fit bg-yellow-400 px-1   backdrop-blur-lg  border-white/20 rounded-lg z-50 sm:w-[35vw] lg:w-[25vw] md:py-1 lg:py-1.5`}
+      className={`relative searchBar flex items-center gap-1 w-[40vw] h-fit bg-yellow-400 px-1  backdrop-blur-lg  border-white/20 rounded-lg z-50 sm:w-[35vw] lg:w-[25vw] md:py-1 lg:py-1.5`}
       onClick={(e) => e.stopPropagation()}
     >
       <CiSearch className={`text-xs text-foreground shrink-0 sm:text-sm md:text-base`} />
@@ -75,16 +75,16 @@ function Searchbar() {
       />
       <div className="flex justify-end flex-1 sm:py-1 sm:pr-5 gap-0.5 sm:gap-1 md:gap-2">
       {isSearching && (
-        <AiOutlineLoading3Quarters size={17} className="animate-spin" />
+        <AiOutlineLoading3Quarters  className="text-[9px] md:text-sm animate-spin" />
       )}
       <FaAlgolia className="text-red-500 shrink-0 text-[10px] sm:text-sm"  />
       </div>
       {searchedSongs?.length > 0 && (
-        <ul className="absolute flex flex-col top-full w-full left-0 mt-2 bg-foreground gap-2 p-3 rounded-md">
+        <ul className="absolute flex flex-col top-full w-64 sm:w-75 md:w-90 lg:w-full left-0 mt-2 bg-foreground gap-2 p-3 rounded-md">
           {searchedSongs.map((hit) => (
             <Hit hit={hit} key={hit?.objectID} onClick={songsQueueSetter} setSearchedSongs={setSearchedSongs} />
           ))}
-          <div className="pagination flex gap-4 items-center m-auto w-fit mt-0.5">
+          <div className="pagination flex  gap-1 md:gap-4 items-center m-auto w-fit mt-0.5">
             {paginationArray.length > 1 &&
               paginationArray.map((page) => (
                 <div

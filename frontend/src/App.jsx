@@ -16,16 +16,18 @@ import ProfileMainPage from "./components/pages/Profile-page/ProfileMainPage";
 import UsersAllSongs from "./components/pages/Profile-page/UsersAllSongs";
 import UsersAllFollowers from "./components/pages/Profile-page/UsersAllFollowers";
 import UsersAllFavSongs from "./components/pages/Profile-page/UsersAllFavSongs";
+import { useRef } from "react";
 
 function App() {
   const { isDark } = useThemeContext();
+  const leftNavBarRef= useRef()
   return (
     <div
-      className={`${isDark ? "dark" : ""} musicApp  flex relative max-w-screen min-h-screen bg-background text-foreground `}
+      className={`${isDark ? "dark" : ""} musicApp  flex relative max-w-screen min-h-screen bg-background text-foreground`}
     >
-      <LSMain />
+      <LSMain leftNavBarRef={leftNavBarRef} />
       <div className="flex flex-1 flex-col min-w-0">
-        <Header />
+        <Header leftNavBarRef={leftNavBarRef} />
         <Routes>
           <Route path="/" element={<Discover />} />
           <Route path="/browse" element={<Browse />} />

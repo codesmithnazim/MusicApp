@@ -69,8 +69,8 @@ function PlayingBar() {
   };
 
   return (
-    <div className=" h-10 w-full min-w-0 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end box-border px-0.5 sm:px-4 ">
-      <section className="main w-full  flex gap-2 items-center sm:gap-4 md:gap-8">
+    <div className=" h-10 w-full min-w-0 border-t border-t-primary bg-background  fixed bottom-0 left-0 flex items-center justify-end box-border px-0.5 sm:px-4 z-60 ">
+      <section className="main w-full  flex gap-2 items-center sm:gap-4 md:gap-8 lg:gap-10 lg:justify-center">
         <div className="controls flex gap-1 items-start sm:gap-3">
           <MdOutlineSkipPrevious
             className="text-foreground cursor-pointer"

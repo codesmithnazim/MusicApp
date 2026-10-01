@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {  NavLink, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import usersService from "../../services/users.service";
@@ -10,7 +10,8 @@ function LogIn() {
   const [emailError, setEmailError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
-  const {setIsAuthenticated, setUser } = useAuth();
+  const { setIsAuthenticated, setUser } = useAuth();
+  const passwordField = useRef();
   const formSubmitHandler = async (user) => {
     try {
       const backRes = await usersService.logInUser(user);
@@ -20,7 +21,6 @@ function LogIn() {
         setIsAuthenticated(true);
         setUser(backRes.user);
         navigate(backRes.redirectTo);
-
       }
     } catch (error) {
       setEmailError(error.response?.data?.error);
@@ -40,12 +40,7 @@ function LogIn() {
     formSubmitHandler(user);
   };
 
-  const changePasswordLook = () => {
-    document.getElementById("password").getAttribute("type") === "password"
-      ? document.getElementById("password").setAttribute("type", "text")
-      : document.getElementById("password").setAttribute("type", "password");
-    setHidePassword(!hidePassword);
-  };
+ 
 
   const validateEmail = (e) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value)) {
@@ -90,9 +85,10 @@ function LogIn() {
             </label>
             <input
               id="password"
-              type="password"
+              type={hidePassword? "password": "text"}
               name="password"
               required
+              ref={passwordField}
               onInput={(e) => {
                 if (e.target.value.length < 6)
                   e.target.setCustomValidity(
@@ -105,12 +101,12 @@ function LogIn() {
             {hidePassword ? (
               <FaRegEyeSlash
                 className="absolute top-10 right-2 cursor-pointer "
-                onClick={changePasswordLook}
+                onClick={()=> setHidePassword(!hidePassword)}
               />
             ) : (
               <IoEyeOutline
                 className="absolute top-10 right-2 cursor-pointer "
-                onClick={changePasswordLook}
+                onClick={()=> setHidePassword(!hidePassword)}
               />
             )}
             {emailError && <span className="text-red-400">{emailError}</span>}

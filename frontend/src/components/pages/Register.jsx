@@ -34,13 +34,6 @@ function Register() {
     formSubmitHandler(newUser);
   };
 
-  const changePasswordLook = () => {
-    document.getElementById("password").getAttribute("type") === "password"
-      ? document.getElementById("password").setAttribute("type", "text")
-      : document.getElementById("password").setAttribute("type", "password");
-    setHidePassword(!hidePassword);
-  };
-
   const validateEmail = (e) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value)) {
       setEmailError("Invalid email address");
@@ -97,7 +90,7 @@ function Register() {
             </label>
             <input
               id="password"
-              type="password"
+              type={hidePassword ? "password" : "text"}
               name="password"
               required
               onInput={(e) => {
@@ -112,12 +105,12 @@ function Register() {
             {hidePassword ? (
               <FaRegEyeSlash
                 className="absolute top-10 right-2 cursor-pointer "
-                onClick={changePasswordLook}
+                onClick={() => setHidePassword(!hidePassword)}
               />
             ) : (
               <IoEyeOutline
                 className="absolute top-10 right-2 cursor-pointer "
-                onClick={changePasswordLook}
+                onClick={() => setHidePassword(!hidePassword)}
               />
             )}
             {emailError && <span className="text-red-400">{emailError}</span>}

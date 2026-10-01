@@ -17,7 +17,7 @@ function Hit({ hit, onClick , setSearchedSongs}) {
 
   return (
     <li
-      className=" relative flex h-22 z-50 w-full gap-3 items-start border-2 cursor-pointer border-black/30 hover:border-primary bg-background p-2  rounded-lg shadow-lg"
+      className=" relative flex min-h-20 h-fit z-50 w-full gap-1 md:gap-3 items-start border-2 cursor-pointer border-black/30 hover:border-primary bg-background p-1 md:p-2  rounded-lg shadow-lg"
       onClick={() =>{ onClick(hit?.objectID);setSearchedSongs([]) }}
       key={hit?.objectID}
     >
@@ -28,18 +28,18 @@ function Hit({ hit, onClick , setSearchedSongs}) {
           className="object-cover w-20 h-12 rounded-md self-start"
         />
       )}
-      <div className="titleAndDesc flex-1 flex flex-col gap-1">
-        <div className="title text-foreground text-[18px] font-medium leading-3">
+      <div className="titleAndDesc flex-1 flex flex-col gap-0.5 md:gap-1">
+        <div className="title text-foreground text-xs md:text-[18px] font-medium  md:leading-3">
           {hit?.title.length > 25
             ? hit?.title.slice(0, 22).concat("...")
             : hit?.title}
         </div>
-        <div className="artist text-muted text-xs ">
+        <div className="artist text-muted text-[10px] md:text-xs ">
           {hit?.artist.length > 17
             ? hit?.artist.slice(0, 14).concat("...")
             : hit?.artist}
         </div>
-        <div className="description text-muted text-xs">
+        <div className="description text-muted text-[10px] text-xs leading-3">
           {hit?.description.length > 103
             ? hit?.description.slice(0, 100).concat("...")
             : hit?.description}

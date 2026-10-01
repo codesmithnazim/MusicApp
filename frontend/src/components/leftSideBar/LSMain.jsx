@@ -2,14 +2,17 @@ import SiteBrand from "./SiteBrand";
 import "../../App.css";
 import BrowseSection from "./BrowseSection";
 import MyCollectionSection from "./MyCollectionSection";
+import { RxCross2 } from "react-icons/rx";
 import SettingsSection from "./SettingsSection";
 import { Link } from "react-router-dom";
 
-function Main() {
+function Main({ leftNavBarRef }) {
   return (
     <div
-      className={`w-54 h-screen bg-background sticky top-0 overflow-y-scroll scrollbar-none pl-4.5 hidden flex-col items-start gap-3 overscroll-y-auto border-r border-r-partitioner shrink-0  xl:flex`}
+      className={`w-54 h-screen hidden absolute bg-background  top-0 overflow-y-scroll scrollbar-none pl-4.5 p-1 flex-col items-start gap-2 overscroll-y-auto border-r border-r-partitioner shrink-0 z-50  lg:flex lg:sticky`}
+      ref={leftNavBarRef}
     >
+      <RxCross2 className="absolute top-4 left-46 cursor-pointer lg:hidden"  onClick={()=>leftNavBarRef.current.style.display="none" }/>
       <SiteBrand />
       <div className={`text-muted font-normal text-sm`}>Browse</div>
       <BrowseSection />
