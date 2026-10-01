@@ -83,12 +83,12 @@ function UploadSong() {
   };
 
   return (
-    <div className="flex justify-center items-center box-border py-10 ">
-      <form className="flex flex-col gap-4" onSubmit={formSubmitHandler}>
+    <div className="flex justify-center items-center box-border py-10  ">
+      <form className="flex w-4/5 flex-col gap-4 " onSubmit={formSubmitHandler}>
         {/* Song Upload  */}
 
         <div
-          className={`${isDark ? "dark" : ""} songUploader w-225 flex flex-col justify-center items-center py-60 border-dashed border-2 border-muted  relative cursor-pointer  hover:border-primary  hover:opacity-60 hover:blur-[0.5px]`}
+          className={`songUploader w-full   flex flex-col justify-center items-center py-20 sm:py-30 lg:py-60 border-dashed border-2 border-muted  relative cursor-pointer  hover:border-primary  hover:opacity-60 hover:blur-[0.5px] `}
           onClick={() => songInputRef.current.click()} // songInputRef.current have the input tag, so we are calling the onclick of that input here.
         >
           <img
@@ -106,14 +106,14 @@ function UploadSong() {
             style={{ display: "none" }}
             onChange={handleSongSelect}
           />
-          <p className={`${songInfo ? "" : "hidden"} text-primary`}>
+          <p className={`${songInfo ? "" : "hidden"} text-primary w-full`}>
             {songInfo}
           </p>
         </div>
 
         {/* Song cover picture upload */}
         <div
-          className={`${isDark ? "dark" : ""} songUploader w-225 py-20 border-dashed border-2 border-muted  relative cursor-pointer mb-10 hover:border-primary  hover:opacity-60 hover:blur-[0.5px] flex flex-col items-center`}
+          className={`songUploader w-full  py-4 lg:py-20 border-dashed border-2 border-muted  relative cursor-pointer mb-10 hover:border-primary  hover:opacity-60 hover:blur-[0.5px] flex flex-col items-center`}
           onClick={() => coverPicInputRef.current.click()} // coverPicInputRef.current have the input tag, so we are calling the onclick of that input here.
         >
           <img
@@ -140,7 +140,7 @@ function UploadSong() {
         <div className="username flex flex-col gap-1">
           <label
             htmlFor="username"
-            className={`${isDark ? "dark" : ""} text-foreground font-normal`}
+            className={` text-foreground font-normal`}
           >
             Track title
           </label>
@@ -154,7 +154,7 @@ function UploadSong() {
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
           />
           <span
-            className={`${isDark ? "dark" : ""} text-sm text-olive-500 `}
+            className={` text-sm text-olive-500 `}
           ></span>
         </div>
 
@@ -162,7 +162,7 @@ function UploadSong() {
         <div className="username flex flex-col gap-1">
           <label
             htmlFor="username"
-            className={`${isDark ? "dark" : ""} text-foreground font-normal`}
+            className={` text-foreground font-normal`}
           >
             Artist name
           </label>
@@ -182,7 +182,7 @@ function UploadSong() {
         <div className="username flex flex-col gap-1">
           <label
             htmlFor="genre"
-            className={`${isDark ? "dark" : ""} text-foreground font-normal`}
+            className={` text-foreground font-normal`}
           >
             Select a Genre
           </label>
@@ -194,75 +194,75 @@ function UploadSong() {
           >
             <option
               value=""
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={`bg-background text-foreground`}
             >
               Search for genre
             </option>
             <option
               value="volvo"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               Classical
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Dance
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Deep House
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Disco
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={`bg-background text-foreground`}
             >
               {" "}
               Drum & Base
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Electronic
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Folk & Singer Song-writer
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={`bg-background text-foreground`}
             >
               {" "}
               Latin
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={` bg-background text-foreground`}
             >
               {" "}
               Metal
             </option>
             <option
               value="audi"
-              className={`${isDark ? "dark" : ""} bg-background text-foreground`}
+              className={`bg-background text-foreground`}
             >
               {" "}
               Indie
@@ -286,7 +286,7 @@ function UploadSong() {
         <div className="username flex flex-col gap-1.5">
           <label
             htmlFor="username"
-            className={`${isDark ? "dark" : ""} text-foreground font-normal`}
+            className={` text-foreground font-normal`}
           >
             Description
           </label>
@@ -296,7 +296,7 @@ function UploadSong() {
             type="text"
             minLength={2}
             maxLength={60}
-            className={` ${isDark ? "dark" : ""} border-b-3 border-b-muted outline-none focus:border-b-foreground hover:border-b-foreground placeholder:text-muted `}
+            className={`  border-b-3 border-b-muted outline-none focus:border-b-foreground hover:border-b-foreground placeholder:text-muted `}
             placeholder="tracks with descriptions tend to get more plays and engagements "
           />
         </div>
@@ -307,7 +307,7 @@ function UploadSong() {
 
         <button
           type="submit"
-          className={`${isDark ? "dark" : ""} px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer  z-10 `}
+          className={`px-6 py-2 bg-primary border-2 border-zinc-300 text-white rounded-2xl flex justify-center items-center self-end gap-1 mt-10 cursor-pointer  z-10 `}
         >
           {successfulUpload ? (
             <>
