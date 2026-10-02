@@ -23,7 +23,7 @@ function NewSongsCards({ song, onClick, cardWidth }) {
 
   return (
     <div
-      className={`song  flex flex-col w-full text-foreground lg:w-40 xl:w-43 2xl:w-48`}
+      className={`song  flex flex-col w-full text-foreground lg:w-40 xl:w-43 2xl:w-64T`}
       onMouseEnter={() => setIsPlayBtnVisible(true)}
       onMouseLeave={() => setIsPlayBtnVisible(false)}
     >

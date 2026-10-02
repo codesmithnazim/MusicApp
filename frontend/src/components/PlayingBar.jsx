@@ -3,7 +3,6 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 import { MdOutlineSkipPrevious } from "react-icons/md";
 import { MdOutlineSkipNext } from "react-icons/md";
 import { TiArrowRepeat } from "react-icons/ti";
-import { IoShuffleOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
@@ -78,13 +77,13 @@ function PlayingBar() {
             title="previous"
             onClick={playPrevious}
           />
-          <div className="playOrStop relative w-4 h-4">
+          <div className="playOrStop relative w-4 h-4 cursor-pointer">
             <button
               className="cursor-pointer outline-none"
               onClick={() => playController()}
             >
               {isPlay ? (
-                <FaRegCirclePause className="text-foreground" size={15} />
+                <FaRegCirclePause className="text-foreground " size={15} />
               ) : (
                 <FaRegCirclePlay className="text-foreground" size={15} />
               )}

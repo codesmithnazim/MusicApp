@@ -44,7 +44,7 @@ function Scruber({
   // {isrepeat?( songAudioRef.loop= true) : ""}
 
   return (
-    <div className="flex items-center  w-2/5 border border-pink-400 justify-between">
+    <div className="flex items-center  w-2/5  justify-between">
       <audio
         src={currentSong.audioUrl}
         // controls
@@ -95,7 +95,7 @@ function Scruber({
          [&::-moz-range-thumb]:transition-colors
          [&::-moz-range-thumb]:duration-150"
         />
-        <div className="duration text-[6px] whitespace-nowrap border border-yellow-400 text-center sm:text-xs">
+        <div className="duration text-[6px] whitespace-nowrap  text-center sm:text-xs">
           {formatTime(currentTime)}/ {formatTime(duration)}
         </div>
       </div>

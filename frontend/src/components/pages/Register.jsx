@@ -133,14 +133,14 @@ function Register() {
           >
             <img
               src="../../../songCoverPicIdentifier.png"
-              alt="the songs upload png"
+              alt="profile picture placeholder"
               className="w-6 h-6"
             />
             <div className="text-muted hover:text-foreground">Profile Picture</div>
 
             <input
               type="file"
-              name="songCoverPic"
+              name="profilePic"
               accept="image/*"
               ref={coverPicInputRef} // We're making the reference of this input equal to the reference stored in the coverPicInputRef varibale.
               style={{ display: "none" }}

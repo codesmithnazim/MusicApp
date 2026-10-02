@@ -13,13 +13,13 @@ function Main({ leftNavBarRef }) {
       ref={leftNavBarRef}
     >
       <RxCross2 className="absolute top-4 left-46 cursor-pointer lg:hidden"  onClick={()=>leftNavBarRef.current.style.display="none" }/>
-      <SiteBrand />
+      <SiteBrand leftNavBarRef={leftNavBarRef} />
       <div className={`text-muted font-normal text-sm`}>Browse</div>
-      <BrowseSection />
+      <BrowseSection leftNavBarRef={leftNavBarRef} />
       <div className={` text-muted font-normal text-sm`}>My collection</div>
-      <MyCollectionSection />
+      <MyCollectionSection leftNavBarRef={leftNavBarRef} />
       <div className={` text-muted font-normal text-sm`}>Settings</div>
-      <SettingsSection />
+      <SettingsSection leftNavBarRef={leftNavBarRef}/>
       <div className="additionals grid grid-cols-[70px_100px] justify-center pb-3">
         <Link to={"/blogs"} className={`text-muted font-normal text-sm`}>
           Blogs

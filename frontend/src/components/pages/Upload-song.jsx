@@ -43,7 +43,7 @@ function UploadSong() {
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     setIsUploading(true);
-    setSuccessfulUpload(false)
+    setSuccessfulUpload(false);
     try {
       const songData = new FormData(e.currentTarget);
       console.log(
@@ -94,7 +94,7 @@ function UploadSong() {
             alt="the songs upload png"
             className="w-20 h-20"
           />
-          <button type="button">Choose Song</button>
+          <button type="button">Choose Song or Naath</button>
 
           <input
             type="file"
@@ -136,10 +136,7 @@ function UploadSong() {
 
         {/* Div for inputting the track title */}
         <div className="username flex flex-col gap-1">
-          <label
-            htmlFor="username"
-            className={` text-foreground font-normal`}
-          >
+          <label htmlFor="username" className={` text-foreground font-normal`}>
             Track title
           </label>
           <input
@@ -151,17 +148,12 @@ function UploadSong() {
             maxLength={50}
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary "
           />
-          <span
-            className={` text-sm text-olive-500 `}
-          ></span>
+          <span className={` text-sm text-olive-500 `}></span>
         </div>
 
         {/* Div for inputting the artist name */}
         <div className="username flex flex-col gap-1">
-          <label
-            htmlFor="username"
-            className={` text-foreground font-normal`}
-          >
+          <label htmlFor="username" className={` text-foreground font-normal`}>
             Artist name
           </label>
           <input
@@ -178,10 +170,7 @@ function UploadSong() {
 
         {/* div for inputting the Genre of the track */}
         <div className="username flex flex-col gap-1">
-          <label
-            htmlFor="genre"
-            className={` text-foreground font-normal`}
-          >
+          <label htmlFor="genre" className={` text-foreground font-normal`}>
             Select a Genre
           </label>
           <select
@@ -190,102 +179,57 @@ function UploadSong() {
             required
             className="outline-muted outline-1 rounded-sm p-1.5 focus:outline-primary text-zinc-500"
           >
-            <option
-              value=""
-              className={`bg-background text-foreground`}
-            >
+            <option value="" className={`bg-background text-foreground`}>
               Search for genre
             </option>
-            <option
-              value="volvo"
-              className={` bg-background text-foreground`}
-            >
+            <option value="volvo" className={` bg-background text-foreground`}>
               Classical
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="Naath" className={` bg-background text-foreground`}>
+              Naath
+            </option>
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Dance
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Deep House
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Disco
             </option>
-            <option
-              value="audi"
-              className={`bg-background text-foreground`}
-            >
+            <option value="audi" className={`bg-background text-foreground`}>
               {" "}
               Drum & Base
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Electronic
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Folk & Singer Song-writer
             </option>
-            <option
-              value="audi"
-              className={`bg-background text-foreground`}
-            >
+            <option value="audi" className={`bg-background text-foreground`}>
               {" "}
               Latin
             </option>
-            <option
-              value="audi"
-              className={` bg-background text-foreground`}
-            >
+            <option value="audi" className={` bg-background text-foreground`}>
               {" "}
               Metal
             </option>
-            <option
-              value="audi"
-              className={`bg-background text-foreground`}
-            >
+            <option value="audi" className={`bg-background text-foreground`}>
               {" "}
               Indie
             </option>
           </select>
-
-          {/* <label htmlFor="username" >
-            Genre
-          </label>
-          <input
-            id="Genre"
-            name="genre"
-            type=""
-            required
-            minLength={3}
-            className=""
-          /> */}
         </div>
 
         {/* div for inputting the description of the track */}
         <div className="username flex flex-col gap-1.5">
-          <label
-            htmlFor="username"
-            className={` text-foreground font-normal`}
-          >
+          <label htmlFor="username" className={` text-foreground font-normal`}>
             Description
           </label>
           <input
@@ -309,7 +253,8 @@ function UploadSong() {
         >
           {successfulUpload ? (
             <>
-              <LuCloudUpload size={20} className="text-green-500" /> uploaded{" "}
+              <LuCloudUpload size={20} className="text-green-500" />{" "}
+              uploaded{" "}
             </>
           ) : isUploading ? (
             <>

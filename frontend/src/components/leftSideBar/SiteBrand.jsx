@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom'
 import '../../App.css'
 import logo from "../../assets/ribbitPlayerLogo.png"
 
-function SiteBrand() {
+function SiteBrand({leftNavBarRef}) {
   return (
     <div className=' flex gap-2 '>
         <div className="logo">
-          <a href="#">
+          <Link href="/">
           <img src={logo} className="base h-24 object-cover w-28"   alt="logo of the website" />
-          </a>
+          </Link>
         </div>
     </div>
   )

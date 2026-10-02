@@ -54,7 +54,7 @@ function Featured() {
   };
 
   return (
-    <div className="featured flex flex-col relative transition-all duration-500 ease-in-out w-full border-2 border-emerald-600">
+    <div className="featured flex flex-col relative transition-all duration-500 ease-in-out w-full ">
       <div className="absolute inset-0 my-auto">
         <div
           className=" text-black bg-white w-5 h-5 flex justify-center items-center rounded-full border border-zinc absolute -left-1.5 top-26 z-40 cursor-pointer md:w-8 md:h-8 lg:top-32"
@@ -78,7 +78,7 @@ function Featured() {
         onMouseLeave={() => setIsHoverd(false)}
       >
         <div
-          className="wider flex items-center gap-5 border-4  border-blue-500 "
+          className="wider flex items-center gap-5"
           style={{
             transform: `translateX(${-pixelsToscroll * index}px)`,
             transition: "all 1200ms cubic-bezier(0.65, 0.06, 0.14, 0.92) ",
