@@ -31,6 +31,18 @@ function Register() {
     setIsProcessing(true);
     const newUser = new FormData(e.currentTarget);
     // const newUser = Object.fromEntries(formData.entries()); Do'nt use it if the form have file inputs
+// For simple forms (without file uploads):
+// Use Object.fromEntries(formData.entries()) to convert FormData into a plain JavaScript object.
+// This is ideal for JSON requests because the backend can easily access the data through req.body.
+// Avoid sending FormData directly unless you specifically need multipart/form-data.
+
+// For forms with file uploads:
+// Use FormData directly when sending the request.
+// It supports both regular form fields and File objects in a multipart/form-data request.
+// Avoid converting it into a plain object if you intend to send the files as multipart data.
+// Object.fromEntries() does not inherently remove File objects, but it does not produce a multipart request body either.
+//Note: new FormData() return us content with content-type : multipart/formdata , on backend request handler for this type of request still needs to handle the file upload
+// with upload.none(). So that why we need to use Object.fromEntries(formData.entries()) to get a plain js object rather multipart/formData.
     // console.log("the raw form data ", formData);
     console.log("the complete record ", newUser);
     formSubmitHandler(newUser);
