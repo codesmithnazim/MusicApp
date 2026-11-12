@@ -1,8 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import postcssPresetEnv from "postcss-preset-env";
-import autoprefixer from "autoprefixer";
 import createTransformer from "tailwind-group-variant";
 
 // https://vite.dev/config/
@@ -15,8 +13,6 @@ export default defineConfig({
         transform: createTransformer({ separatorChar: " " }),
       },
     }),
-    postcssPresetEnv({ stage: 2 }),
-    autoprefixer(),
   ],
   // server: {
   //   proxy: {

@@ -1,5 +1,6 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3000/api/song";
+// const baseUrl =  "https://ribbit.bonto.page/api/song";//in case of making dist folder for the bunto deployement
 const api = axios.create({
   baseURL: baseUrl,
   withCredentials: true,
