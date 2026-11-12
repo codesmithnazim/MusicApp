@@ -15,8 +15,6 @@ export default defineConfig({
         transform: createTransformer({ separatorChar: " " }),
       },
     }),
-    postcssPresetEnv({ stage: 2 }),
-    autoprefixer(),
   ],
   // server: {
   //   proxy: {
