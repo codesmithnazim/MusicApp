@@ -10,6 +10,7 @@ import config from "./utils/config.js";
 import logger from "./utils/logger.js";
 import { usersRouter } from "./routes/user.route.js";
 import { songsRouter } from "./routes/song.route.js";
+import path from "path"
 // import playWorker from "./workers/play.worker.js";
 
 mongoose
@@ -24,6 +25,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(express.static( 'dist'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
