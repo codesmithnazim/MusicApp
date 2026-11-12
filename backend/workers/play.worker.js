@@ -3,10 +3,17 @@ import playRecorder from "../services/playRecorder.js";
 import logger from "../utils/logger.js";
 import mongoose from "mongoose";
 import config from "../utils/config.js";
+import IORedis from "ioredis";
+
 
 mongoose.connect(config.MONGODB_URI, { family: 4 });
 
 console.log("the ctrl of execuation came in worker.js");
+
+const connection = new IORedis(config.REDIS_URL, {
+  maxRetriesPerRequest: null, // required by BullMQ Workers
+});
+
 
 const playWorker = new Worker(
   "music-play",
@@ -18,10 +25,7 @@ const playWorker = new Worker(
     }
   },
   {
-    connection: {
-      host: "localhost",
-      port: 6379,
-    },
+    connection: connection,
   },
 );
 
